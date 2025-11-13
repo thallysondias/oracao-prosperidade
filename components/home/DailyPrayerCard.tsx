@@ -2,13 +2,14 @@
 
 import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
-import { MessageCircle, Share2, Heart } from 'lucide-react';
+import { Share2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 
 interface DailyPrayerCardProps {
   verseText: string;
   verseReference: string;
+  verseId: number;
   authorName: string;
   authorImage: string;
   backgroundImage: string;
@@ -19,6 +20,7 @@ interface DailyPrayerCardProps {
 export function DailyPrayerCard({
   verseText,
   verseReference,
+  verseId,
   authorName,
   authorImage,
   backgroundImage,
@@ -33,6 +35,13 @@ export function DailyPrayerCard({
     const randomNumber = Math.floor(Math.random() * (32000 - 15000 + 1)) + 15000;
     setFakeCount((randomNumber / 1000).toFixed(1) + 'k');
   }, []);
+
+  const handleSharePrayer = () => {
+    const verseUrl = `${window.location.origin}/verse/${verseId}`;
+    const message = `✨ Versículo do Dia ✨\n\n${verseReference}\n\n"${verseText}"\n\n${verseUrl}`;
+    const encodedMessage = encodeURIComponent(message);
+    window.open(`https://wa.me/?text=${encodedMessage}`, '_blank');
+  };
 
   return (
     <div className="px-4 space-y-4">
@@ -52,42 +61,26 @@ export function DailyPrayerCard({
 
         <p className="text-lg font-serif italic leading-relaxed">{verseText}</p>
 
-        {/* Bottom Actions */}
+        {/* Bottom Actions with Send Prayer Button */}
         <div className="flex items-center justify-between mt-4">
-          <div className="flex gap-6 text-xl">
-            <button className="hover:scale-110 transition-transform">
-              <Heart className="h-6 w-6" />
-            </button>
-            <button className="hover:scale-110 transition-transform">
-              <MessageCircle className="h-6 w-6" />
-            </button>
-            <button
-              onClick={onShareWhatsApp}
-              className="hover:scale-110 transition-transform"
-            >
-              <Share2 className="h-6 w-6" />
-            </button>
-          </div>
+          {/* Send Prayer Button */}
+          <Button
+            onClick={handleSharePrayer}
+            variant="outline"
+            className="border-white text-white bg-transparent hover:bg-white hover:text-orange-600"
+            size="sm"
+          >
+            <Share2 className="h-4 w-4 mr-2" />
+            {t('sendPrayer')}
+          </Button>
 
           <div className="text-right">
             <p className="text-xs opacity-75">{fakeCount}</p>
-            <p className="text-xs opacity-75">Visualizações</p>
+            <p className="text-xs opacity-75">{t('views')}</p>
           </div>
         </div>
       </div>
 
-      {/* Author Info and Related Scriptures */}
-      <div className="space-y-4">
-        
-        {/* Share WhatsApp Button */}
-        <Button
-          onClick={onShareWhatsApp}
-          className="w-full bg-green-600 hover:bg-green-700 text-white"
-        >
-          <MessageCircle className="h-4 w-4 mr-2" />
-          {t('shareWhatsApp')}
-        </Button>
-      </div>
     </div>
   );
 }
