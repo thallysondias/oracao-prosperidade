@@ -11,6 +11,7 @@ export interface Product {
   tagsEs: string[];
   durationMinutes: number;
   image?: string;
+  youtubeUrl?: string;
   isLocked: boolean;
 }
 
@@ -27,7 +28,8 @@ export const products: Product[] = [
     tagsEn: ['Health'],
     tagsEs: ['Salud'],
     durationMinutes: 11,
-    image: '',
+    image: '/products/saude.jpeg',
+    youtubeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
     isLocked: false,
   },
   {
@@ -42,7 +44,8 @@ export const products: Product[] = [
     tagsEn: ['Money', 'Prosperity'],
     tagsEs: ['Dinero', 'Prosperidad'],
     durationMinutes: 8,
-    image: '',
+    image: '/products/prosperidade2.png',
+    youtubeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
     isLocked: false,
   },
   {
@@ -57,7 +60,8 @@ export const products: Product[] = [
     tagsEn: ['Love', 'Marriage', 'Relationship'],
     tagsEs: ['Amor', 'Matrimonio', 'Relación'],
     durationMinutes: 3,
-    image: '',
+    image: '/products/amor.jpeg',
+    youtubeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
     isLocked: false,
   },
   {
@@ -72,7 +76,8 @@ export const products: Product[] = [
     tagsEn: ['Protection'],
     tagsEs: ['Protección'],
     durationMinutes: 4,
-    image: '',
+    image: '/products/protecao.jpeg',
+    youtubeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
     isLocked: false,
   },
   {
@@ -87,7 +92,23 @@ export const products: Product[] = [
     tagsEn: ['Miracles', 'Health', 'Love', 'Protection'],
     tagsEs: ['Milagros', 'Salud', 'Amor', 'Protección'],
     durationMinutes: 8,
-    image: '',
+    image: '/products/protecao-santo.jpeg',
+    youtubeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+    isLocked: false,
+  },
+   {
+    id: 'prayer_006',
+    titlePt: 'Grande Oração Milagrosa a São Benedito',
+    titleEn: 'Great Miraculous Prayer to Saint Benedict',
+    titleEs: 'Gran Oración Milagrosa a San Benito',
+    descriptionPt: 'Uma oração milagrosa para pedir proteção, saúde, amor e milagres especiais',
+    descriptionEn: 'A miraculous prayer to ask for protection, health, love and special miracles',
+    descriptionEs: 'Una oración milagrosa para pedir protección, salud, amor y milagros especiales',
+    tagsPt: ['Milagres', 'Saúde', 'Amor', 'Proteção'],
+    tagsEn: ['Miracles', 'Health', 'Love', 'Protection'],
+    tagsEs: ['Milagros', 'Salud', 'Amor', 'Protección'],
+    durationMinutes: 8,
+    image: '/products/protecao-santo.jpeg',
     isLocked: true,
   },
 ];
