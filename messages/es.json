@@ -15,5 +15,21 @@
     "notifications": "Notificaciones",
     "profile": "Perfil",
     "relatedScriptures": "Escrituras Relacionadas"
+  },
+  "SaintBenedict": {
+    "title": "Oración de San Benedicto",
+    "description": "Una poderosa oración enfocada en la prosperidad, protección espiritual y abundancia material.",
+    "cardDescription": "Una poderosa oración enfocada en la prosperidad, protección espiritual y abundancia material. Conéctate con la energía mística de San Benedicto y abre caminos para la bendición y el éxito.",
+    "duration": "10 min",
+    "listenPrayer": "Escuchar Oración",
+    "playingNow": "Reproduciendo ahora",
+    "prayerText": "Texto de la Oración",
+    "fullText": "Gloria sea dada al Padre, y al Hijo, y al Espíritu Santo,\nComo era en el principio, ahora y siempre, por los siglos de los siglos. Amén.\n\nSeñor Jesucristo, que dijiste: \"Yo soy el Camino, la Verdad y la Vida\",\nbendícenos con tu presencia divina.\n\nGlorioso Santo Benedicto, poderoso intercesor ante el trono de Dios,\ntú que consagraste tu vida a la oración y la penitencia,\ntú que conoces los misterios de la prosperidad y la abundancia,\nescucha la voz que clama por protección y bendición.\n\nPor tus méritos e intercesión ante Nuestro Señor Jesucristo,\nalcánzanos la gracia de:\n\n• Prosperidad abundante en nuestras vidas\n• Protección espiritual contra toda clase de mal\n• Sabiduría para discernir los caminos correctos\n• Fuerza para superar las dificultades\n• Paz interior y serenidad del alma\n• Abundancia de bendiciones materiales y espirituales\n• Fe inquebrantable en Dios\n• Coraje para realizar nuestros sueños\n\nGlorioso San Benedicto, por la cruz de nuestro Señor Jesucristo,\nque nos conduce a la salvación y a la gloria,\nbendice nuestros negocios, nuestras familias y nuestras vidas.\n\nQue tu cruz nos proteja contra los enemigos del alma,\ny que tu intercesión nos guíe siempre por los caminos de la luz y la prosperidad.\n\n¡Que así sea! Amén.\n\n\"Que la cruz de San Benedicto nos libere del mal y la adversidad,\ny nos bendiga con la paz eterna de Dios Padre.\""
+  },
+  "Verse": {
+    "verseOfTheDay": "Versículo del Día",
+    "watchVideoAttention": "Mira el video con atención",
+    "wantSecretPrayers": "Quiero las Oraciones Secretas",
+    "receiveNow": "Recibe ahora oraciones y meditaciones exclusivas de prosperidad, protección espiritual y bendiciones."
   }
 }

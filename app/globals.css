@@ -164,4 +164,18 @@
   .tab-underline-animate {
     animation: slideUnderline 0.3s ease-out;
   }
+
+  /* Shadow pulse animation */
+  @keyframes shadowPulse {
+    0%, 100% {
+      box-shadow: 0 0 0 0 rgba(5, 46, 22, 0.7);
+    }
+    50% {
+      box-shadow: 0 0 0 10px rgba(5, 46, 22, 0);
+    }
+  }
+
+  .shadow-pulse {
+    animation: shadowPulse 2s infinite;
+  }
 }

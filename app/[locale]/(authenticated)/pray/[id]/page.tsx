@@ -129,10 +129,10 @@ export default function PrayerPlayPage() {
             </div>
             <button
               onClick={() => setIsFavorite(!isFavorite)}
-              className="ml-4 text-white hover:text-green-500 transition"
+              className="ml-4 text-white hover:text-yellow-500 transition"
             >
               <Heart
-                className={`h-6 w-6 ${isFavorite ? 'fill-current text-green-500' : ''}`}
+                className={`h-6 w-6 ${isFavorite ? 'fill-current text-yellow-500' : ''}`}
               />
             </button>
           </div>
@@ -149,7 +149,7 @@ export default function PrayerPlayPage() {
               step="any"
               value={played}
               onChange={handleProgressChange}
-              className="flex-1 h-1 bg-gray-600 rounded-full cursor-pointer accent-green-500"
+              className="flex-1 h-1 bg-gray-600 rounded-full cursor-pointer accent-yellow-500"
             />
             <span className="text-xs text-gray-400">{formatTime(duration)}</span>
           </div>
@@ -159,7 +159,7 @@ export default function PrayerPlayPage() {
         <div className="flex items-center justify-center gap-6 mb-6">
           <button
             onClick={handlePlayPause}
-            className="bg-green-500 hover:bg-green-600 text-black rounded-full p-4 transition transform hover:scale-105"
+            className="bg-yellow-500 hover:bg-yellow-600 text-black rounded-full p-4 transition transform hover:scale-105"
           >
             {isPlaying ? (
               <Pause className="h-6 w-6" />
@@ -178,7 +178,7 @@ export default function PrayerPlayPage() {
             max="1"
             step="0.1"
             defaultValue="1"
-            className="w-24 h-1 bg-gray-600 rounded-full cursor-pointer accent-green-500"
+            className="w-24 h-1 bg-gray-600 rounded-full cursor-pointer accent-yellow-500"
           />
         </div>
       </div>

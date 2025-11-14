@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { LightRays } from '@/components/ui/light-rays';
 import { getVerseById } from '@/lib/versiculos_traduzidos';
 import { notFound } from 'next/navigation';
+import { getTranslations } from 'next-intl/server';
 
 interface VersePageProps {
   params: Promise<{
@@ -58,6 +59,7 @@ export async function generateMetadata({ params }: VersePageProps): Promise<Meta
 export default async function VersePage({ params }: VersePageProps) {
   const { id } = await params;
   const verseId = parseInt(id, 10);
+  const t = await getTranslations('Verse');
 
   const verse = getVerseById(verseId);
   if (!verse) {
@@ -67,10 +69,10 @@ export default async function VersePage({ params }: VersePageProps) {
   const backgroundImage = 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&h=800&fit=crop';
 
   return (
-    <div className="relative min-h-screen bg-white dark:bg-black flex items-center justify-center">
+    <div className="relative min-h-screen bg-black dark:bg-black flex items-center justify-center">
       {/* Background Image with Overlay */}
       <div
-        className="absolute inset-0 opacity-20"
+        className="absolute inset-0 opacity-10"
         style={{
           backgroundImage: `url(${backgroundImage})`,
           backgroundSize: 'cover',
@@ -79,30 +81,46 @@ export default async function VersePage({ params }: VersePageProps) {
       />
 
       {/* Content */}
-      <div className="relative z-10 max-w-2xl mx-auto px-6 py-12 text-center space-y-8">
+      <div className="relative z-10 max-w-2xl mx-auto px-6 py-12 text-center space-y-6">
         {/* Title */}
-        <div className="space-y-4">
+        <div className="space-y-3">
           <p className="text-sm font-medium text-muted-foreground uppercase tracking-widest">
-            Versículo do Dia
+            {t('verseOfTheDay')}
           </p>
-          <h1 className="text-4xl md:text-5xl font-bold text-foreground">{verse.referencia}</h1>
-          <p className="text-lg md:text-xl font-serif italic leading-relaxed text-foreground">
+          <h1 className="text-xl md:text-2xl text-white/50 font-bold">{verse.referencia}</h1>
+          <p className="text-base md:text-lg font-serif italic leading-relaxed text-white/80">
             "{verse.traducao.pt}"
           </p>
         </div>
+        <hr className="border-yellow-500" />
+
+        <h3 className='text-white/40'>{t('watchVideoAttention')}</h3>
+        {/* Video Player */}
+        <div className="w-full rounded-lg overflow-hidden shadow-lg">
+          <video
+            width="100%"
+            height="auto"
+            controls
+            autoPlay
+            className="w-full bg-black aspect-squ"
+          >
+            <source src="/video/C4 .webm" type="video/webm" />
+            Seu navegador não suporta o elemento de vídeo.
+          </video>
+        </div>
 
         {/* CTA Button */}
-        <div className="pt-8 space-y-4">
+        <div className="pt-4 space-y-4">
           <Button
             asChild
-            className="bg-teal-600 hover:bg-teal-700 text-white px-8 py-6 text-lg rounded-full"
+            className="w-full bg-yellow-500 hover:bg-yellow-600 text-black font-bold px-8 py-4 text-lg rounded-lg"
           >
             <a href="https://hotmart.com" target="_blank" rel="noopener noreferrer">
-              Compre Todas as Orações
+              {t('wantSecretPrayers')}
             </a>
           </Button>
           <p className="text-xs text-muted-foreground">
-            Desbloqueie todas as orações e meditações exclusivas
+            {t('receiveNow')}
           </p>
         </div>
       </div>

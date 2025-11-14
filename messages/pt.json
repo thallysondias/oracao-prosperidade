@@ -15,5 +15,21 @@
     "notifications": "Notificações",
     "profile": "Perfil",
     "relatedScriptures": "Escrituras Relacionadas"
+  },
+  "SaintBenedict": {
+    "title": "Oração de São Benedito",
+    "description": "Uma poderosa oração focada em prosperidade, proteção espiritual e abundância material.",
+    "cardDescription": "Uma oração poderosa focada em prosperidade, proteção espiritual e abundância material. Conecte-se com a energia mística de São Benedito e abra caminhos para a bênção e o sucesso.",
+    "duration": "10 min",
+    "listenPrayer": "Ouvir Oração",
+    "playingNow": "Tocando agora",
+    "prayerText": "Texto da Oração",
+    "fullText": "Glória seja dada ao Pai, e ao Filho, e ao Espírito Santo,\nComo era no princípio, agora e sempre, por todos os séculos dos séculos. Amém.\n\nSenhor Jesus Cristo, que disseste: \"Eu sou o Caminho, a Verdade e a Vida\",\nabençoai-nos com a vossa presença divina.\n\nGlorioso Santo Benedito, poderoso intercessor perante o trono de Deus,\nvós que consagrasti vossa vida à oração e à penitência,\nvós que conheceis os mistérios da prosperidade e da abundância,\nouvi a vossa voz que clama por proteção e bênção.\n\nPor vossos méritos e intercessão junto a Nosso Senhor Jesus Cristo,\nalcançai-nos a graça de:\n\n• Prosperidade abundante em nossas vidas\n• Proteção espiritual contra toda sorte de mal\n• Sabedoria para discernir os caminhos certos\n• Força para vencer as dificuldades\n• Paz interior e serenidade na alma\n• Abundância de bênçãos materiais e espirituais\n• Fé inabalável em Deus\n• Coragem para realizar nossos sonhos\n\nGlorioso São Benedito, pela cruz de nosso Senhor Jesus Cristo,\nque nos conduz à salvação e à glória,\nabençoai os nossos negócios, nossas famílias e nossas vidas.\n\nQue a vossa cruz nos proteja contra os inimigos da alma,\ne que a vossa intercessão nos guie sempre pelos caminhos da luz e da prosperidade.\n\nQue assim seja! Amém.\n\n\"Que a cruz de São Benedito nos livre do mal e da adversidade,\ne nos abençoe com a paz eterna de Deus Pai.\""
+  },
+  "Verse": {
+    "verseOfTheDay": "Versículo do Dia",
+    "watchVideoAttention": "Assista o vídeo com atenção",
+    "wantSecretPrayers": "Quero as Orações Secretas",
+    "receiveNow": "Receba agora orações e meditações exclusivas de prosperidade, proteção espiritual e bênçãos."
   }
 }

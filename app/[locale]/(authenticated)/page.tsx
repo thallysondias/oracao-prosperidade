@@ -4,6 +4,7 @@ import { useState, useMemo } from 'react';
 import { useTranslations } from 'next-intl';
 import { useLocale } from 'next-intl';
 import { Header } from '@/components/home/Header';
+import { SaintBenedictPrayerCard } from '@/components/home/SaintBenedictPrayerCard';
 import { DailyPrayerCard } from '@/components/home/DailyPrayerCard';
 import { RelatedScripturesSection } from '@/components/home/RelatedScripturesSection';
 import { LightRays } from '@/components/ui/light-rays';
@@ -55,6 +56,9 @@ export default function HomePage() {
         {/* Content baseado na aba ativa */}
         <Tabs value={activeTab}>
           <TabsContent value="today" className="space-y-6 pb-12">
+            {/* Saint Benedict Prayer Card */}
+            <SaintBenedictPrayerCard />
+
             {/* Daily Prayer Card */}
             <DailyPrayerCard
               verseText={todayVerse.traducao.pt}

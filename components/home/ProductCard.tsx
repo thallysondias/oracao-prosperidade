@@ -49,11 +49,10 @@ export function ProductCard({
 
       {/* Right Image */}
       <div className="relative w-24 h-24 shrink-0">
-        <Image
+        <img
           src={image}
           alt={title}
-          fill
-          className="object-cover rounded-lg"
+          className="object-cover rounded-lg aspect-square"
         />
       </div>
 

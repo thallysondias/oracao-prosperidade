@@ -15,5 +15,21 @@
     "notifications": "Notifications",
     "profile": "Profile",
     "relatedScriptures": "Related Scriptures"
+  },
+  "SaintBenedict": {
+    "title": "Saint Benedict Prayer",
+    "description": "A powerful prayer focused on prosperity, spiritual protection and material abundance.",
+    "cardDescription": "A powerful prayer focused on prosperity, spiritual protection and material abundance. Connect with the mystical energy of Saint Benedict and open paths to blessing and success.",
+    "duration": "10 min",
+    "listenPrayer": "Listen to Prayer",
+    "playingNow": "Playing now",
+    "prayerText": "Prayer Text",
+    "fullText": "Glory be to the Father, and to the Son, and to the Holy Spirit,\nAs it was in the beginning, is now, and ever shall be, world without end. Amen.\n\nLord Jesus Christ, who said: \"I am the Way, the Truth, and the Life\",\nbless us with your divine presence.\n\nGlorious Saint Benedict, powerful intercessor before the throne of God,\nyou who consecrated your life to prayer and penance,\nyou who know the mysteries of prosperity and abundance,\nhear your voice that cries out for protection and blessing.\n\nBy your merits and intercession before Our Lord Jesus Christ,\ngrant us the grace of:\n\n• Abundant prosperity in our lives\n• Spiritual protection against all manner of evil\n• Wisdom to discern the right paths\n• Strength to overcome difficulties\n• Inner peace and serenity of soul\n• Abundance of material and spiritual blessings\n• Unwavering faith in God\n• Courage to realize our dreams\n\nGlorious Saint Benedict, by the cross of our Lord Jesus Christ,\nwhich leads us to salvation and glory,\nbless our businesses, our families, and our lives.\n\nMay your cross protect us against the enemies of the soul,\nand may your intercession guide us always along the paths of light and prosperity.\n\nSo be it! Amen.\n\n\"May the cross of Saint Benedict free us from evil and adversity,\nand bless us with the eternal peace of God the Father.\""
+  },
+  "Verse": {
+    "verseOfTheDay": "Verse of the Day",
+    "watchVideoAttention": "Watch the video carefully",
+    "wantSecretPrayers": "I Want the Secret Prayers",
+    "receiveNow": "Receive now exclusive prayers and meditations on prosperity, spiritual protection and blessings."
   }
 }
