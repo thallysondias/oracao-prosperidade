@@ -3,10 +3,12 @@
 import { useState, useMemo } from 'react';
 import { useTranslations } from 'next-intl';
 import { useLocale } from 'next-intl';
+import { useAuthStore } from '@/store/authStore';
 import { Header } from '@/components/home/Header';
 import { SaintBenedictPrayerCard } from '@/components/home/SaintBenedictPrayerCard';
 import { DailyPrayerCard } from '@/components/home/DailyPrayerCard';
 import { RelatedScripturesSection } from '@/components/home/RelatedScripturesSection';
+import { Challenge21Days } from '@/components/home/Challenge21Days';
 import { LivePrayerFooter } from '@/components/home/LivePrayerFooter';
 import { LightRays } from '@/components/ui/light-rays';
 import { Tabs, TabsContent } from '@/components/ui/tabs';
@@ -16,6 +18,7 @@ import { getTodayVerse } from '@/lib/versiculos_traduzidos';
 export default function HomePage() {
   const t = useTranslations('HomePage');
   const locale = useLocale() as 'pt' | 'en' | 'es';
+  const user = useAuthStore((state) => state.user);
   const [activeTab, setActiveTab] = useState<'today' | 'prayer-request' | 'challenge-21'>('today');
 
   // Get today's verse
@@ -45,10 +48,10 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-black">
-      <div className='relative z-50'>
+      <div className='relative z-50 max-w-5xl mx-auto'>
         {/* Header com tabs */}
         <Header
-          userName="Thallyson"
+          userName={user?.name || user?.email || 'Usuário'}
           notificationCount={1}
           activeTab={activeTab}
           onTabChange={setActiveTab}
@@ -84,8 +87,8 @@ export default function HomePage() {
             <p>{t('prayerRequest')} - Em breve</p>
           </TabsContent>
 
-          <TabsContent value="challenge-21" className="px-4 py-8 text-center text-muted-foreground">
-            <p>{t('challenge21Days')} - Em breve</p>
+          <TabsContent value="challenge-21">
+            <Challenge21Days />
           </TabsContent>
         </Tabs>
 

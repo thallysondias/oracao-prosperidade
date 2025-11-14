@@ -18,7 +18,7 @@ export default function SaintBenedictPage() {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const image = '/products/saobenedito.jpeg';
-  const audioUrl = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'; // Placeholder
+  const audioUrl = '/prayer/saobenedicto.mp3'; // Placeholder
 
   const handlePlayPause = () => {
     if (videoRef.current) {
