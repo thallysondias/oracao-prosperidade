@@ -1,5 +1,33 @@
 # Sistema de Webhook e Autenticação
 
+## ⚙️ Configuração Inicial
+
+### 1. Variáveis de Ambiente
+
+Copie o arquivo `.env.example` para `.env.local` e preencha as variáveis:
+
+```bash
+cp .env.example .env.local
+```
+
+**Obter as chaves do Supabase:**
+
+1. Acesse o [Dashboard do Supabase](https://app.supabase.com)
+2. Selecione seu projeto
+3. Vá em **Settings** → **API**
+4. Copie as chaves:
+   - `NEXT_PUBLIC_SUPABASE_URL` → Project URL
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY` → anon/public key
+   - `SUPABASE_SERVICE_ROLE_KEY` → service_role key ⚠️ **SECRETA!**
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=https://seu-projeto.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGc...
+SUPABASE_SERVICE_ROLE_KEY=eyJhbGc...  # ⚠️ Nunca exponha no frontend!
+```
+
+⚠️ **IMPORTANTE**: A `SUPABASE_SERVICE_ROLE_KEY` bypassa o RLS e só deve ser usada no servidor!
+
 ## Estrutura das Tabelas
 
 ### Tabela: `profiles`
@@ -33,9 +61,14 @@ Registra todas as compras realizadas.
 
 ## Configuração do Supabase
 
-### 1. Executar a Migration
+### 1. Executar as Migrations
 
-Copie o conteúdo de `supabase/migrations/001_create_profiles_and_purchases.sql` e execute no SQL Editor do Supabase.
+**Passo 1:** Copie o conteúdo de `supabase/migrations/001_create_profiles_and_purchases.sql` e execute no SQL Editor do Supabase.
+
+**Passo 2:** ⚠️ **IMPORTANTE** - Execute também a correção de políticas:
+Copie o conteúdo de `supabase/migrations/002_fix_webhook_policies.sql` e execute no SQL Editor.
+
+Esta segunda migration corrige as políticas RLS para permitir que webhooks (requisições anônimas) possam criar perfis e registrar compras.
 
 ### 2. Verificar as Tabelas
 

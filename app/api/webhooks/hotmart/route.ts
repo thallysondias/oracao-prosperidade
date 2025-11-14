@@ -109,6 +109,17 @@ export async function POST(request: Request) {
       });
     }
 
+    // 3. Create new purchase
+    // Hotmart pode enviar timestamp em segundos ou milissegundos
+    let purchasedAt = new Date();
+    if (purchase.approved_date) {
+      // Se timestamp tem mais de 13 dígitos, já está em milissegundos
+      const timestamp = purchase.approved_date;
+      purchasedAt = timestamp > 9999999999 
+        ? new Date(timestamp) 
+        : new Date(timestamp * 1000);
+    }
+
     const { error: purchaseError } = await supabase.from("purchases").insert({
       profile_id: profileId,
       email: buyer.email,
@@ -117,9 +128,7 @@ export async function POST(request: Request) {
       transaction_id: purchase.transaction,
       status: mappedStatus,
       purchase_data: body,
-      purchased_at: purchase.approved_date
-        ? new Date(purchase.approved_date * 1000).toISOString()
-        : new Date().toISOString(),
+      purchased_at: purchasedAt.toISOString(),
     });
 
     if (purchaseError) {
