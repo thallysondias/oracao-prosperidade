@@ -3,9 +3,10 @@
 import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import { ChevronLeft, Play, Pause, Volume2, Heart } from 'lucide-react';
+import { ChevronLeft, Play, Pause, Volume2, Heart, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
+import SanBenitoPrayer from '@/components/oracao/SanBenitoPrayer';
 
 export default function SaintBenedictPage() {
   const router = useRouter();
@@ -55,7 +56,7 @@ export default function SaintBenedictPage() {
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
     const secs = Math.floor(seconds % 60);
-    
+
     if (hours > 0) {
       return `${hours}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
     }
@@ -64,9 +65,9 @@ export default function SaintBenedictPage() {
 
   return (
     <div className="min-h-screen bg-black">
-      {/* Player Section */}
-      <div className="bg-black text-white py-6">
-        <div className="max-w-2xl mx-auto px-4">
+      {/* Player Section with Sticky Header */}
+      <div className=" bg-black text-white border-b border-yellow-500/20">
+        <div className="max-w-2xl mx-auto px-4 pt-6">
           {/* Header with back button */}
           <div className="flex items-center justify-between mb-8">
             <button
@@ -109,11 +110,40 @@ export default function SaintBenedictPage() {
               </button>
             </div>
           </div>
+        </div>
 
-          {/* Progress Bar */}
-          <div className="mb-6">
-            <div className="flex items-center gap-2">
-              <span className="text-xs text-gray-400">{formatTime(played * duration)}</span>
+        {/* Hidden video element */}
+        <video
+          ref={videoRef}
+          src={audioUrl}
+          onTimeUpdate={handleTimeUpdate}
+          onLoadedMetadata={handleLoadedMetadata}
+          onEnded={() => setIsPlaying(false)}
+          className="hidden"
+        />
+      </div>
+
+
+      {/* Prayer Text Section */}
+      <div>
+        {/* Sticky Controls + Progress Bar */}
+        <div className='sticky top-0 z-50 bg-black border-b border-yellow-500/20 px-4 py-2'>
+          <div className="max-w-2xl mx-auto flex items-center justify-between gap-4">
+            {/* Play Button */}
+            <button
+              onClick={handlePlayPause}
+              className="bg-yellow-500 hover:bg-yellow-600 text-black rounded-full p-2 transition transform hover:scale-105 shrink-0"
+            >
+              {isPlaying ? (
+                <Pause className="h-4 w-4" />
+              ) : (
+                <Play className="h-4 w-4 ml-1" />
+              )}
+            </button>
+
+            {/* Progress Bar */}
+            <div className="flex items-center justify-between gap-2 flex-1">
+              <span className="text-xs text-gray-400 whitespace-nowrap">{formatTime(played * duration)}</span>
               <input
                 type="range"
                 min="0"
@@ -123,62 +153,22 @@ export default function SaintBenedictPage() {
                 onChange={handleProgressChange}
                 className="flex-1 h-1 bg-gray-600 rounded-full cursor-pointer accent-yellow-500"
               />
-              <span className="text-xs text-gray-400">{formatTime(duration)}</span>
-            </div>
-          </div>
-
-          {/* Controls */}
-          <div className="flex items-center justify-center gap-6 mb-6">
-            <button
-              onClick={handlePlayPause}
-              className="bg-yellow-500 hover:bg-yellow-600 text-black rounded-full p-4 transition transform hover:scale-105"
-            >
-              {isPlaying ? (
-                <Pause className="h-6 w-6" />
-              ) : (
-                <Play className="h-6 w-6 ml-1" />
-              )}
-            </button>
-          </div>
-
-          {/* Volume Control */}
-          <div className="flex items-center justify-center gap-3">
-            <Volume2 className="h-4 w-4 text-gray-400" />
-            <input
-              type="range"
-              min="0"
-              max="1"
-              step="0.1"
-              defaultValue="1"
-              className="w-24 h-1 bg-gray-600 rounded-full cursor-pointer accent-yellow-500"
-            />
-          </div>
-
-          {/* Hidden video element */}
-          <video
-            ref={videoRef}
-            src={audioUrl}
-            onTimeUpdate={handleTimeUpdate}
-            onLoadedMetadata={handleLoadedMetadata}
-            onEnded={() => setIsPlaying(false)}
-            className="hidden"
-          />
-        </div>
-      </div>
-
-      {/* Prayer Text Section */}
-      <div className="bg-gray-50 dark:bg-slate-900 py-12">
-        <div className="max-w-2xl mx-auto px-4">
-          <div className="bg-white dark:bg-slate-800 rounded-lg p-8 shadow-lg">
-            <h2 className="text-2xl font-bold text-foreground mb-6 text-center">{t('prayerText')}</h2>
-            <div className="prose dark:prose-invert max-w-none">
-              <p className="text-foreground leading-relaxed whitespace-pre-wrap">
-                {t('fullText')}
-              </p>
+              <span className="text-xs text-gray-400 whitespace-nowrap">{formatTime(duration)}</span>
             </div>
           </div>
         </div>
+
+        {/* Animated Down Arrow */}
+        <div className="flex justify-center py-8 bg-black">
+          <div className="animate-bounce">
+            <ChevronDown className="h-8 w-8 text-yellow-500" />
+          </div>
+        </div>
+
+
+        <SanBenitoPrayer />
       </div>
+
     </div>
   );
 }

@@ -7,6 +7,7 @@ import { Header } from '@/components/home/Header';
 import { SaintBenedictPrayerCard } from '@/components/home/SaintBenedictPrayerCard';
 import { DailyPrayerCard } from '@/components/home/DailyPrayerCard';
 import { RelatedScripturesSection } from '@/components/home/RelatedScripturesSection';
+import { LivePrayerFooter } from '@/components/home/LivePrayerFooter';
 import { LightRays } from '@/components/ui/light-rays';
 import { Tabs, TabsContent } from '@/components/ui/tabs';
 import { products } from '@/lib/products/oraciones';
@@ -89,6 +90,10 @@ export default function HomePage() {
         </Tabs>
 
       </div>
+      
+      {/* Live Prayer Footer */}
+      <LivePrayerFooter />
+      
       <LightRays color='rgba(255, 215, 0, 0.1)' />
     </div>
   );

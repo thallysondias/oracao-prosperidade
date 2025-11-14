@@ -97,7 +97,7 @@ export default async function VersePage({ params }: VersePageProps) {
         <h3 className='text-white/40'>{t('watchVideoAttention')}</h3>
         {/* Video Player */}
         <div className="w-full rounded-lg overflow-hidden shadow-lg">
-          <video
+          {/* <video
             width="100%"
             height="auto"
             controls
@@ -106,7 +106,9 @@ export default async function VersePage({ params }: VersePageProps) {
           >
             <source src="/video/C4 .webm" type="video/webm" />
             Seu navegador não suporta o elemento de vídeo.
-          </video>
+          </video> */}
+
+          <iframe width="100%" height="100%" className='aspect-square' src="https://videomng.builderall.com/embed/Z3KIl67Kf5/?controls=1&allowpause=1&loop=1" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"></iframe>
         </div>
 
         {/* CTA Button */}
