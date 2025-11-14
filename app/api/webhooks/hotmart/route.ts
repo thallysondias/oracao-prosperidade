@@ -1,195 +1,154 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/utils/supabase/server';
-import crypto from 'crypto';
+import { createClient } from "@/utils/supabase/server";
+import { NextResponse } from "next/server";
 
+type HotmartStatus = "approved" | "cancelled" | "refunded" | "chargeback" | "pending";
 
-// Função para validar assinatura do webhook da Hotmart
-function validateHotmartSignature(
-  body: string,
-  signature: string | null,
-  secret: string
-): boolean {
-  if (!signature) return false;
-  
-  const hash = crypto
-    .createHmac('sha256', secret)
-    .update(body)
-    .digest('hex');
-  
-  return hash === signature;
+interface HotmartWebhook {
+  id: string;
+  event: string;
+  creation_date: number;
+  data: {
+    buyer: {
+      email: string;
+      name: string;
+    };
+    product: {
+      id: string;
+      name: string;
+    };
+    purchase: {
+      transaction: string;
+      status: HotmartStatus;
+      approved_date?: number;
+    };
+  };
 }
 
-export async function POST(request: NextRequest) {
+function mapHotmartStatus(event: string, status: HotmartStatus): string {
+  if (event === "PURCHASE_CANCELED") return "cancelled";
+  if (event === "PURCHASE_REFUNDED") return "refunded";
+  if (event === "PURCHASE_CHARGEBACK") return "chargeback";
+  if (status === "approved") return "approved";
+  return "pending";
+}
 
-
-// Cliente Supabase Admin (pode criar usuários)
-const supabaseAdmin = await createClient();
-
+export async function POST(request: Request) {
   try {
-    // Pegar o body como texto para validar assinatura
-    const bodyText = await request.text();
-    const body = JSON.parse(bodyText);
+    const supabase = await createClient();
+    const body: HotmartWebhook = await request.json();
 
-    // Validar assinatura (segurança)
-    const signature = request.headers.get('x-hotmart-hottok');
-    const webhookSecret = process.env.HOTMART_WEBHOOK_SECRET || '';
-    
-    if (webhookSecret && !validateHotmartSignature(bodyText, signature, webhookSecret)) {
-      console.error('Invalid webhook signature');
-      return NextResponse.json(
-        { error: 'Invalid signature' },
-        { status: 401 }
-      );
-    }
+    console.log("Hotmart webhook received:", {
+      event: body.event,
+      transaction: body.data.purchase.transaction,
+      email: body.data.buyer.email,
+    });
 
-    // Extrair dados do webhook
-    const { event, data } = body;
-    
-    console.log('Webhook received:', event);
-    console.log('Data:', JSON.stringify(data, null, 2));
+    const { buyer, product, purchase } = body.data;
+    const mappedStatus = mapHotmartStatus(body.event, purchase.status);
 
-    // Processar apenas eventos de compra
-    const validEvents = [
-      'PURCHASE_COMPLETE', // Compra aprovada
-      'PURCHASE_APPROVED', // Compra aprovada (outro nome)
-      'PURCHASE_REFUNDED', // Reembolso
-      'PURCHASE_CHARGEBACK', // Chargeback
-      'SUBSCRIPTION_CANCELLATION' // Cancelamento de assinatura
-    ];
+    const { data: existingProfile } = await supabase
+      .from("profiles")
+      .select("id")
+      .eq("email", buyer.email)
+      .single();
 
-    if (!validEvents.includes(event)) {
-      console.log('Event not handled:', event);
-      return NextResponse.json({ message: 'Event not handled' });
-    }
+    let profileId: string;
 
-    // Extrair informações do comprador
-    const buyerEmail = data.buyer?.email || data.subscriber?.email;
-    const buyerName = data.buyer?.name || data.subscriber?.name;
-    const productId = data.product?.id;
-    const productName = data.product?.name;
-    const purchaseStatus = data.purchase?.status || 'approved';
-    const transactionId = data.purchase?.transaction || data.subscription?.subscriber_code;
+    if (!existingProfile) {
+      const { data: newProfile, error: profileError } = await supabase
+        .from("profiles")
+        .insert({
+          email: buyer.email,
+          name: buyer.name,
+          password: "benedito",
+        })
+        .select("id")
+        .single();
 
-    if (!buyerEmail) {
-      console.error('No buyer email found in webhook data');
-      return NextResponse.json(
-        { error: 'No buyer email found' },
-        { status: 400 }
-      );
-    }
-
-    // Determinar status da compra
-    const isActive = ['PURCHASE_COMPLETE', 'PURCHASE_APPROVED'].includes(event);
-
-    // 1. Verificar se usuário já existe
-    const { data: existingUser, error: checkError } = await supabaseAdmin.auth.admin.listUsers();
-    
-    const userExists = existingUser?.users.find(u => u.email === buyerEmail);
-
-    let userId: string;
-
-    if (!userExists) {
-      // 2. Criar usuário no Supabase Auth
-      const { data: newUser, error: createError } = await supabaseAdmin.auth.admin.createUser({
-        email: buyerEmail,
-        email_confirm: true, // Confirmar email automaticamente
-        user_metadata: {
-          full_name: buyerName,
-          created_via: 'hotmart_webhook'
-        }
-      });
-
-      if (createError || !newUser.user) {
-        console.error('Error creating user:', createError);
+      if (profileError || !newProfile) {
+        console.error("Error creating profile:", profileError);
         return NextResponse.json(
-          { error: 'Failed to create user', details: createError },
+          { error: "Failed to create profile" },
           { status: 500 }
         );
       }
 
-      userId = newUser.user.id;
-      console.log('User created:', userId);
+      profileId = newProfile.id;
     } else {
-      userId = userExists.id;
-      console.log('User already exists:', userId);
+      profileId = existingProfile.id;
     }
 
-    // 3. Criar/Atualizar registro de compra (assumindo que você tenha uma tabela 'purchases')
-    const purchaseData = {
-      user_id: userId,
-      email: buyerEmail,
-      product_id: productId,
-      product_name: productName,
-      transaction_id: transactionId,
-      status: isActive ? 'active' : 'inactive',
-      event_type: event,
-      purchase_data: data,
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
-    };
-
-    // Verificar se já existe compra com esse transaction_id
-    const { data: existingPurchase } = await supabaseAdmin
-      .from('purchases')
-      .select('id')
-      .eq('transaction_id', transactionId)
+    const { data: existingPurchase } = await supabase
+      .from("purchases")
+      .select("id")
+      .eq("transaction_id", purchase.transaction)
       .single();
 
     if (existingPurchase) {
-      // Atualizar compra existente
-      const { error: updateError } = await supabaseAdmin
-        .from('purchases')
+      const { error: updateError } = await supabase
+        .from("purchases")
         .update({
-          status: isActive ? 'active' : 'inactive',
-          event_type: event,
-          updated_at: new Date().toISOString()
+          status: mappedStatus,
+          purchase_data: body,
+          updated_at: new Date().toISOString(),
         })
-        .eq('transaction_id', transactionId);
+        .eq("transaction_id", purchase.transaction);
 
       if (updateError) {
-        console.error('Error updating purchase:', updateError);
-      } else {
-        console.log('Purchase updated:', transactionId);
+        console.error("Error updating purchase:", updateError);
+        return NextResponse.json(
+          { error: "Failed to update purchase" },
+          { status: 500 }
+        );
       }
-    } else {
-      // Criar nova compra
-      const { error: insertError } = await supabaseAdmin
-        .from('purchases')
-        .insert(purchaseData);
 
-      if (insertError) {
-        console.error('Error inserting purchase:', insertError);
-        // Não retornar erro aqui para não quebrar o webhook
-        // O usuário foi criado com sucesso
-      } else {
-        console.log('Purchase created:', transactionId);
-      }
+      return NextResponse.json({
+        success: true,
+        action: "updated",
+        transaction: purchase.transaction,
+      });
     }
 
-    // 4. Enviar email de boas-vindas (opcional)
-    // Você pode implementar aqui a lógica de envio de email
+    const { error: purchaseError } = await supabase.from("purchases").insert({
+      profile_id: profileId,
+      email: buyer.email,
+      product_id: product.id,
+      product_name: product.name,
+      transaction_id: purchase.transaction,
+      status: mappedStatus,
+      purchase_data: body,
+      purchased_at: purchase.approved_date
+        ? new Date(purchase.approved_date * 1000).toISOString()
+        : new Date().toISOString(),
+    });
+
+    if (purchaseError) {
+      console.error("Error creating purchase:", purchaseError);
+      return NextResponse.json(
+        { error: "Failed to create purchase" },
+        { status: 500 }
+      );
+    }
 
     return NextResponse.json({
       success: true,
-      message: 'Webhook processed successfully',
-      userId,
-      event,
-      isActive
+      action: "created",
+      transaction: purchase.transaction,
+      status: mappedStatus,
     });
-
   } catch (error) {
-    console.error('Webhook error:', error);
+    console.error("Webhook error:", error);
     return NextResponse.json(
-      { error: 'Internal server error', details: error },
+      { error: "Internal server error" },
       { status: 500 }
     );
   }
 }
 
-// Método GET para testar se a rota está funcionando
 export async function GET() {
   return NextResponse.json({
-    message: 'Hotmart webhook endpoint is working',
-    timestamp: new Date().toISOString()
+    status: "ok",
+    endpoint: "hotmart-webhook",
+    timestamp: new Date().toISOString(),
   });
 }
