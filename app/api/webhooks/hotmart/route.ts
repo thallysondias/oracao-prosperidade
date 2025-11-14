@@ -28,6 +28,7 @@ function mapHotmartStatus(event: string, status: HotmartStatus): string {
   if (event === "PURCHASE_CANCELED") return "cancelled";
   if (event === "PURCHASE_REFUNDED") return "refunded";
   if (event === "PURCHASE_CHARGEBACK") return "chargeback";
+  if (event === "PURCHASE_APPROVED") return "approved";
   if (status === "approved") return "approved";
   return "pending";
 }
