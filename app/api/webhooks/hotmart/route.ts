@@ -1,18 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
+import { createClient } from '@/utils/supabase/server';
 import crypto from 'crypto';
 
-// Cliente Supabase Admin (pode criar usuários)
-const supabaseAdmin = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!, // Chave admin
-  {
-    auth: {
-      autoRefreshToken: false,
-      persistSession: false
-    }
-  }
-);
 
 // Função para validar assinatura do webhook da Hotmart
 function validateHotmartSignature(
@@ -31,6 +20,11 @@ function validateHotmartSignature(
 }
 
 export async function POST(request: NextRequest) {
+
+
+// Cliente Supabase Admin (pode criar usuários)
+const supabaseAdmin = await createClient();
+
   try {
     // Pegar o body como texto para validar assinatura
     const bodyText = await request.text();
