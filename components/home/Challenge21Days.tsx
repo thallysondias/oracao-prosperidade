@@ -5,6 +5,7 @@ import { Play, Pause, Lock, CheckCircle2 } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Alert } from "@/components/ui/alert";
+import { useTranslations } from "next-intl";
 
 interface DayPrayer {
   day: number;
@@ -99,7 +100,7 @@ const generateDays = (): DayPrayer[] => {
 
   return Array.from({ length: 21 }, (_, i) => {
     const dayNumber = i + 1;
-    
+
     return {
       day: dayNumber,
       title: titles[i],
@@ -112,6 +113,7 @@ const generateDays = (): DayPrayer[] => {
 };
 
 export function Challenge21Days() {
+  const t = useTranslations("Challenge21");
   const [currentPlaying, setCurrentPlaying] = useState<number | null>(null);
   const days = generateDays();
   const currentDayOfMonth = new Date().getDate();
@@ -139,40 +141,77 @@ export function Challenge21Days() {
   const todayPrayer = days.find(d => d.day === currentDayOfMonth);
 
   return (
-    <div className="px-4 py-6 pb-20 max-w-2xl mx-auto">
-      {/* CTA da Oração do Dia */}
-      {todayPrayer && currentDayOfMonth <= 21 && (
-        <div className="mb-6 text-center">
-          <h2 className="text-xl font-bold text-gray-900 mb-1">
-            Faça a oração do dia {currentDayOfMonth}
-          </h2>
-          <p className="text-sm text-gray-600 mb-4">
-            <span className="font-medium italic">{todayPrayer.title}</span>
-          </p>
-          <Button
-            onClick={() => scrollToDay(currentDayOfMonth)}
-            className="bg-yellow-500 hover:bg-yellow-600 text-white font-medium px-6 py-2 rounded-full shadow-md hover:shadow-lg transition-all"
-          >
-            Ouvir Oração
-          </Button>
+    <div className="max-w-2xl mx-auto p-4">
+      {/* Header com Cardeal */}
+      <div className="relative overflow-hidden -mb-2 rounded-t-3xl ">
+        {/* Imagem de fundo com overlay */}
+        <div className="relative h-80">
+          <img
+            src="/cardeal/cardeal.png"
+            alt="Cardeal Giovanni Battista Re"
+            className="w-full h-full object-cover object-center"
+          />
+          {/* Overlay gradient para legibilidade */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-black/20" />
         </div>
-      )}
 
-      {/* Introdução */}
-      <div className="mb-8 p-6 bg-gradient-to-br from-amber-50 to-yellow-50 border-2 border-amber-200/50 rounded-xl shadow-sm">
-        <div className="space-y-3">
-          <p className="font-serif text-lg text-amber-900 leading-relaxed">
-            Este é um desafio espiritual de 21 dias. Cada oração foi cuidadosamente preparada para guiar sua jornada de fé e reflexão.
-          </p>
-          <p className="text-sm text-amber-800 leading-relaxed">
-            Dedique 5 minutos diários para meditar sobre cada oração. Respeite o ritmo sagrado: apenas uma oração por dia, sem pular etapas.
-          </p>
-          <div className="pt-2 border-t border-amber-200/50">
-            <p className="text-xs text-amber-700 italic">
-              "A fé se fortalece quando compartilhada e praticada diariamente."
-            </p>
+        {/* Conteúdo sobre a imagem */}
+        <div className="absolute inset-0 flex flex-col justify-end p-6 text-white">
+          <div className="space-y-3">
+            {/* Título principal */}
+            <h1 className="text-3xl font-serif font-bold drop-shadow-2xl">
+              {t("headerTitle")}
+            </h1>
+
+            {/* Informação do Cardeal */}
+            <div className="space-y-1">
+              <p className="text-base font-medium drop-shadow-lg">
+                {t("headerCardinal")} <span className="font-bold">{t("headerCardinalName")}</span>
+              </p>
+              <p className="text-sm text-gray-200 drop-shadow-md">
+                {t("headerCardinalTitle")}
+              </p>
+            </div>
           </div>
         </div>
+      </div>
+      <div className="px-6 py-8 bg-black border border-t border-white/30 rounded-b-3xl shadow-xl ">
+          <h3 className="text-lg font-semibold text-white">
+            {t("challengeTitle")}
+          </h3>
+
+          <div className="space-y-3">
+
+            <p className="text-sm text-white/60 leading-relaxed">
+              <span className="font-bold">{t("challengeText1")}</span> {t("challengeText1Emphasis")}
+            </p>
+            <p className="text-sm text-white/60 leading-relaxed">
+              <span className="font-bold text-yellow-500">{t("challengeText2")}</span> {t("challengeText2Part1")} <span className="font-semibold">{t("challengeText2Desire")}</span> {t("challengeText2Part2")} <span className="font-semibold">{t("challengeText2Conquers")}</span> {t("challengeText2Part3")}
+            </p>
+            <div className="pt-6 border-t border-amber-200/50">             
+              <Button
+              onClick={() => scrollToDay(currentDayOfMonth)}
+              className="bg-yellow-500 w-full hover:bg-yellow-600 text-white font-medium px-6 py-2 rounded-full shadow-md hover:shadow-lg transition-all"
+            >
+              {t("listenPrayer")}
+            </Button>
+            </div>
+          </div>
+        </div>
+
+
+
+      <div className="px-4">
+        {/* CTA da Oração do Dia */}
+      
+          <div className="mb-8 text-center mt-8">
+            <p className="text-sm text-yellow-700 italic text-center font-medium">
+                "{t("challengeQuote")}"
+              </p>
+          </div>
+       
+
+
       </div>
 
       {/* Timeline */}
@@ -183,8 +222,8 @@ export function Challenge21Days() {
         {/* Lista de dias */}
         <div className="space-y-6">
           {days.map((prayer, index) => (
-            <div 
-              key={prayer.day} 
+            <div
+              key={prayer.day}
               id={`day-${prayer.day}`}
               className="relative flex gap-4"
             >
@@ -194,13 +233,12 @@ export function Challenge21Days() {
                   className={`
                   w-10 h-10 rounded-full flex items-center justify-center
                   font-bold text-sm transition-all border-2
-                  ${
-                    prayer.isCompleted
+                  ${prayer.isCompleted
                       ? "bg-green-700 text-white border-green-600 ring-4 ring-green-600/20"
                       : prayer.isLocked
-                      ? "bg-gray-300 text-gray-500 border-gray-400"
-                      : "bg-green-600 text-white border-green-500 ring-4 ring-green-500/20"
-                  }
+                        ? "bg-gray-300 text-gray-500 border-gray-400"
+                        : "bg-green-600 text-white border-green-500 ring-4 ring-green-500/20"
+                    }
                 `}
                 >
                   {prayer.isCompleted ? (
@@ -217,27 +255,26 @@ export function Challenge21Days() {
               <div
                 className={`
                 flex-1 rounded-lg overflow-hidden transition-all relative
-                ${
-                  prayer.isLocked
+                ${prayer.isLocked
                     ? "opacity-60"
                     : "hover:scale-[1.02]"
-                }
+                  }
               `}
               >
                 {/* Background Image */}
-                <div 
+                <div
                   className="absolute inset-0 bg-cover bg-center"
                   style={{
                     backgroundImage: `url('/prayer/oracione.jpeg')`,
                   }}
                 />
-                
+
                 {/* Overlay Verde */}
-                <div 
+                <div
                   className={`
                     absolute inset-0 bg-linear-to-br 
-                    ${prayer.isLocked 
-                      ? 'from-gray-400/90 to-gray-500/90' 
+                    ${prayer.isLocked
+                      ? 'from-gray-400/90 to-gray-500/90'
                       : 'from-green-950/90 to-[#16231A]/90'
                     }
                   `}
@@ -250,11 +287,11 @@ export function Challenge21Days() {
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1">
                         <span className="text-xs font-medium text-green-400">
-                          Dia {prayer.day}
+                          {t("day")} {prayer.day}
                         </span>
                         {prayer.isCompleted && (
                           <span className="text-xs bg-green-800/60 text-green-300 px-2 py-0.5 rounded-full border border-green-600/30">
-                            Completo
+                            {t("completed")}
                           </span>
                         )}
                       </div>
@@ -270,10 +307,9 @@ export function Challenge21Days() {
                       onClick={() => handlePlayPause(prayer.day)}
                       className={`
                         shrink-0 h-9 w-9 rounded-full p-0 border transition-all
-                        ${
-                          currentPlaying === prayer.day
-                            ? "bg-yellow-500 hover:bg-yellow-600 border-yellow-400 shadow-lg shadow-yellow-500/50"
-                            : prayer.isLocked
+                        ${currentPlaying === prayer.day
+                          ? "bg-yellow-500 hover:bg-yellow-600 border-yellow-400 shadow-lg shadow-yellow-500/50"
+                          : prayer.isLocked
                             ? "bg-gray-400 border-gray-500"
                             : "bg-yellow-500/90 hover:bg-yellow-500 border-yellow-400/50 hover:shadow-lg hover:shadow-yellow-500/30"
                         }
@@ -313,10 +349,10 @@ export function Challenge21Days() {
       {/* Rodapé motivacional */}
       <div className="mt-12 text-center">
         <p className="text-sm text-gray-700 font-medium">
-          Continue firme na sua jornada espiritual 🙏
+          {t("motivationalFooter")}
         </p>
         <p className="text-xs text-gray-500 mt-1">
-          {days.filter((d) => d.isCompleted).length} de 21 dias completos
+          {days.filter((d) => d.isCompleted).length} {t("progressText")}
         </p>
       </div>
     </div>

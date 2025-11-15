@@ -9,6 +9,7 @@ import { SaintBenedictPrayerCard } from '@/components/home/SaintBenedictPrayerCa
 import { DailyPrayerCard } from '@/components/home/DailyPrayerCard';
 import { RelatedScripturesSection } from '@/components/home/RelatedScripturesSection';
 import { Challenge21Days } from '@/components/home/Challenge21Days';
+import { PrayerRequest } from '@/components/home/PrayerRequest';
 import { LivePrayerFooter } from '@/components/home/LivePrayerFooter';
 import { LightRays } from '@/components/ui/light-rays';
 import { Tabs, TabsContent } from '@/components/ui/tabs';
@@ -83,8 +84,8 @@ export default function HomePage() {
             />
           </TabsContent>
 
-          <TabsContent value="prayer-request" className="px-4 py-8 text-center text-muted-foreground">
-            <p>{t('prayerRequest')} - Em breve</p>
+          <TabsContent value="prayer-request">
+            <PrayerRequest />
           </TabsContent>
 
           <TabsContent value="challenge-21">
