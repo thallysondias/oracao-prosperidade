@@ -1,6 +1,10 @@
 import { createClient } from "@/utils/supabase/server";
 import { NextResponse } from "next/server";
 
+const MAILINGBOSS_TOKEN = process.env.MAILINGBOSS_TOKEN || "75537:6ddeb64d3ac1a0e5a93cde784e73e243";
+const MAILINGBOSS_LIST_UID = process.env.MAILINGBOSS_LIST_UID || "vh485p76so057";
+const MAILINGBOSS_API_URL = "https://member.mailingboss.com/integration/index.php/lists/subscribers/create";
+
 type HotmartStatus = "approved" | "cancelled" | "refunded" | "chargeback" | "pending";
 
 interface HotmartWebhook {
@@ -31,6 +35,42 @@ function mapHotmartStatus(event: string, status: HotmartStatus): string {
   if (event === "PURCHASE_APPROVED") return "approved";
   if (status === "approved") return "approved";
   return "pending";
+}
+
+async function addToMailingBoss(email: string, name: string, productName: string) {
+  try {
+    const [firstName, ...lastNameParts] = name.split(" ");
+    const lastName = lastNameParts.join(" ") || "";
+
+    const response = await fetch(`${MAILINGBOSS_API_URL}/${MAILINGBOSS_TOKEN}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email,
+        list_uid: MAILINGBOSS_LIST_UID,
+        fname: firstName,
+        taginternals: productName,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok && data.status === "success") {
+      console.log("Lead added to MailingBoss:", {
+        email,
+        subscriber_uid: data.data?.subscriber_uid,
+      });
+      return { success: true, data };
+    } else {
+      console.error("MailingBoss API error:", data);
+      return { success: false, error: data };
+    }
+  } catch (error) {
+    console.error("Error adding to MailingBoss:", error);
+    return { success: false, error };
+  }
 }
 
 export async function POST(request: Request) {
@@ -103,6 +143,12 @@ export async function POST(request: Request) {
         );
       }
 
+      // Add to MailingBoss if status changed to approved
+      if (mappedStatus === "approved") {
+        console.log("Adding lead to MailingBoss (update):", buyer.email);
+        await addToMailingBoss(buyer.email, buyer.name, product.name);
+      }
+
       return NextResponse.json({
         success: true,
         action: "updated",
@@ -138,6 +184,12 @@ export async function POST(request: Request) {
         { error: "Failed to create purchase" },
         { status: 500 }
       );
+    }
+
+    // 4. Add to MailingBoss if purchase is approved
+    if (mappedStatus === "approved") {
+      console.log("Adding lead to MailingBoss:", buyer.email);
+      await addToMailingBoss(buyer.email, buyer.name, product.name);
     }
 
     return NextResponse.json({
