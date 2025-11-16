@@ -56,8 +56,28 @@ export function PrayerRequest() {
 
   return (
     <div className="max-w-2xl mx-auto p-4">
+      {/* Banner de Inscrições Fechadas */}
+      <div className="mb-6 p-6 bg-gradient-to-r from-red-500 to-red-600 rounded-xl shadow-lg border-2 border-red-400">
+        <div className="text-center text-white">
+          <div className="flex items-center justify-center gap-2 mb-3">
+            <Clock className="w-6 h-6" />
+            <h2 className="text-2xl font-bold">
+              {t("closedTitle")}
+            </h2>
+          </div>
+          <p className="text-lg mb-4">
+            {t("closedMessage")}
+          </p>
+          <div className="inline-block px-6 py-3 bg-white/20 backdrop-blur-sm rounded-lg border border-white/30">
+            <p className="text-2xl font-bold">
+              📅 18 de Noviembre de 2025
+            </p>
+          </div>
+        </div>
+      </div>
+
       {/* Header com Imagem do Cardeal */}
-      <div className="relative overflow-hidden rounded-2xl mb-8 shadow-xl">
+      <div className="relative overflow-hidden rounded-2xl mb-8 shadow-xl opacity-60 pointer-events-none">
         <div className="relative h-64">
           <img
             src="/cardeal/cardeal-oracao.jpg"
@@ -84,7 +104,7 @@ export function PrayerRequest() {
       </div>
 
       {/* Timeline Horizontal */}
-      <div className="mb-8 bg-white rounded-xl p-6 shadow-md border border-gray-200">
+      <div className="mb-8 bg-white rounded-xl p-6 shadow-md border border-gray-200 opacity-60 pointer-events-none">
         <h3 className="text-center font-serif text-xl font-bold text-gray-900 mb-6">
           {t("howItWorks")}
         </h3>
@@ -135,7 +155,7 @@ export function PrayerRequest() {
       </div>
 
       {/* Carta de Vendas */}
-      <Card className="mb-8 p-6 bg-gradient-to-br from-amber-50 to-yellow-50 border-2 border-amber-200/50">
+      <Card className="mb-8 p-6 bg-gradient-to-br from-amber-50 to-yellow-50 border-2 border-amber-200/50 opacity-60 pointer-events-none">
         <div className="space-y-4">
           <div className="flex items-start gap-3">
             <Heart className="w-6 h-6 text-red-500 shrink-0 mt-1" />
@@ -170,7 +190,7 @@ export function PrayerRequest() {
       </Card>
 
       {/* Formulário */}
-      <Card className="p-6 shadow-xl border-2 border-gray-200">
+      <Card className="p-6 shadow-xl border-2 border-gray-200 opacity-60 pointer-events-none">
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <Label htmlFor="name" className="text-gray-700 font-medium">

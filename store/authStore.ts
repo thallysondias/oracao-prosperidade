@@ -3,8 +3,10 @@ import { persist, createJSONStorage } from 'zustand/middleware';
 
 export interface UserPurchase {
   product_id: string;
+  product_name: string;
   transaction_id: string;
   status: string;
+  purchased_at?: string; // ISO date string
 }
 
 export interface UserProfile {
@@ -19,7 +21,7 @@ interface AuthStore {
   isAuthenticated: boolean;
   login: (user: UserProfile) => void;
   logout: () => void;
-  hasPurchase: (productId: string) => boolean;
+  hasPurchase: (productName: string) => boolean;
   getActivePurchases: () => UserPurchase[];
 }
 
@@ -37,12 +39,12 @@ export const useAuthStore = create<AuthStore>()(
         set({ user: null, isAuthenticated: false });
       },
 
-      hasPurchase: (productId: string) => {
+      hasPurchase: (productName: string) => {
         const { user } = get();
         if (!user) return false;
         
         return user.purchases.some(
-          (p) => p.product_id === productId && p.status === 'approved'
+          (p) => p.product_name === productName && p.status === 'approved'
         );
       },
 

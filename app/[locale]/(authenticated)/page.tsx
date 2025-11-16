@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import { useLocale } from 'next-intl';
 import { useAuthStore } from '@/store/authStore';
 import { Header } from '@/components/home/Header';
-import { SaintBenedictPrayerCard } from '@/components/home/SaintBenedictPrayerCard';
+import { PrayersSlider } from '@/components/home/PrayersSlider';
 import { DailyPrayerCard } from '@/components/home/DailyPrayerCard';
 import { RelatedScripturesSection } from '@/components/home/RelatedScripturesSection';
 import { Challenge21Days } from '@/components/home/Challenge21Days';
@@ -48,8 +48,8 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-black">
-      <div className='relative z-50 max-w-5xl mx-auto'>
+    <div className="min-h-screen bg-gray-50 dark:bg-black overflow-x-hidden">
+      <div className='relative z-50 max-w-5xl mx-auto px-4'>
         {/* Header com tabs */}
         <Header
           userName={user?.name || user?.email || 'Usuário'}
@@ -61,8 +61,8 @@ export default function HomePage() {
         {/* Content baseado na aba ativa */}
         <Tabs value={activeTab}>
           <TabsContent value="today" className="space-y-6 pb-12">
-            {/* Saint Benedict Prayer Card */}
-            <SaintBenedictPrayerCard />
+            {/* Prayers Slider */}
+            <PrayersSlider />
 
             {/* Daily Prayer Card */}
             <DailyPrayerCard
@@ -96,8 +96,8 @@ export default function HomePage() {
       </div>
       
       {/* Live Prayer Footer */}
-      <LivePrayerFooter />
-      
+   {/*    <LivePrayerFooter />
+       */}
       <LightRays color='rgba(255, 215, 0, 0.1)' />
     </div>
   );

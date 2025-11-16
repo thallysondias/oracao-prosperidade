@@ -1,5 +1,25 @@
 {
   "language": "en",
+  "Login": {
+    "title": "Prayer & Prosperity",
+    "subtitle": "Your spiritual transformation journey starts here",
+    "emailLabel": "Email",
+    "accessPrayers": "Access Prayers",
+    "entering": "Entering...",
+    "errorLogin": "Login error",
+    "errorServer": "Error connecting to server",
+    "secureAccess": "🔒 Secure and immediate access to your personalized prayers"
+  },
+  "PrayersSlider": {
+    "saintBenedictTitle": "Prayer of Saint Benedict",
+    "saintBenedictDescription": "A powerful prayer focused on prosperity, spiritual protection, and material abundance. Connect with the mystical energy of Saint Benedict and open pathways to blessing and success.",
+    "padrePioTitle": "Padre Pio Prayer",
+    "padrePioDescription": "Invoke the intercession of the stigmatized saint. Padre Pio brings healing, protection, and miracles to those who seek his spiritual help with genuine faith.",
+    "carlosAcutisTitle": "Carlos Acutis Prayer",
+    "carlosAcutisDescription": "The saint of modern youth. Carlos Acutis intercedes for young people, studies, technology, and for the renewal of faith in the digital age.",
+    "listenPrayer": "Listen to Prayer",
+    "buyPrayer": "Buy Prayer"
+  },
   "HomePage": {
     "title": "Prayer & Prosperity",
     "greeting": "Good afternoon",
@@ -154,9 +174,41 @@
     "locked": "Locked",
     "lockedUntil": "Available on",
     "motivationalFooter": "Stay strong on your spiritual journey 🙏",
-    "progressText": "of 21 days completed"
+    "progressText": "of 21 days completed",
+    "ctaTitle": "21 Days of Prayer and Miracles Live",
+    "ctaSubtitle": "The Challenge That Has Already Transformed Thousands of Lives",
+    "ctaHeading": "What If You Could Transform Your Life In Just 21 Days?",
+    "ctaParagraph1": "Imagine waking up every day with a powerful prayer, guided by Cardinal Giovanni Battista Re, one of the most respected spiritual leaders of the Vatican. It's not just a prayer... it's a deep connection with the divine that begins to remove the invisible blockages preventing your prosperity.",
+    "ctaParagraph2": "This is not a common challenge. It's a 21-day spiritual journey where each prayer was carefully crafted to touch the most sensitive areas of your life: financial prosperity, complete health, harmonious relationships, and spiritual protection. Thousands of people have already experienced extraordinary results.",
+    "ctaParagraph3": "The question isn't whether it will work... but whether you're ready to begin.",
+    "ctaBenefitsTitle": "What You Will Receive:",
+    "ctaBenefit1": "21 exclusive audio prayers, narrated by Cardinal Giovanni Battista Re",
+    "ctaBenefit2": "One day of prayer released at a time - creating the sacred habit of spiritual discipline",
+    "ctaBenefit3": "Prayers focused on prosperity, health, protection, and emotional healing",
+    "ctaBenefit4": "Immediate and lifetime access to the complete challenge",
+    "ctaTestimonial": "I started without much faith, but on the 7th day I felt something different in me. On the 14th day, I received an unexpected job opportunity. On the 21st day, my life was completely transformed.",
+    "ctaButton": "Start My 21-Day Journey",
+    "ctaSecure": "100% secure payment via Hotmart",
+    "testimonialsTitle": "Lives Transformed By The Challenge",
+    "testimonialsSubtitle": "See what real people are saying about their 21-day journey",
+    "testimonialAriaLabel": "View testimonial {number}",
+    "dayPageTitle": "Day {day} of 21",
+    "dayLabel": "DAY {day}",
+    "cardinalName": "Cardinal Giovanni Battista Re",
+    "reflectionTitle": "Day {day} Reflection",
+    "continueJourney": "Continue your transformation journey",
+    "nextDay": "Next Day →",
+    "congratulations": "🎉 Congratulations!",
+    "challengeComplete": "You completed the 21 Days of Prayer and Miracles Challenge!",
+    "keepGoing": "Continue your spiritual journey with discipline and faith.",
+    "dayLocked": "Day {day} Locked",
+    "needPurchase": "You need to purchase the 21-Day Challenge to access this prayer.",
+    "dayNotUnlocked": "This day has not been unlocked yet. Keep strong on your journey!",
+    "backToChallenge": "Back to Challenge"
   },
   "PrayerRequest": {
+    "closedTitle": "Registrations Temporarily Closed",
+    "closedMessage": "Registrations for prayer requests will open on:",
     "title": "Personalized Prayer Request",
     "subtitle": "Receive an individual prayer recorded especially for you",
     "exclusiveService": "Exclusive Service",
@@ -190,5 +242,15 @@
     "successMessage": "Your request has been received and will be forwarded to the cardinal. You will receive the prayer audio within 7 days at the registered email.",
     "makeAnotherRequest": "Make Another Request",
     "footerInfo": "🔒 Your request is confidential and will be treated with total respect and spiritual secrecy."
+  },
+  "PrayerPlayer": {
+    "notFound": "Prayer not found",
+    "back": "Back",
+    "nowPlaying": "Now Playing"
+  },
+  "VersePage": {
+    "verseOfTheDay": "Verse of the Day",
+    "buyAllPrayers": "Buy All Prayers",
+    "unlockDescription": "Unlock all exclusive prayers and meditations"
   }
 }

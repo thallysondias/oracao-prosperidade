@@ -1,8 +1,13 @@
 import { Metadata } from 'next';
+import { useTranslations } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
 import { Button } from '@/components/ui/button';
 import { LightRays } from '@/components/ui/light-rays';
 
 interface VersePageProps {
+  params: Promise<{
+    locale: string;
+  }>;
   searchParams: Promise<{
     ref?: string;
     text?: string;
@@ -11,18 +16,21 @@ interface VersePageProps {
 }
 
 // Generate metadata for Open Graph and SEO
-export async function generateMetadata({ searchParams }: VersePageProps): Promise<Metadata> {
-  const params = await searchParams;
-  const verseReference = params.ref || 'Versículo do Dia';
-  const verseText = params.text || 'Compartilhe a palavra de Deus';
+export async function generateMetadata({ searchParams, params }: VersePageProps): Promise<Metadata> {
+  const resolvedParams = await searchParams;
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'VersePage' });
+  
+  const verseReference = resolvedParams.ref || t('verseOfTheDay');
+  const verseText = resolvedParams.text || t('unlockDescription');
   const backgroundImage =
-    params.bg ||
+    resolvedParams.bg ||
     'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&h=800&fit=crop';
 
-  const url = `${process.env.NEXT_PUBLIC_APP_URL || 'https://oracao-prosperidade.com'}/verse`;
+  const url = `${process.env.NEXT_PUBLIC_APP_URL || 'https://oracao.guiaceleste.com/'}/${locale}/verse`;
 
   return {
-    title: `${verseReference} - Versículo do Dia`,
+    title: `${verseReference} - ${t('verseOfTheDay')}`,
     description: verseText.substring(0, 160),
     keywords: ['versículo', 'bíblia', 'espiritualidade', 'oração'],
     openGraph: {
@@ -39,7 +47,7 @@ export async function generateMetadata({ searchParams }: VersePageProps): Promis
         },
       ],
       type: 'website',
-      locale: 'pt_BR',
+      locale: locale === 'pt' ? 'pt_BR' : locale === 'es' ? 'es_ES' : 'en_US',
     },
     twitter: {
       card: 'summary_large_image',
@@ -50,12 +58,15 @@ export async function generateMetadata({ searchParams }: VersePageProps): Promis
   };
 }
 
-export default async function VersePage({ searchParams }: VersePageProps) {
-  const params = await searchParams;
-  const verseReference = params.ref || 'Versículo do Dia';
-  const verseText = params.text || 'Compartilhe a palavra de Deus';
+export default async function VersePage({ searchParams, params }: VersePageProps) {
+  const resolvedParams = await searchParams;
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'VersePage' });
+  
+  const verseReference = resolvedParams.ref || t('verseOfTheDay');
+  const verseText = resolvedParams.text || t('unlockDescription');
   const backgroundImage =
-    params.bg ||
+    resolvedParams.bg ||
     'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&h=800&fit=crop';
 
   return (
@@ -75,7 +86,7 @@ export default async function VersePage({ searchParams }: VersePageProps) {
         {/* Title */}
         <div className="space-y-4">
           <p className="text-sm font-medium text-muted-foreground uppercase tracking-widest">
-            Versículo do Dia
+            {t('verseOfTheDay')}
           </p>
           <h1 className="text-4xl md:text-5xl font-bold text-foreground">{verseReference}</h1>
           <p className="text-lg md:text-xl font-serif italic leading-relaxed text-foreground">
@@ -89,12 +100,12 @@ export default async function VersePage({ searchParams }: VersePageProps) {
             asChild
             className="bg-teal-600 hover:bg-teal-700 text-white px-8 py-6 text-lg rounded-full"
           >
-            <a href="https://hotmart.com" target="_blank" rel="noopener noreferrer">
-              Compre Todas as Orações
+            <a href="https://pay.hotmart.com/X102941563H?checkoutMode=10" target="_blank" rel="noopener noreferrer">
+              {t('buyAllPrayers')}
             </a>
           </Button>
           <p className="text-xs text-muted-foreground">
-            Desbloqueie todas as orações e meditações exclusivas
+            {t('unlockDescription')}
           </p>
         </div>
       </div>

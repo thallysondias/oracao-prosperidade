@@ -1,5 +1,25 @@
 {
   "language": "es",
+  "Login": {
+    "title": "Oración y Prosperidad",
+    "subtitle": "Tu jornada de transformación espiritual comienza aquí",
+    "emailLabel": "Email",
+    "accessPrayers": "Acceder a Oraciones",
+    "entering": "Entrando...",
+    "errorLogin": "Error al iniciar sesión",
+    "errorServer": "Error al conectar con el servidor",
+    "secureAccess": "🔒 Acceso seguro e inmediato a tus oraciones personalizadas"
+  },
+  "PrayersSlider": {
+    "saintBenedictTitle": "Oración de San Benito",
+    "saintBenedictDescription": "Una poderosa oración enfocada en prosperidad, protección espiritual y abundancia material. Conéctate con la energía mística de San Benito y abre caminos hacia la bendición y el éxito.",
+    "padrePioTitle": "Oración del Padre Pío",
+    "padrePioDescription": "Invoca la intercesión del santo de los estigmas. El Padre Pío trae sanación, protección y milagros para aquellos que buscan su ayuda espiritual con fe genuina.",
+    "carlosAcutisTitle": "Oración de Carlos Acutis",
+    "carlosAcutisDescription": "El santo de la juventud moderna. Carlos Acutis intercede por los jóvenes, los estudios, la tecnología y por la renovación de la fe en la era digital.",
+    "listenPrayer": "Escuchar Oración",
+    "buyPrayer": "Comprar Oración"
+  },
   "HomePage": {
     "title": "Oración y Prosperidad",
     "greeting": "Buenas tardes",
@@ -154,9 +174,41 @@
     "locked": "Bloqueado",
     "lockedUntil": "Disponible en",
     "motivationalFooter": "Continúa firme en tu jornada espiritual 🙏",
-    "progressText": "de 21 días completados"
+    "progressText": "de 21 días completados",
+    "ctaTitle": "21 Días de Oración y Milagros en Vivo",
+    "ctaSubtitle": "El Desafío que Ya Ha Transformado Miles de Vidas",
+    "ctaHeading": "¿Y Si Pudieras Transformar Tu Vida En Solo 21 Días?",
+    "ctaParagraph1": "Imagina despertar cada día con una oración poderosa, guiada por el Cardenal Giovanni Battista Re, uno de los líderes espirituales más respetados del Vaticano. No es solo una oración... es una conexión profunda con lo divino que comienza a remover los bloqueos invisibles que impiden tu prosperidad.",
+    "ctaParagraph2": "Este no es un desafío común. Es un viaje espiritual de 21 días donde cada oración fue cuidadosamente elaborada para tocar las áreas más sensibles de tu vida: prosperidad financiera, salud plena, relaciones armoniosas y protección espiritual. Miles de personas ya han experimentado resultados extraordinarios.",
+    "ctaParagraph3": "La pregunta no es si funcionará... sino si estás listo para comenzar.",
+    "ctaBenefitsTitle": "Lo Que Vas a Recibir:",
+    "ctaBenefit1": "21 oraciones en audio exclusivas, narradas por el Cardenal Giovanni Battista Re",
+    "ctaBenefit2": "Un día de oración liberado a la vez - creando el hábito sagrado de la disciplina espiritual",
+    "ctaBenefit3": "Oraciones enfocadas en prosperidad, salud, protección y sanación emocional",
+    "ctaBenefit4": "Acceso inmediato y vitalicio al desafío completo",
+    "ctaTestimonial": "Comencé sin mucha fe, pero en el 7º día sentí algo diferente en mí. En el 14º día, recibí una oportunidad de trabajo inesperada. En el 21º día, mi vida estaba completamente transformada.",
+    "ctaButton": "Comenzar Mi Jornada de 21 Días",
+    "ctaSecure": "Pago 100% seguro vía Hotmart",
+    "testimonialsTitle": "Vidas Transformadas Por El Desafío",
+    "testimonialsSubtitle": "Mira lo que personas reales están diciendo sobre su jornada de 21 días",
+    "testimonialAriaLabel": "Ver testimonio {number}",
+    "dayPageTitle": "Día {day} de 21",
+    "dayLabel": "DÍA {day}",
+    "cardinalName": "Cardenal Giovanni Battista Re",
+    "reflectionTitle": "Reflexión del Día {day}",
+    "continueJourney": "Continúa tu jornada de transformación",
+    "nextDay": "Siguiente Día →",
+    "congratulations": "🎉 ¡Felicitaciones!",
+    "challengeComplete": "¡Completaste el Desafío de 21 Días de Oración y Milagros!",
+    "keepGoing": "Continúa tu jornada espiritual con disciplina y fe.",
+    "dayLocked": "Día {day} Bloqueado",
+    "needPurchase": "Necesitas adquirir el Desafío de 21 Días para acceder a esta oración.",
+    "dayNotUnlocked": "Este día aún no ha sido liberado. ¡Continúa firme en tu jornada!",
+    "backToChallenge": "Volver al Desafío"
   },
   "PrayerRequest": {
+    "closedTitle": "Inscripciones Temporalmente Cerradas",
+    "closedMessage": "Las inscripciones para pedidos de oración se abrirán el:",
     "title": "Pedido de Oración Personalizado",
     "subtitle": "Recibe una oración individual grabada especialmente para ti",
     "exclusiveService": "Servicio Exclusivo",
@@ -190,5 +242,15 @@
     "successMessage": "Tu pedido fue recibido y será enviado al cardenal. Recibirás el audio de la oración en hasta 7 días en el email registrado.",
     "makeAnotherRequest": "Hacer Otro Pedido",
     "footerInfo": "🔒 Tu pedido es confidencial y será tratado con total respeto y sigilo espiritual."
+  },
+  "PrayerPlayer": {
+    "notFound": "Oración no encontrada",
+    "back": "Volver",
+    "nowPlaying": "Reproduciendo ahora"
+  },
+  "VersePage": {
+    "verseOfTheDay": "Versículo del Día",
+    "buyAllPrayers": "Compra Todas las Oraciones",
+    "unlockDescription": "Desbloquea todas las oraciones y meditaciones exclusivas"
   }
 }

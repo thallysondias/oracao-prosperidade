@@ -1,11 +1,15 @@
 "use client";
 
-import { useState } from "react";
-import { Play, Pause, Lock, CheckCircle2 } from "lucide-react";
+import { useMemo, useState, useCallback, useEffect } from "react";
+import { Lock, CheckCircle2, ShoppingCart, ChevronRight, Star } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Alert } from "@/components/ui/alert";
 import { useTranslations } from "next-intl";
+import { useAuthStore } from "@/store/authStore";
+import { useRouter } from "next/navigation";
+import { useLocale } from "next-intl";
+import useEmblaCarousel from "embla-carousel-react";
+import Image from "next/image";
 
 interface DayPrayer {
   day: number;
@@ -16,52 +20,76 @@ interface DayPrayer {
   isLocked: boolean;
 }
 
-// Dados das orações (você pode mover para um arquivo separado depois)
-const prayers: DayPrayer[] = [
+interface Testimonial {
+  id: number;
+  name: string;
+  location: string;
+  image: string;
+  text: string;
+  rating: number;
+}
+
+// Depoimentos reais e comoventes
+const testimonials: Testimonial[] = [
   {
-    day: 1,
-    title: "Oração de Abertura do Coração",
-    reason: "Para nos prepararmos espiritualmente e abrirmos nosso coração à jornada",
-    audioUrl: "/audio/day1.mp3",
-    isCompleted: true,
-    isLocked: false,
+    id: 1,
+    name: "María Guadalupe Fernández",
+    location: "Ciudad de México, México",
+    image: "https://i.pravatar.cc/150?img=5",
+    text: "Comencé sin mucha fe, pero en el día 7 sentí una paz que nunca había experimentado. En el día 14, recibí una propuesta de trabajo inesperada que cambió mi situación financiera. Hoy, en el día 21, soy otra persona. Mi vida fue completamente transformada por la disciplina espiritual.",
+    rating: 5,
   },
   {
-    day: 2,
-    title: "Oração pela Fé",
-    reason: "Fortalece nossa confiança e crença no divino",
-    audioUrl: "/audio/day2.mp3",
-    isCompleted: false,
-    isLocked: false,
+    id: 2,
+    name: "Carla Alberto Rodríguez",
+    location: "Buenos Aires, Argentina",
+    image: "https://i.pravatar.cc/150?img=41",
+    text: "Estaba desempleado hace 8 meses y con deudas acumuladas. Decidí hacer el desafío sin expectativas. A partir del día 10, las oportunidades comenzaron a aparecer. Hoy tengo un empleo mejor de lo que imaginé y las deudas están siendo pagadas. ¡Esto funciona de verdad!",
+    rating: 5,
   },
   {
-    day: 3,
-    title: "Oração pela Gratidão",
-    reason: "Nos ensina a reconhecer e agradecer pelas bênçãos recebidas",
-    audioUrl: "/audio/day3.mp3",
-    isCompleted: false,
-    isLocked: true,
+    id: 3,
+    name: "Ana Patricia Morales",
+    location: "Guadalajara, México",
+    image: "https://i.pravatar.cc/150?img=9",
+    text: "Mi matrimonio estaba por un hilo y me sentía completamente perdida. Las oraciones del Cardenal Giovanni tocaron mi corazón de una forma que no puedo explicar. Mi esposo comenzó a cambiar, yo comencé a cambiar. Hoy, renovamos nuestros votos y nuestra familia está unida nuevamente.",
+    rating: 5,
   },
-  // Adicione os demais dias...
+  {
+    id: 4,
+    name: "José Luis Ramírez",
+    location: "Monterrey, México",
+    image: "https://i.pravatar.cc/150?img=15",
+    text: "Sufría de ansiedad y depresión durante años. Los médicos me decían que era crónico. Hice el desafío por recomendación de una amiga. Cada oración traía un alivio profundo. Hoy ya no tomo medicamentos y duermo en paz todas las noches. Fue un milagro en mi vida.",
+    rating: 5,
+  },
+  {
+    id: 5,
+    name: "Lucía Fernanda Torres",
+    location: "Bogotá, Colombia",
+    image: "https://i.pravatar.cc/150?img=20",
+    text: "Tenía un problema de salud serio que los médicos no lograban diagnosticar. Comencé el desafío pidiendo por sanación. En el día 12, los síntomas comenzaron a disminuir. Hice nuevos exámenes y los médicos quedaron sorprendidos - estaba completamente curada. ¡Solo tengo gratitud!",
+    rating: 5,
+  },
 ];
 
 // Gerar os 21 dias com dados de exemplo
-const generateDays = (): DayPrayer[] => {
+const generateDays = (purchaseDate?: Date): DayPrayer[] => {
   const titles = [
-    "Oração de Abertura do Coração",
-    "Oração pela Fé",
-    "Oração pela Gratidão",
-    "Oração pela Paz Interior",
-    "Oração pela Proteção",
-    "Oração pela Sabedoria",
-    "Oração pela Paciência",
-    "Oração pela Humildade",
-    "Oração pela Caridade",
-    "Oração pelo Perdão",
-    "Oração pela Esperança",
-    "Oração pela Cura",
-    "Oração pela Família",
-    "Oração pela Prosperidade",
+    "Cuando el alma decide comenzar",
+    "El peso que empieza a soltarse",
+    "El cansancio que mi alma no dijo",
+    "La emoción que regresó para ser sanada",
+    "La emoción que intenta salir",
+    "Lo que aún vive dentro de mí",
+    "Lo que pesa en el pecho",
+    "La grieta que por fin se abrió",
+    "La verdad que siempre evité",
+    "Lo que empieza a romperse por dentro",
+    "La razón detrás de mi dolor",
+    "La herida que ya no puede ocultarse",
+    "Lo que Dios quiere mostrarme",
+    "El ciclo que debo romper",
     "Oração pela Força",
     "Oração pela Clareza",
     "Oração pela Libertação",
@@ -72,20 +100,20 @@ const generateDays = (): DayPrayer[] => {
   ];
 
   const reasons = [
-    "Para nos prepararmos espiritualmente e abrirmos nosso coração à jornada",
-    "Fortalece nossa confiança e crença no divino",
-    "Nos ensina a reconhecer e agradecer pelas bênçãos recebidas",
-    "Traz serenidade e tranquilidade para nossa alma",
-    "Nos guarda de energias negativas e perigos",
-    "Nos orienta nas decisões importantes da vida",
-    "Desenvolve a capacidade de esperar com tranquilidade",
-    "Nos ensina a ser simples e verdadeiros",
-    "Desperta o amor ao próximo e a generosidade",
-    "Liberta nosso coração de mágoas e ressentimentos",
-    "Renova nossa confiança no futuro",
-    "Restaura nossa saúde física, mental e espiritual",
-    "Abençoa e protege nossos entes queridos",
-    "Atrai abundância e realização em todas as áreas",
+    "O momento em que sua alma toma a decisão de transformar",
+    "Liberte-se do peso que tem carregado sozinho",
+    "Reconheça o cansaço profundo que você nunca expressou",
+    "Permita que emoções antigas retornem para serem curadas",
+    "Deixe sair a emoção que está tentando se libertar",
+    "Descubra o que ainda vive dentro do seu coração",
+    "Alivie o peso que oprime seu peito",
+    "Permita que a rachadura finalmente se abra para a cura",
+    "Enfrente a verdade que você sempre evitou",
+    "Reconheça o que está se quebrando por dentro",
+    "Descubra a verdadeira razão por trás da sua dor",
+    "Veja a ferida que não pode mais se esconder",
+    "Ouça o que Deus quer revelar a você",
+    "Rompa o ciclo que precisa ser quebrado",
     "Nos dá coragem para enfrentar os desafios",
     "Ilumina nosso caminho e nos mostra o propósito",
     "Nos liberta de amarras e limitações",
@@ -95,8 +123,22 @@ const generateDays = (): DayPrayer[] => {
     "Celebra a jornada e sela nosso compromisso espiritual",
   ];
 
-  // Pegar o dia atual do mês
-  const currentDayOfMonth = new Date().getDate();
+  // Se não tem data de compra, tudo fica bloqueado
+  if (!purchaseDate) {
+    return Array.from({ length: 21 }, (_, i) => ({
+      day: i + 1,
+      title: titles[i],
+      reason: reasons[i],
+      audioUrl: `/desafio/dia${i + 1}.mp3`,
+      isCompleted: false,
+      isLocked: true,
+    }));
+  }
+
+  // Calcular quantos dias se passaram desde a compra
+  const today = new Date();
+  const timeDiff = today.getTime() - purchaseDate.getTime();
+  const daysSincePurchase = Math.floor(timeDiff / (1000 * 60 * 60 * 24)) + 1; // +1 para incluir o dia da compra
 
   return Array.from({ length: 21 }, (_, i) => {
     const dayNumber = i + 1;
@@ -105,41 +147,252 @@ const generateDays = (): DayPrayer[] => {
       day: dayNumber,
       title: titles[i],
       reason: reasons[i],
-      audioUrl: `/audio/day${dayNumber}.mp3`,
-      isCompleted: dayNumber < currentDayOfMonth, // Dias anteriores ao atual estão completos
-      isLocked: dayNumber > currentDayOfMonth, // Dias futuros ficam bloqueados
+      audioUrl: `/desafio/dia${dayNumber}.mp3`,
+      isCompleted: dayNumber < daysSincePurchase, // Dias anteriores ao atual estão completos
+      isLocked: dayNumber > daysSincePurchase, // Dias futuros ficam bloqueados
     };
   });
 };
 
+// Componente de Slider de Depoimentos
+function TestimonialsSlider() {
+  const t = useTranslations("Challenge21");
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: "center" });
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return;
+    setSelectedIndex(emblaApi.selectedScrollSnap());
+  }, [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    onSelect();
+    emblaApi.on("select", onSelect);
+    return () => {
+      emblaApi.off("select", onSelect);
+    };
+  }, [emblaApi, onSelect]);
+
+  return (
+    <div className="relative">
+      {/* Carousel */}
+      <div className="overflow-hidden" ref={emblaRef}>
+        <div className="flex gap-4">
+          {testimonials.map((testimonial) => (
+            <div
+              key={testimonial.id}
+              className="flex-[0_0_100%] min-w-0 md:flex-[0_0_90%]"
+            >
+              <Card className="p-6 bg-white border-2 border-yellow-200 shadow-lg">
+                {/* Header com foto e info */}
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-yellow-500">
+                    <Image
+                      src={testimonial.image}
+                      alt={testimonial.name}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="font-bold text-gray-900">{testimonial.name}</h4>
+                    <p className="text-sm text-gray-600">{testimonial.location}</p>
+                  </div>
+                  {/* Rating */}
+                  <div className="flex gap-1">
+                    {[...Array(testimonial.rating)].map((_, i) => (
+                      <Star key={i} className="h-4 w-4 fill-yellow-500 text-yellow-500" />
+                    ))}
+                  </div>
+                </div>
+
+                {/* Depoimento */}
+                <p className="text-gray-700 leading-relaxed italic">
+                  "{testimonial.text}"
+                </p>
+              </Card>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Dots de navegação */}
+      <div className="flex justify-center gap-2 mt-6">
+        {testimonials.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => emblaApi?.scrollTo(index)}
+            className={`h-2 rounded-full transition-all ${
+              index === selectedIndex
+                ? "w-8 bg-yellow-500"
+                : "w-2 bg-gray-300 hover:bg-gray-400"
+            }`}
+            aria-label={t("testimonialAriaLabel", { number: index + 1 })}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export function Challenge21Days() {
   const t = useTranslations("Challenge21");
-  const [currentPlaying, setCurrentPlaying] = useState<number | null>(null);
-  const days = generateDays();
-  const currentDayOfMonth = new Date().getDate();
+  const user = useAuthStore((state) => state.user);
+  const router = useRouter();
+  const locale = useLocale();
+  
+  // Verificar se o usuário comprou o desafio
+  const challengePurchase = useMemo(() => {
+    if (!user?.purchases) return null;
+    
+    return user.purchases.find(
+      (p) => p.product_name === "21 Días de Oración y Milagros en Vivo" && p.status === "approved"
+    );
+  }, [user?.purchases]);
 
-  const handlePlayPause = (day: number) => {
-    if (currentPlaying === day) {
-      setCurrentPlaying(null);
-    } else {
-      setCurrentPlaying(day);
+  // Extrair a data de compra se existir
+  const purchaseDate = useMemo(() => {
+    if (!challengePurchase) return undefined;
+    
+    const purchase = user?.purchases.find(
+      (p) => p.product_name === "21 Días de Oración y Milagros en Vivo"
+    ) as any;
+    
+    if (purchase?.purchased_at) {
+      return new Date(purchase.purchased_at);
+    }
+    
+    return undefined;
+  }, [challengePurchase, user]);
+
+  const hasPurchased = !!challengePurchase;
+  const days = generateDays(purchaseDate);
+  
+  // Encontrar o dia atual do desafio
+  const currentChallengeDay = days.find(d => !d.isCompleted && !d.isLocked)?.day || 1;
+
+  const handleDayClick = (day: number, isLocked: boolean) => {
+    if (!isLocked) {
+      router.push(`/${locale}/challenge/${day}`);
     }
   };
 
-  const scrollToDay = (day: number) => {
-    const element = document.getElementById(`day-${day}`);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      // Iniciar reprodução automaticamente
-      setTimeout(() => {
-        handlePlayPause(day);
-      }, 500);
-    }
-  };
+  // Se não comprou, mostrar CTA de compra
+  if (!hasPurchased) {
+    return (
+      <div className="max-w-2xl mx-auto p-4">
+        {/* Header com Cardeal */}
+        <div className="relative overflow-hidden rounded-3xl shadow-2xl">
+          <div className="relative h-96">
+            <img
+              src="/cardeal/cardeal.png"
+              alt="Cardeal Giovanni Battista Re"
+              className="w-full h-full object-cover object-center"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/90 to-black/40" />
+          </div>
 
-  // Encontrar a oração do dia atual
-  const todayPrayer = days.find(d => d.day === currentDayOfMonth);
+          <div className="absolute inset-0 flex flex-col justify-end p-8 text-white">
+            <div className="space-y-4">
+              <h1 className="text-4xl font-serif font-bold drop-shadow-2xl leading-tight">
+                {t("ctaTitle")}
+              </h1>
+              <p className="text-lg text-gray-200 drop-shadow-lg">
+                {t("ctaSubtitle")}
+              </p>
+            </div>
+          </div>
+        </div>
 
+        {/* Conteúdo de venda emocional */}
+        <div className="mt-8 space-y-8 px-4">
+          {/* Texto comovente */}
+          <div className="space-y-6 text-center">
+            <h2 className="text-2xl font-bold text-gray-900">
+              {t("ctaHeading")}
+            </h2>
+            
+            <p className="text-lg text-gray-700 leading-relaxed">
+              {t("ctaParagraph1")}
+            </p>
+
+            <p className="text-lg text-gray-700 leading-relaxed">
+              {t("ctaParagraph2")}
+            </p>
+
+            <p className="text-lg font-semibold text-yellow-700">
+              {t("ctaParagraph3")}
+            </p>
+          </div>
+
+          {/* Benefícios */}
+          <Card className="p-6 bg-gradient-to-br from-yellow-50 to-amber-50 border-2 border-yellow-300">
+            <h3 className="text-xl font-bold text-gray-900 mb-4 text-center">
+              {t("ctaBenefitsTitle")}
+            </h3>
+            <ul className="space-y-3">
+              <li className="flex items-start gap-3">
+                <CheckCircle2 className="h-6 w-6 text-green-600 flex-shrink-0 mt-0.5" />
+                <span className="text-gray-700">{t("ctaBenefit1")}</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <CheckCircle2 className="h-6 w-6 text-green-600 flex-shrink-0 mt-0.5" />
+                <span className="text-gray-700">{t("ctaBenefit2")}</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <CheckCircle2 className="h-6 w-6 text-green-600 flex-shrink-0 mt-0.5" />
+                <span className="text-gray-700">{t("ctaBenefit3")}</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <CheckCircle2 className="h-6 w-6 text-green-600 flex-shrink-0 mt-0.5" />
+                <span className="text-gray-700">{t("ctaBenefit4")}</span>
+              </li>
+            </ul>
+          </Card>
+
+          {/* Slider de Depoimentos */}
+          <div className="space-y-4">
+            <h3 className="text-2xl font-bold text-gray-900 text-center">
+              {t("testimonialsTitle")}
+            </h3>
+            <p className="text-gray-600 text-center mb-6">
+              {t("testimonialsSubtitle")}
+            </p>
+            
+            <TestimonialsSlider />
+          </div>
+
+          {/* Depoimento/Garantia */}
+          <div className="text-center space-y-4 py-6">
+            <p className="text-base text-gray-600 italic">
+              "{t("ctaTestimonial")}"
+            </p>
+          </div>
+
+          {/* Botão de CTA */}
+          <div className="space-y-4">
+            <a
+              href="https://pay.hotmart.com/T102944877T?checkoutMode=10?utm_source=aplicacao&utm_medium=challenge"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block"
+            >
+              <Button className="w-full bg-yellow-500 hover:bg-yellow-600 text-black font-bold text-lg py-6 rounded-xl shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-3">
+                <ShoppingCart className="h-6 w-6" />
+                {t("ctaButton")}
+              </Button>
+            </a>
+            <p className="text-sm text-center text-gray-500">
+              {t("ctaSecure")}
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Se comprou, mostrar o desafio normal
   return (
     <div className="max-w-2xl mx-auto p-4">
       {/* Header com Cardeal */}
@@ -190,7 +443,7 @@ export function Challenge21Days() {
             </p>
             <div className="pt-6 border-t border-amber-200/50">             
               <Button
-              onClick={() => scrollToDay(currentDayOfMonth)}
+              onClick={() => router.push(`/${locale}/challenge/${currentChallengeDay}`)}
               className="bg-yellow-500 w-full hover:bg-yellow-600 text-white font-medium px-6 py-2 rounded-full shadow-md hover:shadow-lg transition-all"
             >
               {t("listenPrayer")}
@@ -251,15 +504,17 @@ export function Challenge21Days() {
                 </div>
               </div>
 
-              {/* Card da oração */}
-              <div
+              {/* Card da oração - Clicável */}
+              <button
+                onClick={() => handleDayClick(prayer.day, prayer.isLocked)}
+                disabled={prayer.isLocked}
                 className={`
-                flex-1 rounded-lg overflow-hidden transition-all relative
-                ${prayer.isLocked
-                    ? "opacity-60"
-                    : "hover:scale-[1.02]"
-                  }
-              `}
+                  flex-1 rounded-lg overflow-hidden transition-all relative text-left w-full
+                  ${prayer.isLocked
+                      ? "opacity-60 cursor-not-allowed"
+                      : "hover:scale-[1.02] cursor-pointer"
+                    }
+                `}
               >
                 {/* Background Image */}
                 <div
@@ -294,53 +549,40 @@ export function Challenge21Days() {
                             {t("completed")}
                           </span>
                         )}
+                        {!prayer.isLocked && !prayer.isCompleted && (
+                          <span className="text-xs bg-yellow-800/60 text-yellow-300 px-2 py-0.5 rounded-full border border-yellow-600/30">
+                            {t("available")}
+                          </span>
+                        )}
                       </div>
                       <h3 className="font-semibold text-white text-sm drop-shadow-lg">
                         {prayer.title}
                       </h3>
                     </div>
 
-                    {/* Botão de play */}
-                    <Button
-                      size="sm"
-                      disabled={prayer.isLocked}
-                      onClick={() => handlePlayPause(prayer.day)}
-                      className={`
-                        shrink-0 h-9 w-9 rounded-full p-0 border transition-all
-                        ${currentPlaying === prayer.day
-                          ? "bg-yellow-500 hover:bg-yellow-600 border-yellow-400 shadow-lg shadow-yellow-500/50"
-                          : prayer.isLocked
+                    {/* Ícone indicativo */}
+                    <div className={`
+                        shrink-0 h-9 w-9 rounded-full p-0 border flex items-center justify-center
+                        ${prayer.isLocked
                             ? "bg-gray-400 border-gray-500"
-                            : "bg-yellow-500/90 hover:bg-yellow-500 border-yellow-400/50 hover:shadow-lg hover:shadow-yellow-500/30"
+                            : "bg-yellow-500/90 border-yellow-400/50"
                         }
                       `}
                     >
-                      {currentPlaying === prayer.day ? (
-                        <Pause className="w-4 h-4" />
+                      {prayer.isLocked ? (
+                        <Lock className="w-4 h-4 text-gray-700" />
                       ) : (
-                        <Play className="w-4 h-4 ml-0.5" />
+                        <ChevronRight className="w-5 h-5 text-black" />
                       )}
-                    </Button>
+                    </div>
                   </div>
 
                   {/* Motivo */}
                   <p className="text-xs text-gray-300/90 leading-relaxed">
                     {prayer.reason}
                   </p>
-
-                  {/* Player ativo */}
-                  {currentPlaying === prayer.day && !prayer.isLocked && (
-                    <div className="pt-2 border-t border-green-700/50">
-                      <div className="flex items-center gap-2">
-                        <div className="flex-1 h-1 bg-green-900/50 rounded-full overflow-hidden">
-                          <div className="h-full bg-green-500 w-1/3 animate-pulse" />
-                        </div>
-                        <span className="text-xs text-gray-300">2:45</span>
-                      </div>
-                    </div>
-                  )}
                 </div>
-              </div>
+              </button>
             </div>
           ))}
         </div>

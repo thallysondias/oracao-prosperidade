@@ -1,14 +1,25 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
+import { useTranslations, useLocale } from 'next-intl';
 import { products } from '@/lib/products/oraciones';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, Play, Pause, Volume2, Heart } from 'lucide-react';
 
+// Declaração do tipo para o YouTube Player API
+declare global {
+  interface Window {
+    YT: any;
+    onYouTubeIframeAPIReady: () => void;
+  }
+}
+
 export default function PrayerPlayPage() {
   const params = useParams();
   const router = useRouter();
+  const locale = useLocale();
+  const t = useTranslations('PrayerPlayer');
   const prayerId = params.id as string;
   const normalizedId = `prayer_${prayerId.padStart(3, '0')}`;
 
@@ -18,50 +29,135 @@ export default function PrayerPlayPage() {
   const [duration, setDuration] = useState(0);
   const [played, setPlayed] = useState(0);
   const [isFavorite, setIsFavorite] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const [player, setPlayer] = useState<any>(null);
+  const [isPlayerReady, setIsPlayerReady] = useState(false);
+  const playerRef = useRef<any>(null);
+
+  // Extrair o ID do vídeo do YouTube da URL
+  const getYouTubeVideoId = (url: string) => {
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+    return match && match[2].length === 11 ? match[2] : null;
+  };
+
+  const videoId = prayer?.youtubeUrl ? getYouTubeVideoId(prayer.youtubeUrl) : null;
+
+  // Carregar a API do YouTube
+  useEffect(() => {
+    if (!videoId) return;
+
+    // Carregar o script da API do YouTube
+    const tag = document.createElement('script');
+    tag.src = 'https://www.youtube.com/iframe_api';
+    const firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode?.insertBefore(tag, firstScriptTag);
+
+    // Callback quando a API estiver pronta
+    window.onYouTubeIframeAPIReady = () => {
+      playerRef.current = new window.YT.Player('youtube-player', {
+        videoId: videoId,
+        playerVars: {
+          autoplay: 0,
+          controls: 0,
+          disablekb: 1,
+          fs: 0,
+          modestbranding: 1,
+          playsinline: 1,
+        },
+        events: {
+          onReady: (event: any) => {
+            setPlayer(event.target);
+            setIsPlayerReady(true);
+            setDuration(event.target.getDuration());
+          },
+          onStateChange: (event: any) => {
+            if (event.data === window.YT.PlayerState.PLAYING) {
+              setIsPlaying(true);
+            } else if (
+              event.data === window.YT.PlayerState.PAUSED ||
+              event.data === window.YT.PlayerState.ENDED
+            ) {
+              setIsPlaying(false);
+            }
+          },
+        },
+      });
+    };
+
+    return () => {
+      if (playerRef.current) {
+        playerRef.current.destroy();
+      }
+    };
+  }, [videoId]);
+
+  // Atualizar progresso
+  useEffect(() => {
+    if (!player || !isPlaying) return;
+
+    const interval = setInterval(() => {
+      if (player.getCurrentTime && player.getDuration) {
+        const currentTime = player.getCurrentTime();
+        const duration = player.getDuration();
+        setPlayed(currentTime / duration);
+      }
+    }, 100);
+
+    return () => clearInterval(interval);
+  }, [player, isPlaying]);
 
   if (!prayer) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-black">
         <div className="text-center">
-          <h1 className="text-2xl font-bold mb-4 text-white">Oração não encontrada</h1>
+          <h1 className="text-2xl font-bold mb-4 text-white">{t('notFound')}</h1>
           <Button onClick={() => router.back()} className="mt-4">
-            Voltar
+            {t('back')}
           </Button>
         </div>
       </div>
     );
   }
 
+  // Obter título e descrição baseado no locale
+  const getLocalizedText = () => {
+    switch (locale) {
+      case 'pt':
+        return { title: prayer.titlePt, description: prayer.descriptionPt };
+      case 'es':
+        return { title: prayer.titleEs, description: prayer.descriptionEs };
+      case 'en':
+        return { title: prayer.titleEn, description: prayer.descriptionEn };
+      default:
+        return { title: prayer.titlePt, description: prayer.descriptionPt };
+    }
+  };
+
+  const { title, description } = getLocalizedText();
+
   const handlePlayPause = () => {
-    if (videoRef.current) {
-      if (isPlaying) {
-        videoRef.current.pause();
-      } else {
-        videoRef.current.play();
-      }
-      setIsPlaying(!isPlaying);
+    if (!player || !isPlayerReady) return;
+
+    if (isPlaying) {
+      player.pauseVideo();
+    } else {
+      player.playVideo();
     }
   };
 
   const handleProgressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!player || !isPlayerReady) return;
+
     const newPlayed = parseFloat(e.target.value);
     setPlayed(newPlayed);
-    if (videoRef.current) {
-      videoRef.current.currentTime = newPlayed * videoRef.current.duration;
-    }
+    player.seekTo(newPlayed * duration, true);
   };
 
-  const handleTimeUpdate = () => {
-    if (videoRef.current) {
-      setPlayed(videoRef.current.currentTime / videoRef.current.duration);
-    }
-  };
+  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!player || !isPlayerReady) return;
 
-  const handleLoadedMetadata = () => {
-    if (videoRef.current) {
-      setDuration(videoRef.current.duration);
-    }
+    const volume = parseFloat(e.target.value) * 100;
+    player.setVolume(volume);
   };
 
   const formatTime = (seconds: number) => {
@@ -85,15 +181,8 @@ export default function PrayerPlayPage() {
         backgroundPosition: 'center',
       }}
     >
-      {/* Hidden Video Player */}
-      <video
-        ref={videoRef}
-        src={prayer.youtubeUrl}
-        onTimeUpdate={handleTimeUpdate}
-        onLoadedMetadata={handleLoadedMetadata}
-        onEnded={() => setIsPlaying(false)}
-        style={{ display: 'none' }}
-      />
+      {/* Hidden YouTube Player */}
+      <div id="youtube-player" style={{ display: 'none' }}></div>
 
       {/* Player Card - Spotify Style */}
       <div className="w-full max-w-md mx-auto px-4">
@@ -105,7 +194,7 @@ export default function PrayerPlayPage() {
           >
             <ChevronLeft className="h-6 w-6" />
           </button>
-          <span className="text-white text-sm font-medium">Tocando agora</span>
+          <span className="text-white text-sm font-medium">{t('nowPlaying')}</span>
           <div className="w-6" />
         </div>
 
@@ -114,7 +203,7 @@ export default function PrayerPlayPage() {
           <div className="aspect-square rounded-lg overflow-hidden shadow-2xl">
             <img
               src={prayer.image || 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=400&fit=crop'}
-              alt={prayer.titlePt}
+              alt={title}
               className="w-full h-full object-cover"
             />
           </div>
@@ -124,8 +213,8 @@ export default function PrayerPlayPage() {
         <div className="mb-6">
           <div className="flex items-start justify-between mb-2">
             <div className="flex-1">
-              <h1 className="text-2xl font-bold text-white mb-2">{prayer.titlePt}</h1>
-              <p className="text-gray-300 text-sm">{prayer.descriptionPt}</p>
+              <h1 className="text-2xl font-bold text-white mb-2">{title}</h1>
+              <p className="text-gray-300 text-sm">{description}</p>
             </div>
             <button
               onClick={() => setIsFavorite(!isFavorite)}
@@ -178,6 +267,7 @@ export default function PrayerPlayPage() {
             max="1"
             step="0.1"
             defaultValue="1"
+            onChange={handleVolumeChange}
             className="w-24 h-1 bg-gray-600 rounded-full cursor-pointer accent-yellow-500"
           />
         </div>

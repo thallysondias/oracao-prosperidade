@@ -39,7 +39,7 @@ export async function POST(request: Request) {
     // 3. Buscar compras do usuário
     const { data: purchases, error: purchasesError } = await supabase
       .from("purchases")
-      .select("product_id, transaction_id, status")
+      .select("product_id, product_name, transaction_id, status, purchased_at")
       .eq("profile_id", profile.id)
       .order("purchased_at", { ascending: false });
 
