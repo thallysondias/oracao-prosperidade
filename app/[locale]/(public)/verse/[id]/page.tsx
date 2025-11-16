@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: VersePageProps): Promise<Meta
   }
 
   const verseText = verse.traducao.pt;
-  const url = `${process.env.NEXT_PUBLIC_APP_URL || 'https://oracao-prosperidade.com'}/verse/${id}`;
+  const url = `${process.env.NEXT_PUBLIC_APP_URL || 'https://oracao-prosperidade.com'}/es/verse/${id}`;
   const backgroundImage = 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&h=800&fit=crop';
 
   return {
@@ -117,7 +117,7 @@ export default async function VersePage({ params }: VersePageProps) {
             asChild
             className="w-full bg-yellow-500 hover:bg-yellow-600 text-black font-bold px-8 py-4 text-lg rounded-lg"
           >
-            <a href="https://hotmart.com" target="_blank" rel="noopener noreferrer">
+            <a href="https://pay.hotmart.com/X102941563H?checkoutMode=10?utm_source=aplicacao&utm_medium=recomendacao" target="_blank" rel="noopener noreferrer">
               {t('wantSecretPrayers')}
             </a>
           </Button>
