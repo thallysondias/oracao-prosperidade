@@ -49,7 +49,7 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-black overflow-x-hidden">
-      <div className='relative z-50 max-w-5xl mx-auto px-4'>
+      <div className='relative z-50 max-w-5xl mx-auto px-2'>
         {/* Header com tabs */}
         <Header
           userName={user?.name || user?.email || 'Usuário'}

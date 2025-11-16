@@ -37,7 +37,7 @@ export function DailyPrayerCard({
   }, []);
 
   const handleSharePrayer = () => {
-    const verseUrl = `${window.location.origin}/verse/${verseId}`;
+    const verseUrl = `${window.location.origin}/es/verse/${verseId}`;
     const message = `✨ Versículo do Dia ✨\n\n${verseReference}\n\n"${verseText}"\n\n${verseUrl}`;
     const encodedMessage = encodeURIComponent(message);
     window.open(`https://wa.me/?text=${encodedMessage}`, '_blank');

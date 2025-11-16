@@ -213,12 +213,12 @@ export default function ChallengeDayPage() {
           {/* Album Art - Cardinal Image */}
           <div className="mb-8">
             <div className="aspect-square rounded-lg overflow-hidden shadow-2xl">
-              <Image
+              <img
                 src="/cardeal/cardeal.png"
                 alt={`Dia ${day}`}
                 width={400}
                 height={400}
-                className="w-full h-full object-cover object-top"
+                className="w-full h-full object-cover aspect-square object-top"
               />
             </div>
           </div>

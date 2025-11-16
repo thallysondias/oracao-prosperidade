@@ -188,11 +188,10 @@ function TestimonialsSlider() {
                 {/* Header com foto e info */}
                 <div className="flex items-center gap-4 mb-4">
                   <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-yellow-500">
-                    <Image
+                    <img
                       src={testimonial.image}
                       alt={testimonial.name}
-                      fill
-                      className="object-cover"
+                      className="object-cover aspect-square"
                     />
                   </div>
                   <div className="flex-1">

@@ -12,6 +12,7 @@ export interface Product {
   durationMinutes: number;
   image?: string;
   youtubeUrl?: string;
+  audioUrl?: string;
   isLocked: boolean;
 }
 
@@ -29,6 +30,7 @@ export const products: Product[] = [
     tagsEs: ['Salud'],
     durationMinutes: 11,
     image: '/products/saude.jpeg',
+    audioUrl: '/oracion/ENFERMEDAD.mp3',
     youtubeUrl: 'https://www.youtube.com/watch?v=NQHLpSWVQT4',
     isLocked: false,
   },
@@ -45,6 +47,7 @@ export const products: Product[] = [
     tagsEs: ['Dinero', 'Prosperidad'],
     durationMinutes: 8,
     image: '/products/prosperidade2.png',
+    audioUrl: '/oracion/DINERO.mp3',
     youtubeUrl: 'https://www.youtube.com/watch?v=TE6zAdzAd2o',
     isLocked: false,
   },
@@ -61,6 +64,7 @@ export const products: Product[] = [
     tagsEs: ['Amor', 'Matrimonio', 'Relación'],
     durationMinutes: 3,
     image: '/products/amor.jpeg',
+    audioUrl: '/oracion/AMOR.mp3',
     youtubeUrl: 'https://www.youtube.com/watch?v=o9KVk5wuBhM',
     isLocked: false,
   },
@@ -77,6 +81,7 @@ export const products: Product[] = [
     tagsEs: ['Protección'],
     durationMinutes: 4,
     image: '/products/protecao.jpeg',
+    audioUrl: '/oracion/BRUJERIA.mp3',
     youtubeUrl: 'https://www.youtube.com/watch?v=lmHMMdeBtYY',
     isLocked: false,
   }

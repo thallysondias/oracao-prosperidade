@@ -92,11 +92,10 @@ export function PrayersSlider() {
                 {/* Avatar positioned absolute above */}
                 <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
                   <div className="relative w-32 h-32 rounded-2xl overflow-hidden shadow-lg ring-4 ring-white dark:ring-slate-900">
-                    <Image
+                    <img
                       src={card.image}
                       alt={t(card.titleKey)}
-                      fill
-                      className="object-cover object-top"
+                      className="object-cover aspect-square object-top"
                     />
                   </div>
                 </div>

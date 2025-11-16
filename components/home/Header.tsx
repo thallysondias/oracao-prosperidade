@@ -24,7 +24,8 @@ export function Header({
       {/* Top bar with greeting and icons */}
       <div className="flex items-center justify-between px-4 pt-4">
         <div className="flex-1">
-          <p className="text-sm text-muted-foreground">{t('greeting')}</p>
+        {/*   <p className="text-sm text-muted-foreground">{t('greeting')}</p> */}
+                  <p className="text-sm text-muted-foreground">Hola</p>
           <h1 className="text-2xl font-bold">{userName}</h1>
         </div>
 

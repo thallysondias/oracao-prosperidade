@@ -83,12 +83,12 @@ export default function SaintBenedictPage() {
           {/* Album Art */}
           <div className="mb-8">
             <div className="aspect-square rounded-lg overflow-hidden shadow-2xl">
-              <Image
+              <img
                 src={image}
                 alt={t('title')}
                 width={400}
                 height={400}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover aspect-square"
               />
             </div>
           </div>

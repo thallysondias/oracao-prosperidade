@@ -1,19 +1,11 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { useTranslations, useLocale } from 'next-intl';
 import { products } from '@/lib/products/oraciones';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, Play, Pause, Volume2, Heart } from 'lucide-react';
-
-// Declaração do tipo para o YouTube Player API
-declare global {
-  interface Window {
-    YT: any;
-    onYouTubeIframeAPIReady: () => void;
-  }
-}
 
 export default function PrayerPlayPage() {
   const params = useParams();
@@ -29,82 +21,7 @@ export default function PrayerPlayPage() {
   const [duration, setDuration] = useState(0);
   const [played, setPlayed] = useState(0);
   const [isFavorite, setIsFavorite] = useState(false);
-  const [player, setPlayer] = useState<any>(null);
-  const [isPlayerReady, setIsPlayerReady] = useState(false);
-  const playerRef = useRef<any>(null);
-
-  // Extrair o ID do vídeo do YouTube da URL
-  const getYouTubeVideoId = (url: string) => {
-    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-    const match = url.match(regExp);
-    return match && match[2].length === 11 ? match[2] : null;
-  };
-
-  const videoId = prayer?.youtubeUrl ? getYouTubeVideoId(prayer.youtubeUrl) : null;
-
-  // Carregar a API do YouTube
-  useEffect(() => {
-    if (!videoId) return;
-
-    // Carregar o script da API do YouTube
-    const tag = document.createElement('script');
-    tag.src = 'https://www.youtube.com/iframe_api';
-    const firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode?.insertBefore(tag, firstScriptTag);
-
-    // Callback quando a API estiver pronta
-    window.onYouTubeIframeAPIReady = () => {
-      playerRef.current = new window.YT.Player('youtube-player', {
-        videoId: videoId,
-        playerVars: {
-          autoplay: 0,
-          controls: 0,
-          disablekb: 1,
-          fs: 0,
-          modestbranding: 1,
-          playsinline: 1,
-        },
-        events: {
-          onReady: (event: any) => {
-            setPlayer(event.target);
-            setIsPlayerReady(true);
-            setDuration(event.target.getDuration());
-          },
-          onStateChange: (event: any) => {
-            if (event.data === window.YT.PlayerState.PLAYING) {
-              setIsPlaying(true);
-            } else if (
-              event.data === window.YT.PlayerState.PAUSED ||
-              event.data === window.YT.PlayerState.ENDED
-            ) {
-              setIsPlaying(false);
-            }
-          },
-        },
-      });
-    };
-
-    return () => {
-      if (playerRef.current) {
-        playerRef.current.destroy();
-      }
-    };
-  }, [videoId]);
-
-  // Atualizar progresso
-  useEffect(() => {
-    if (!player || !isPlaying) return;
-
-    const interval = setInterval(() => {
-      if (player.getCurrentTime && player.getDuration) {
-        const currentTime = player.getCurrentTime();
-        const duration = player.getDuration();
-        setPlayed(currentTime / duration);
-      }
-    }, 100);
-
-    return () => clearInterval(interval);
-  }, [player, isPlaying]);
+  const audioRef = useRef<HTMLAudioElement>(null);
 
   if (!prayer) {
     return (
@@ -136,28 +53,39 @@ export default function PrayerPlayPage() {
   const { title, description } = getLocalizedText();
 
   const handlePlayPause = () => {
-    if (!player || !isPlayerReady) return;
+    if (!audioRef.current) return;
 
     if (isPlaying) {
-      player.pauseVideo();
+      audioRef.current.pause();
     } else {
-      player.playVideo();
+      audioRef.current.play();
     }
+    setIsPlaying(!isPlaying);
   };
 
   const handleProgressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!player || !isPlayerReady) return;
+    if (!audioRef.current) return;
 
     const newPlayed = parseFloat(e.target.value);
     setPlayed(newPlayed);
-    player.seekTo(newPlayed * duration, true);
+    audioRef.current.currentTime = newPlayed * duration;
   };
 
   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!player || !isPlayerReady) return;
+    if (!audioRef.current) return;
 
-    const volume = parseFloat(e.target.value) * 100;
-    player.setVolume(volume);
+    const volume = parseFloat(e.target.value);
+    audioRef.current.volume = volume;
+  };
+
+  const handleTimeUpdate = () => {
+    if (!audioRef.current) return;
+    setPlayed(audioRef.current.currentTime / duration);
+  };
+
+  const handleLoadedMetadata = () => {
+    if (!audioRef.current) return;
+    setDuration(audioRef.current.duration);
   };
 
   const formatTime = (seconds: number) => {
@@ -181,8 +109,15 @@ export default function PrayerPlayPage() {
         backgroundPosition: 'center',
       }}
     >
-      {/* Hidden YouTube Player */}
-      <div id="youtube-player" style={{ display: 'none' }}></div>
+      {/* Hidden Audio Player */}
+      <audio
+        ref={audioRef}
+        src={prayer?.audioUrl || ''}
+        onTimeUpdate={handleTimeUpdate}
+        onLoadedMetadata={handleLoadedMetadata}
+        onEnded={() => setIsPlaying(false)}
+        style={{ display: 'none' }}
+      />
 
       {/* Player Card - Spotify Style */}
       <div className="w-full max-w-md mx-auto px-4">
