@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { useAuthStore } from "@/store/authStore";
 import { Card } from "@/components/ui/card";
@@ -9,7 +9,16 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select } from "@/components/ui/select";
-import { Send, Check, Clock, Mail, Sparkles, Heart, Shield } from "lucide-react";
+import { Send, Check, Clock, Mail, Sparkles, Heart, Shield, Package, CheckCircle } from "lucide-react";
+
+interface PrayerRequestStatus {
+  id: string;
+  status: string;
+  goal: string;
+  prayer_text: string;
+  payment_link: string;
+  created_at: string;
+}
 
 export function PrayerRequest() {
   const t = useTranslations("PrayerRequest");
@@ -18,17 +27,169 @@ export function PrayerRequest() {
   const [prayerText, setPrayerText] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [existingRequest, setExistingRequest] = useState<PrayerRequestStatus | null>(null);
+  const [loadingStatus, setLoadingStatus] = useState(true);
+
+  // Verificar se usuário já tem pedido
+  useEffect(() => {
+    const checkExistingRequest = async () => {
+      if (!user?.email) {
+        setLoadingStatus(false);
+        return;
+      }
+
+      try {
+        const response = await fetch(`/api/prayer-request/status?email=${user.email}`);
+        const data = await response.json();
+
+        if (response.ok && data.request) {
+          setExistingRequest(data.request);
+        }
+      } catch (error) {
+        console.error("Error checking prayer request status:", error);
+      } finally {
+        setLoadingStatus(false);
+      }
+    };
+
+    checkExistingRequest();
+  }, [user?.email]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simular envio
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    try {
+      const response = await fetch("/api/prayer-request", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: user?.email,
+          name: user?.name,
+          goal: prayerGoal,
+          prayerText: prayerText,
+          profileId: user?.id,
+        }),
+      });
 
-    setIsSubmitting(false);
-    setIsSubmitted(true);
+      const data = await response.json();
+
+      if (!response.ok) {
+        alert("Erro ao enviar pedido. Tente novamente.");
+        setIsSubmitting(false);
+        return;
+      }
+
+      // Redirecionar para página de pagamento
+      if (data.paymentLink) {
+        window.location.href = data.paymentLink;
+      } else {
+        setIsSubmitting(false);
+        setIsSubmitted(true);
+      }
+    } catch (error) {
+      console.error("Error submitting prayer request:", error);
+      alert("Erro ao enviar pedido. Tente novamente.");
+      setIsSubmitting(false);
+    }
   };
+
+  // Mostrar status de pedido existente
+  if (loadingStatus) {
+    return (
+      <div className="max-w-2xl mx-auto p-4">
+        <Card className="p-8 text-center">
+          <Clock className="w-12 h-12 mx-auto mb-4 animate-spin text-yellow-500" />
+          <p className="text-gray-600">Carregando...</p>
+        </Card>
+      </div>
+    );
+  }
+
+  if (existingRequest) {
+    const getStatusInfo = () => {
+      switch (existingRequest.status) {
+        case "pending":
+          return {
+            icon: <Clock className="w-12 h-12 text-yellow-500" />,
+            title: t("statusPendingTitle"),
+            message: t("statusPendingMessage"),
+            bgColor: "from-yellow-50 to-amber-50",
+            borderColor: "border-yellow-200",
+            showPaymentButton: true,
+          };
+        case "approved":
+          return {
+            icon: <Package className="w-12 h-12 text-blue-500" />,
+            title: t("statusApprovedTitle"),
+            message: t("statusApprovedMessage"),
+            bgColor: "from-blue-50 to-indigo-50",
+            borderColor: "border-blue-200",
+            showPaymentButton: false,
+          };
+        case "finished":
+          return {
+            icon: <CheckCircle className="w-12 h-12 text-green-500" />,
+            title: t("statusFinishedTitle"),
+            message: t("statusFinishedMessage"),
+            bgColor: "from-green-50 to-emerald-50",
+            borderColor: "border-green-200",
+            showPaymentButton: false,
+          };
+        default:
+          return {
+            icon: <Clock className="w-12 h-12 text-gray-500" />,
+            title: "Status desconhecido",
+            message: "Entre em contato com o suporte.",
+            bgColor: "from-gray-50 to-slate-50",
+            borderColor: "border-gray-200",
+            showPaymentButton: false,
+          };
+      }
+    };
+
+    const statusInfo = getStatusInfo();
+
+    return (
+      <div className="max-w-2xl mx-auto p-4">
+        <Card className={`p-8 text-center bg-gradient-to-br ${statusInfo.bgColor} border-2 ${statusInfo.borderColor}`}>
+          <div className="mb-4 flex justify-center">
+            {statusInfo.icon}
+          </div>
+          <h2 className="text-2xl font-serif font-bold text-gray-900 mb-3">
+            {statusInfo.title}
+          </h2>
+          <p className="text-gray-700 mb-6">
+            {statusInfo.message}
+          </p>
+
+          {/* Mostrar detalhes do pedido */}
+          <div className="bg-white/50 rounded-lg p-4 mb-6 text-left">
+            <p className="text-sm text-gray-600 mb-2">
+              <strong>Objetivo:</strong> {t(`goal${existingRequest.goal.charAt(0).toUpperCase() + existingRequest.goal.slice(1)}`)}
+            </p>
+            <p className="text-sm text-gray-600 mb-2">
+              <strong>Data do pedido:</strong> {new Date(existingRequest.created_at).toLocaleDateString('pt-BR')}
+            </p>
+          </div>
+
+          {statusInfo.showPaymentButton && existingRequest.payment_link && (
+            <Button
+              asChild
+              className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold"
+            >
+              <a href={existingRequest.payment_link} target="_blank" rel="noopener noreferrer">
+                <Sparkles className="w-5 h-5 mr-2" />
+                {t("completePayment")}
+              </a>
+            </Button>
+          )}
+        </Card>
+      </div>
+    );
+  }
 
   if (isSubmitted) {
     return (
@@ -56,28 +217,8 @@ export function PrayerRequest() {
 
   return (
     <div className="max-w-2xl mx-auto p-4">
-      {/* Banner de Inscrições Fechadas */}
-      <div className="mb-6 p-6 bg-gradient-to-r from-red-500 to-red-600 rounded-xl shadow-lg border-2 border-red-400">
-        <div className="text-center text-white">
-          <div className="flex items-center justify-center gap-2 mb-3">
-            <Clock className="w-6 h-6" />
-            <h2 className="text-2xl font-bold">
-              {t("closedTitle")}
-            </h2>
-          </div>
-          <p className="text-lg mb-4">
-            {t("closedMessage")}
-          </p>
-          <div className="inline-block px-6 py-3 bg-white/20 backdrop-blur-sm rounded-lg border border-white/30">
-            <p className="text-2xl font-bold">
-              📅 18 de Noviembre de 2025
-            </p>
-          </div>
-        </div>
-      </div>
-
       {/* Header com Imagem do Cardeal */}
-      <div className="relative overflow-hidden rounded-2xl mb-8 shadow-xl opacity-60 pointer-events-none">
+      <div className="relative overflow-hidden rounded-2xl mb-8 shadow-xl">
         <div className="relative h-64">
           <img
             src="/cardeal/cardeal-oracao.jpg"
@@ -104,7 +245,7 @@ export function PrayerRequest() {
       </div>
 
       {/* Timeline Horizontal */}
-      <div className="mb-8 bg-white rounded-xl p-6 shadow-md border border-gray-200 opacity-60 pointer-events-none">
+      <div className="mb-8 bg-white rounded-xl p-6 shadow-md border border-gray-200">
         <h3 className="text-center font-serif text-xl font-bold text-gray-900 mb-6">
           {t("howItWorks")}
         </h3>
@@ -155,7 +296,7 @@ export function PrayerRequest() {
       </div>
 
       {/* Carta de Vendas */}
-      <Card className="mb-8 p-6 bg-gradient-to-br from-amber-50 to-yellow-50 border-2 border-amber-200/50 opacity-60 pointer-events-none">
+      <Card className="mb-8 p-6 bg-gradient-to-br from-amber-50 to-yellow-50 border-2 border-amber-200/50">
         <div className="space-y-4">
           <div className="flex items-start gap-3">
             <Heart className="w-6 h-6 text-red-500 shrink-0 mt-1" />
@@ -190,7 +331,7 @@ export function PrayerRequest() {
       </Card>
 
       {/* Formulário */}
-      <Card className="p-6 shadow-xl border-2 border-gray-200 opacity-60 pointer-events-none">
+      <Card className="p-6 shadow-xl border-2 border-gray-200">
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <Label htmlFor="name" className="text-gray-700 font-medium">

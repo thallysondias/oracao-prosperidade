@@ -241,7 +241,14 @@
     "successTitle": "Request Sent Successfully! 🙏",
     "successMessage": "Your request has been received and will be forwarded to the cardinal. You will receive the prayer audio within 7 days at the registered email.",
     "makeAnotherRequest": "Make Another Request",
-    "footerInfo": "🔒 Your request is confidential and will be treated with total respect and spiritual secrecy."
+    "footerInfo": "🔒 Your request is confidential and will be treated with total respect and spiritual secrecy.",
+    "statusPendingTitle": "⏳ Awaiting Payment",
+    "statusPendingMessage": "Your prayer request has been created. Complete the payment so the cardinal can begin preparing your personalized prayer.",
+    "statusApprovedTitle": "✅ Payment Confirmed - Awaiting Delivery",
+    "statusApprovedMessage": "Your payment has been confirmed! The cardinal is preparing your personalized prayer. You will receive the audio in your email within 7 days.",
+    "statusFinishedTitle": "🎉 Prayer Sent",
+    "statusFinishedMessage": "Your personalized prayer has been sent to your email. Check your inbox and spam folder.",
+    "completePayment": "Complete Payment"
   },
   "PrayerPlayer": {
     "notFound": "Prayer not found",

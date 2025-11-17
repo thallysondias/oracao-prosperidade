@@ -190,6 +190,27 @@ export async function POST(request: Request) {
     if (mappedStatus === "approved") {
       console.log("Adding lead to MailingBoss:", buyer.email);
       await addToMailingBoss(buyer.email, buyer.name, product.name);
+
+      // 5. Update prayer request status if product is "Pedido de Oración Personalizado"
+      if (product.name.includes("Pedido de Oración") || product.name.includes("Pedido Personalizado")) {
+        const { error: updatePrayerError } = await supabase
+          .from("prayer_requests")
+          .update({
+            status: "approved",
+            transaction_id: purchase.transaction,
+            updated_at: new Date().toISOString(),
+          })
+          .eq("email", buyer.email)
+          .eq("status", "pending")
+          .order("created_at", { ascending: false })
+          .limit(1);
+
+        if (updatePrayerError) {
+          console.error("Error updating prayer request:", updatePrayerError);
+        } else {
+          console.log("Prayer request updated to approved for:", buyer.email);
+        }
+      }
     }
 
     return NextResponse.json({
