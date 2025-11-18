@@ -13,6 +13,7 @@ import { LightRays } from '@/components/ui/light-rays';
 import { Tabs, TabsContent } from '@/components/ui/tabs';
 import { products } from '@/lib/products/oraciones';
 import { getTodayVerse } from '@/lib/versiculos_traduzidos';
+import { Button } from '@/components/ui/button';
 
 export default function HomePage() {
   const t = useTranslations('HomePage');
@@ -43,6 +44,10 @@ export default function HomePage() {
     const message = `"${verseText}"\n\n${verseReference}`;
     const encodedMessage = encodeURIComponent(message);
     window.open(`https://wa.me/?text=${encodedMessage}`, '_blank');
+  };
+
+  const handleSupportClick = () => {
+    window.open('https://wa.me/553196609318', '_blank');
   };
 
   return (
@@ -90,6 +95,25 @@ export default function HomePage() {
             <Challenge21Days />
           </TabsContent>
         </Tabs>
+
+        <div className="px-4 pb-12">
+          <div className="rounded-2xl border bg-card/80 p-6 space-y-4">
+            <div className="space-y-1">
+              <p className="text-sm font-medium text-muted-foreground">{t('profileSupport')}</p>
+              <p className="text-2xl font-semibold">{t('profileTab')}</p>
+            </div>
+            <Button
+              onClick={handleSupportClick}
+              className="w-full bg-yellow-500 hover:bg-yellow-600 text-black font-semibold"
+            >
+              {t('profileSupportCTA')}
+            </Button>
+            <p className="text-xs text-muted-foreground">{t('profileSupportHint')}</p>
+            <div className="rounded-lg border border-dashed bg-muted/40 px-4 py-3 text-sm text-muted-foreground">
+              {t('profileSupportInfo')}
+            </div>
+          </div>
+        </div>
 
       </div>
       

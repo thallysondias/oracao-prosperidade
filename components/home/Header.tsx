@@ -1,7 +1,7 @@
 'use client';
 
+import Link from 'next/link';
 import { useLocale, useTranslations } from 'next-intl';
-import { useRouter } from 'next/navigation';
 import { Bell, User } from 'lucide-react';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
@@ -21,12 +21,8 @@ export function Header({
   onTabChange,
 }: HeaderProps) {
   const t = useTranslations('HomePage');
-  const router = useRouter();
   const locale = useLocale();
-
-  const handleProfileClick = () => {
-    router.push(`/${locale}/profile`);
-  };
+  const profileHref = `/${locale}/profile`;
 
   return (
     <div className="space-y-6 pb-6">
@@ -40,34 +36,37 @@ export function Header({
 
         <div className="flex items-center gap-4">
           {/* Notifications */}
-          <div className="relative">
+       {/*    <div className="relative">
             <Bell className="h-6 w-6 text-foreground" />
             {notificationCount > 0 && (
               <span className="absolute -top-2 -right-2 bg-yellow-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
                 {notificationCount}
               </span>
             )}
-          </div>
+          </div> */}
 
           {/* Profile */}
-          <button
+          <Link
+            prefetch
+            href={profileHref}
             className="h-8 w-8 rounded-full bg-muted flex items-center justify-center transition hover:bg-muted/80"
-            onClick={handleProfileClick}
             aria-label={t('profileTab')}
           >
             <User className="h-5 w-5" />
-          </button>
+          </Link>
         </div>
       </div>
 
       {/* Tabs */}
       <div className="px-4">
         <Tabs value={activeTab} onValueChange={(value) => onTabChange(value as HomeTabs)}>
-          <TabsList>
-            <TabsTrigger value="today">{t('prayers')}</TabsTrigger>
-            <TabsTrigger value="prayer-request">{t('prayerRequest')}</TabsTrigger>
-            <TabsTrigger value="challenge-21">{t('challenge21Days')}</TabsTrigger>
-          </TabsList>
+          <div className="overflow-x-auto scrollbar-hide">
+            <TabsList className="flex min-w-max gap-2">
+              <TabsTrigger value="today">{t('prayers')}</TabsTrigger>
+              <TabsTrigger value="prayer-request">{t('prayerRequest')}</TabsTrigger>
+              <TabsTrigger value="challenge-21">{t('challenge21Days')}</TabsTrigger>
+            </TabsList>
+          </div>
         </Tabs>
       </div>
     </div>

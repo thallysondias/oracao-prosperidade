@@ -2,6 +2,7 @@
 
 import { useLocale, useTranslations } from 'next-intl';
 import { usePathname, useRouter } from 'next/navigation';
+import { ArrowLeft } from 'lucide-react';
 import { useAuthStore } from '@/store/authStore';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
@@ -39,9 +40,24 @@ export default function ProfilePage() {
     window.open('https://wa.me/553196609318', '_blank');
   };
 
+  const handleBackHome = () => {
+    router.push(`/${locale}`);
+  };
+
   return (
     <div className="relative min-h-screen bg-gray-50 dark:bg-black">
       <div className="relative z-10 max-w-3xl mx-auto px-4 py-12">
+        <div className="mb-6">
+          <Button
+            variant="ghost"
+            onClick={handleBackHome}
+            className="flex items-center gap-2 text-muted-foreground hover:text-foreground"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            {t('profileBack')}
+          </Button>
+        </div>
+
         <div className="mb-8 space-y-2">
           <p className="text-sm text-muted-foreground uppercase tracking-widest">
             {t('profileTab')}
@@ -95,10 +111,16 @@ export default function ProfilePage() {
 
             <div className="space-y-2">
               <Label>{t('profileSupport')}</Label>
-              <Button onClick={handleSupportClick} variant="secondary">
+              <Button
+                onClick={handleSupportClick}
+                className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold"
+              >
                 {t('profileSupportCTA')}
               </Button>
               <p className="text-xs text-muted-foreground">{t('profileSupportHint')}</p>
+              <div className="rounded-lg border border-dashed bg-muted/40 px-4 py-3 text-sm text-muted-foreground">
+                {t('profileSupportInfo')}
+              </div>
             </div>
           </CardContent>
         </Card>
