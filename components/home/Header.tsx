@@ -1,14 +1,17 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
+import { useRouter } from 'next/navigation';
 import { Bell, User } from 'lucide-react';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+
+type HomeTabs = 'today' | 'prayer-request' | 'challenge-21';
 
 interface HeaderProps {
   userName: string;
   notificationCount?: number;
-  activeTab: 'today' | 'prayer-request' | 'challenge-21';
-  onTabChange: (tab: 'today' | 'prayer-request' | 'challenge-21') => void;
+  activeTab: HomeTabs;
+  onTabChange: (tab: HomeTabs) => void;
 }
 
 export function Header({
@@ -18,6 +21,12 @@ export function Header({
   onTabChange,
 }: HeaderProps) {
   const t = useTranslations('HomePage');
+  const router = useRouter();
+  const locale = useLocale();
+
+  const handleProfileClick = () => {
+    router.push(`/${locale}/profile`);
+  };
 
   return (
     <div className="space-y-6 pb-6">
@@ -41,7 +50,11 @@ export function Header({
           </div>
 
           {/* Profile */}
-          <button className="h-8 w-8 rounded-full bg-muted flex items-center justify-center">
+          <button
+            className="h-8 w-8 rounded-full bg-muted flex items-center justify-center transition hover:bg-muted/80"
+            onClick={handleProfileClick}
+            aria-label={t('profileTab')}
+          >
             <User className="h-5 w-5" />
           </button>
         </div>
@@ -49,7 +62,7 @@ export function Header({
 
       {/* Tabs */}
       <div className="px-4">
-        <Tabs value={activeTab} onValueChange={(value) => onTabChange(value as 'today' | 'prayer-request' | 'challenge-21')}>
+        <Tabs value={activeTab} onValueChange={(value) => onTabChange(value as HomeTabs)}>
           <TabsList>
             <TabsTrigger value="today">{t('prayers')}</TabsTrigger>
             <TabsTrigger value="prayer-request">{t('prayerRequest')}</TabsTrigger>

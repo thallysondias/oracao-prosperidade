@@ -26,6 +26,17 @@
     "prayers": "Prayers",
     "prayerRequest": "Prayer Request",
     "challenge21Days": "21-Day Challenge",
+    "profileTab": "Profile",
+    "profileSubtitle": "Manage the data linked to your prayers",
+    "profileName": "Full name",
+    "profileEmail": "Email",
+    "profileEmpty": "Information not available",
+    "profileLanguage": "App language",
+    "profileLanguagePlaceholder": "Select a language",
+    "profileLanguageHint": "Your content updates instantly after switching.",
+    "profileSupport": "Need help?",
+    "profileSupportCTA": "Contact support",
+    "profileSupportHint": "We reply to every request within 24 business hours.",
     "verseOfTheDay": "Verse of the Day",
     "shareWhatsApp": "Share on WhatsApp",
     "sendPrayer": "Send Prayer",
@@ -34,7 +45,12 @@
     "products": "Available Prayers",
     "notifications": "Notifications",
     "profile": "Profile",
-    "relatedScriptures": "Related Scriptures"
+    "relatedScriptures": "Related Scriptures",
+    "languages": {
+      "pt": "Portuguese",
+      "en": "English",
+      "es": "Spanish"
+    }
   },
   "SaintBenedict": {
     "title": "Saint Benedict Prayer",

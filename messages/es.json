@@ -26,6 +26,17 @@
     "prayers": "Oraciones",
     "prayerRequest": "Solicitud de Oración",
     "challenge21Days": "Desafío 21 Días",
+    "profileTab": "Perfil",
+    "profileSubtitle": "Administra los datos vinculados a tus oraciones",
+    "profileName": "Nombre completo",
+    "profileEmail": "Email",
+    "profileEmpty": "Información no disponible",
+    "profileLanguage": "Idioma de la aplicación",
+    "profileLanguagePlaceholder": "Selecciona un idioma",
+    "profileLanguageHint": "Tu contenido se actualizará inmediatamente después del cambio.",
+    "profileSupport": "¿Necesitas ayuda?",
+    "profileSupportCTA": "Hablar con soporte",
+    "profileSupportHint": "Respondemos cada solicitud en un máximo de 24 h hábiles.",
     "verseOfTheDay": "Versículo del Día",
     "shareWhatsApp": "Compartir en WhatsApp",
     "sendPrayer": "Enviar Oración",
@@ -34,7 +45,12 @@
     "products": "Oraciones Disponibles",
     "notifications": "Notificaciones",
     "profile": "Perfil",
-    "relatedScriptures": "Escrituras Relacionadas"
+    "relatedScriptures": "Escrituras Relacionadas",
+    "languages": {
+      "pt": "Portugués",
+      "en": "Inglés",
+      "es": "Español"
+    }
   },
   "SaintBenedict": {
     "title": "Oración de San Benedicto",

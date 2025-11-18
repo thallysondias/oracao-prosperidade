@@ -1,8 +1,7 @@
 'use client';
 
-import { useState, useMemo } from 'react';
-import { useTranslations } from 'next-intl';
-import { useLocale } from 'next-intl';
+import { useMemo, useState } from 'react';
+import { useLocale, useTranslations } from 'next-intl';
 import { useAuthStore } from '@/store/authStore';
 import { Header } from '@/components/home/Header';
 import { PrayersSlider } from '@/components/home/PrayersSlider';
@@ -10,7 +9,6 @@ import { DailyPrayerCard } from '@/components/home/DailyPrayerCard';
 import { RelatedScripturesSection } from '@/components/home/RelatedScripturesSection';
 import { Challenge21Days } from '@/components/home/Challenge21Days';
 import { PrayerRequest } from '@/components/home/PrayerRequest';
-import { LivePrayerFooter } from '@/components/home/LivePrayerFooter';
 import { LightRays } from '@/components/ui/light-rays';
 import { Tabs, TabsContent } from '@/components/ui/tabs';
 import { products } from '@/lib/products/oraciones';
@@ -95,9 +93,6 @@ export default function HomePage() {
 
       </div>
       
-      {/* Live Prayer Footer */}
-   {/*    <LivePrayerFooter />
-       */}
       <LightRays color='rgba(255, 215, 0, 0.1)' />
     </div>
   );
