@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/authStore";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,7 +14,6 @@ import { useTranslations } from "next-intl";
 export default function LoginPage() {
   const t = useTranslations("Login");
   const router = useRouter();
-  const searchParams = useSearchParams();
   const login = useAuthStore((state) => state.login);
   
   const [email, setEmail] = useState("");
@@ -22,13 +21,17 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  // Auto-preencher email se vier na URL
+  // Auto-preencher email se vier na URL (ler apenas no mount para evitar
+  // dependências instáveis que possam causar re-renders desnecessários)
   useEffect(() => {
-    const emailParam = searchParams.get("email");
-    if (emailParam) {
-      setEmail(emailParam);
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const emailParam = params.get("email");
+      if (emailParam) setEmail(emailParam);
+    } catch (err) {
+      // ambiente onde `window` não existe ou parsing falhou — ignorar
     }
-  }, [searchParams]);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

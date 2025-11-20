@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState, type CSSProperties } from "react"
+import React, { useEffect, useState, type CSSProperties } from "react"
 import { motion } from "motion/react"
 
 import { cn } from "@/lib/utils"
@@ -84,7 +84,7 @@ const Ray = ({
   )
 }
 
-export function LightRays({
+const LightRaysComponent = ({
   className,
   style,
   count = 7,
@@ -94,7 +94,7 @@ export function LightRays({
   length = "70vh",
   ref,
   ...props
-}: LightRaysProps) {
+}: LightRaysProps) => {
   const [rays, setRays] = useState<LightRay[]>([])
   const cycleDuration = Math.max(speed, 0.1)
 
@@ -147,3 +147,5 @@ export function LightRays({
     </div>
   )
 }
+
+export const LightRays = React.memo(LightRaysComponent)
