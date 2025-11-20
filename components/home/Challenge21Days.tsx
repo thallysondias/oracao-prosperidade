@@ -280,7 +280,7 @@ export function Challenge21Days() {
   // Se não comprou, mostrar CTA de compra
   if (!hasPurchased) {
     return (
-      <div className="max-w-2xl mx-auto p-4">
+      <div className="mx-auto p-4">
         {/* Header com Cardeal */}
         <div className="relative overflow-hidden rounded-3xl shadow-2xl">
           <div className="relative h-96">
@@ -382,9 +382,7 @@ export function Challenge21Days() {
                 {t("ctaButton")}
               </Button>
             </a>
-            <p className="text-sm text-center text-gray-500">
-              {t("ctaSecure")}
-            </p>
+
           </div>
         </div>
       </div>
@@ -393,7 +391,7 @@ export function Challenge21Days() {
 
   // Se comprou, mostrar o desafio normal
   return (
-    <div className="max-w-2xl mx-auto p-4">
+    <div className=" mx-auto p-4">
       {/* Header com Cardeal */}
       <div className="relative overflow-hidden -mb-2 rounded-t-3xl ">
         {/* Imagem de fundo com overlay */}

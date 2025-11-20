@@ -47,7 +47,7 @@ export function DailyPrayerCard({
     <div className="px-4 space-y-4">
       {/* Verse Card with Background */}
       <div
-        className="relative rounded-2xl overflow-hidden h-64 flex flex-col justify-between p-6 text-white"
+        className="relative rounded-2xl overflow-hidden min-h-50 flex flex-col justify-between p-6 text-white"
         style={{
           backgroundImage: `linear-gradient(135deg, rgba(233, 200, 42, 0.85) 0%, rgba(233, 155, 42, 0.85) 100%), url(${backgroundImage})`,
           backgroundSize: 'cover',

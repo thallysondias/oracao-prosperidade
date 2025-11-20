@@ -91,7 +91,7 @@ export default function LoginPage() {
       <div className="relative z-10 w-full max-w-md">
       
        
-        <Card className="bg-black/60 p-0  space-y-0 gap-0 backdrop-blur-sm border-none shadow-2xl overflow-hidden">
+        <Card className="bg-black/60 px-2 py-0 space-y-0 gap-0 backdrop-blur-sm border-none shadow-2xl overflow-hidden">
           {/* Header com São Benedito */}
           <div className="relative h-58 overflow-hidden">
             <img
@@ -190,8 +190,6 @@ export default function LoginPage() {
           </div>
         </Card>
       </div>
-
-      <LightRays color="rgba(255, 215, 0, 0.1)" />
     </div>
   );
 }
