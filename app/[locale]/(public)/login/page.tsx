@@ -76,7 +76,7 @@ export default function LoginPage() {
   const backgroundImage = 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&h=800&fit=crop';
 
   return (
-    <div className="relative min-h-screen bg-black flex items-center justify-center p-4">
+    <div className="relative min-h-screen h-screen bg-black flex items-center justify-center p-4 overflow-hidden">
       {/* Background Image with Overlay */}
       <div
         className="absolute inset-0 opacity-10"
