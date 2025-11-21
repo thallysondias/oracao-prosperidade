@@ -29,7 +29,7 @@ export const products: Product[] = [
     tagsEn: ['Health'],
     tagsEs: ['Salud'],
     durationMinutes: 11,
-    image: '/oracion/saude.jpeg',
+    image: '/oracion/saude.jpg',
     audioUrl: '/oracion/ENFERMEDAD.mp3',
     youtubeUrl: 'https://www.youtube.com/watch?v=NQHLpSWVQT4',
     isLocked: false,
