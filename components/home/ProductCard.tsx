@@ -40,9 +40,8 @@ export function ProductCard({
         {/* Duration */}
         {duration && (
           <div className="items-center gap-1 text-xs text-muted-foreground bg-gray-100 rounded-full px-3 py-1 inline-flex">
-            <Play size={14} />
-            <span className="font-bold">Ouvir Oração</span>
-            <span>- {duration}</span>
+            <Play size={14} />        
+            <span>{duration}</span>
           </div>
         )}
       </div>
