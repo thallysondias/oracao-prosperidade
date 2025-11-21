@@ -25,15 +25,7 @@ export default function ProfilePage() {
   const user = useAuthStore((state) => state.user);
 
   const handleLanguageChange = (value: string) => {
-    const segments = pathname.split('/').filter(Boolean);
-
-    if (segments.length === 0) {
-      router.push(`/${value}`);
-      return;
-    }
-
-    segments[0] = value;
-    router.push(`/${segments.join('/')}`);
+    router.push(pathname, { locale: value as 'pt' | 'en' | 'es' });
   };
 
   const handleSupportClick = () => {
