@@ -20,7 +20,22 @@ interface PrayerCard {
   purchaseUrl?: string;
 }
 
-const prayerCards: PrayerCard[] = [
+
+
+export function PrayersSlider() {
+  const t = useTranslations('PrayersSlider');
+  const locale = useLocale();
+  const hasPurchase = useAuthStore((state) => state.hasPurchase);
+  const user = useAuthStore((state) => state.user);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [emblaRef, emblaApi] = useEmblaCarousel({ 
+    loop: false,
+    align: 'center',
+    skipSnaps: false,
+  });
+
+
+  const prayerCards: PrayerCard[] = [
   {
     id: 'saint-benedict',
     titleKey: 'saintBenedictTitle',
@@ -36,7 +51,7 @@ const prayerCards: PrayerCard[] = [
     image: '/prayer/padrepio.png',
     route: '/padre-pio',
     productName: 'Oração Padre Pio',
-    purchaseUrl: 'https://pay.hotmart.com/O102962155C?utm_source=aplicacao&utm_medium=banner',
+    purchaseUrl: `https://buy.stripe.com/14A6oGcxl9lxckadEU6kg02?prefilled_email=${user?.email || ''}`,
   },
   {
     id: 'carlos-acutis',
@@ -45,20 +60,9 @@ const prayerCards: PrayerCard[] = [
     image: '/prayer/carlosacuri.jpeg',
     route: '/carlos-acutis',
     productName: 'Oração do Carlo Acuri',
-    purchaseUrl: 'https://pay.hotmart.com/J102962185F?utm_source=aplicacao&utm_medium=banner',
+    purchaseUrl: `https://buy.stripe.com/6oUbJ0eFtfJV5VMgR66kg03?prefilled_email=${user?.email || ''}`,
   },
 ];
-
-export function PrayersSlider() {
-  const t = useTranslations('PrayersSlider');
-  const locale = useLocale();
-  const hasPurchase = useAuthStore((state) => state.hasPurchase);
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const [emblaRef, emblaApi] = useEmblaCarousel({ 
-    loop: false,
-    align: 'center',
-    skipSnaps: false,
-  });
 
   const scrollTo = useCallback(
     (index: number) => emblaApi && emblaApi.scrollTo(index),
@@ -130,7 +134,7 @@ export function PrayersSlider() {
                       </Link>
                     ) : (
                       // Não tem acesso - mostrar botão de comprar
-                      <a href={card.purchaseUrl} target="_blank" rel="noopener noreferrer" className="flex-1">
+                      <a href={card.purchaseUrl ? `${card.purchaseUrl.replace('${user?.email || \'\'}', user?.email || '')}` : '#'} target="_blank" rel="noopener noreferrer" className="flex-1">
                         <Button
                           className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg flex items-center justify-center gap-2"
                           size="sm"

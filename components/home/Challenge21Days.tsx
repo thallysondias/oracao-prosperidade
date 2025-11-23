@@ -372,7 +372,7 @@ export function Challenge21Days() {
           {/* Botão de CTA */}
           <div className="space-y-4">
             <a
-              href="https://pay.hotmart.com/T102944877T?checkoutMode=10?utm_source=aplicacao&utm_medium=challenge"
+              href={`https://buy.stripe.com/aFa6oG7d169l1FwcAQ6kg01?prefilled_email=${user?.email || ''}`}
               target="_blank"
               rel="noopener noreferrer"
               className="block"

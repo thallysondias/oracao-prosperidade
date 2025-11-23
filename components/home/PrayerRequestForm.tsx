@@ -31,7 +31,7 @@ export default function PrayerRequestForm() {
       const supabase = createClient();
       
       // Link de pagamento da Hotmart - ajuste conforme necessário
-      const paymentLink = "https://pay.hotmart.com/J103070760W?email=" + encodeURIComponent(user.email);
+      const paymentLink = "https://buy.stripe.com/aFafZg2WL7dpgAqcAQ6kg00";
 
       const { data, error } = await supabase
         .from("prayer_requests")
