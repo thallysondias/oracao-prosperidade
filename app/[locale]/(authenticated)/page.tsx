@@ -50,7 +50,7 @@ export default function HomePage() {
   };
 
   const handleSupportClick = () => {
-    window.open('https://wa.me/553196609318', '_blank');
+    window.open('https://wa.me/5531973130289', '_blank');
   };
 
   return (

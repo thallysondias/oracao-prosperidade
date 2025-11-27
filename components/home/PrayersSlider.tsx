@@ -44,6 +44,16 @@ export function PrayersSlider() {
     route: '/saint-benedict',
     productName: null, // Sempre livre (ou pode usar "San Benito Player" se quiser verificar também)
   },
+    {
+    id: 'carlos-acutis',
+    titleKey: 'carlosAcutisTitle',
+    descriptionKey: 'carlosAcutisDescription',
+    image: '/prayer/carlosacuri.jpeg',
+    route: '/carlos-acutis',
+/* productName: 'Oração do Carlo Acutis', */
+     productName: null, 
+    purchaseUrl: `https://buy.stripe.com/6oUbJ0eFtfJV5VMgR66kg03?prefilled_email=${user?.email || ''}`,
+  },
   {
     id: 'padre-pio',
     titleKey: 'padrePioTitle',
@@ -52,16 +62,8 @@ export function PrayersSlider() {
     route: '/padre-pio',
     productName: 'Oração Padre Pio',
     purchaseUrl: `https://buy.stripe.com/14A6oGcxl9lxckadEU6kg02?prefilled_email=${user?.email || ''}`,
-  },
-  {
-    id: 'carlos-acutis',
-    titleKey: 'carlosAcutisTitle',
-    descriptionKey: 'carlosAcutisDescription',
-    image: '/prayer/carlosacuri.jpeg',
-    route: '/carlos-acutis',
-    productName: 'Oração do Carlo Acuri',
-    purchaseUrl: `https://buy.stripe.com/6oUbJ0eFtfJV5VMgR66kg03?prefilled_email=${user?.email || ''}`,
-  },
+  }
+
 ];
 
   const scrollTo = useCallback(
