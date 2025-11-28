@@ -28,8 +28,6 @@ interface HotmartWebhook {
   };
 }
 
-
-
 function mapHotmartStatus(event: string, status: HotmartStatus): string {
   if (event === "PURCHASE_CANCELED") return "cancelled";
   if (event === "PURCHASE_REFUNDED") return "refunded";
@@ -89,61 +87,6 @@ export async function POST(request: Request) {
     const { buyer, product, purchase } = body.data;
     const mappedStatus = mapHotmartStatus(body.event, purchase.status);
 
-    const { data: existingPurchase } = await supabase
-      .from("purchases")
-      .select("id")
-      .eq("transaction_id", purchase.transaction)
-      .single();
-
-    if (existingPurchase) {
-      const { error: updateError } = await supabase
-        .from("purchases")
-        .update({
-          status: mappedStatus,
-          purchase_data: body,
-          updated_at: new Date().toISOString(),
-        })
-        .eq("transaction_id", purchase.transaction);
-
-      if (updateError) {
-        console.error("Error updating purchase:", updateError);
-        return NextResponse.json(
-          { error: "Failed to update purchase" },
-          { status: 500 }
-        );
-      }
-
-      // Add to MailingBoss if status changed to approved
-      if (mappedStatus === "approved") {
-        console.log("Adding lead to MailingBoss (update):", buyer.email);
-        await addToMailingBoss(buyer.email, buyer.name, product.name);
-      } else if (mappedStatus === "cancelled") {
-        console.log("Tagging lead as cancelled in MailingBoss (update):", buyer.email);
-        await addToMailingBoss(buyer.email, buyer.name, "cancelled");
-      }
-
-      return NextResponse.json({
-        success: true,
-        action: "updated",
-        transaction: purchase.transaction,
-      });
-    }
-
-    if (mappedStatus !== "approved") {
-      console.log("Skipping profile creation for non-approved status:", {
-        email: buyer.email,
-        status: mappedStatus,
-      });
-
-      return NextResponse.json({
-        success: true,
-        action: "ignored",
-        transaction: purchase.transaction,
-        status: mappedStatus,
-        message: "Profile creation skipped for non-approved status",
-      });
-    }
-
     const { data: existingProfile } = await supabase
       .from("profiles")
       .select("id")
@@ -176,6 +119,40 @@ export async function POST(request: Request) {
       profileId = existingProfile.id;
     }
 
+    const { data: existingPurchase } = await supabase
+      .from("purchases")
+      .select("id")
+      .eq("transaction_id", purchase.transaction)
+      .single();
+
+    if (existingPurchase) {
+      const { error: updateError } = await supabase
+        .from("purchases")
+        .update({
+          status: mappedStatus,
+          purchase_data: body,
+          updated_at: new Date().toISOString(),
+        })
+        .eq("transaction_id", purchase.transaction);
+
+      if (updateError) {
+        console.error("Error updating purchase:", updateError);
+        return NextResponse.json(
+          { error: "Failed to update purchase" },
+          { status: 500 }
+        );
+      }
+
+      console.log("Updating MailingBoss tag:", { email: buyer.email, status: mappedStatus });
+      await addToMailingBoss(buyer.email, buyer.name, mappedStatus);
+
+      return NextResponse.json({
+        success: true,
+        action: "updated",
+        transaction: purchase.transaction,
+      });
+    }
+
     // 3. Create new purchase
     // Hotmart pode enviar timestamp em segundos ou milissegundos
     let purchasedAt = new Date();
@@ -206,34 +183,28 @@ export async function POST(request: Request) {
       );
     }
 
-    // 4. Add to MailingBoss if purchase is approved
-    if (mappedStatus === "approved") {
-      console.log("Adding lead to MailingBoss:", buyer.email);
-      await addToMailingBoss(buyer.email, buyer.name, product.name);
+    console.log("Adding lead to MailingBoss with status tag:", { email: buyer.email, status: mappedStatus });
+    await addToMailingBoss(buyer.email, buyer.name, mappedStatus);
 
-      // 5. Update prayer request status if product is "Pedido de Oración Personalizado"
-      if (product.name.includes("Pedido de Oración") || product.name.includes("Pedido Personalizado")) {
-        const { error: updatePrayerError } = await supabase
-          .from("prayer_requests")
-          .update({
-            status: "approved",
-            transaction_id: purchase.transaction,
-            updated_at: new Date().toISOString(),
-          })
-          .eq("email", buyer.email)
-          .eq("status", "pending")
-          .order("created_at", { ascending: false })
-          .limit(1);
+    // 5. Update prayer request status if product is approved "Pedido de Oración Personalizado"
+    if (mappedStatus === "approved" && (product.name.includes("Pedido de Oración") || product.name.includes("Pedido Personalizado"))) {
+      const { error: updatePrayerError } = await supabase
+        .from("prayer_requests")
+        .update({
+          status: "approved",
+          transaction_id: purchase.transaction,
+          updated_at: new Date().toISOString(),
+        })
+        .eq("email", buyer.email)
+        .eq("status", "pending")
+        .order("created_at", { ascending: false })
+        .limit(1);
 
-        if (updatePrayerError) {
-          console.error("Error updating prayer request:", updatePrayerError);
-        } else {
-          console.log("Prayer request updated to approved for:", buyer.email);
-        }
+      if (updatePrayerError) {
+        console.error("Error updating prayer request:", updatePrayerError);
+      } else {
+        console.log("Prayer request updated to approved for:", buyer.email);
       }
-    } else if (mappedStatus === "cancelled") {
-      console.log("Tagging lead as cancelled in MailingBoss:", buyer.email);
-      await addToMailingBoss(buyer.email, buyer.name, "cancelled");
     }
 
     return NextResponse.json({
