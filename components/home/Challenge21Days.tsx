@@ -167,7 +167,6 @@ function TestimonialsSlider() {
 
   useEffect(() => {
     if (!emblaApi) return;
-    onSelect();
     emblaApi.on("select", onSelect);
     return () => {
       emblaApi.off("select", onSelect);
@@ -208,7 +207,7 @@ function TestimonialsSlider() {
 
                 {/* Depoimento */}
                 <p className="text-gray-700 leading-relaxed italic">
-                  "{testimonial.text}"
+                  {testimonial.text}
                 </p>
               </Card>
             </div>
@@ -248,17 +247,17 @@ export function Challenge21Days() {
     return user.purchases.find(
       (p) => p.product_name === "21 Días de Oración y Milagros en Vivo" && p.status === "approved"
     );
-  }, [user?.purchases]);
+  }, [user]);
 
   // Extrair a data de compra se existir
   const purchaseDate = useMemo(() => {
     if (!challengePurchase) return undefined;
     
-    const purchase = user?.purchases.find(
+    const purchase = user?.purchases?.find(
       (p) => p.product_name === "21 Días de Oración y Milagros en Vivo"
-    ) as any;
+    );
     
-    if (purchase?.purchased_at) {
+    if (purchase && 'purchased_at' in purchase && purchase.purchased_at) {
       return new Date(purchase.purchased_at);
     }
     
@@ -365,7 +364,7 @@ export function Challenge21Days() {
           {/* Depoimento/Garantia */}
           <div className="text-center space-y-4 py-6">
             <p className="text-base text-gray-600 italic">
-              "{t("ctaTestimonial")}"
+              {t("ctaTestimonial")}
             </p>
           </div>
 
@@ -456,7 +455,7 @@ export function Challenge21Days() {
       
           <div className="mb-8 text-center mt-8">
             <p className="text-sm text-yellow-700 italic text-center font-medium">
-                "{t("challengeQuote")}"
+                {t("challengeQuote")}
               </p>
           </div>
        

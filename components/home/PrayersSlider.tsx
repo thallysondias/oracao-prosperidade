@@ -43,6 +43,7 @@ export function PrayersSlider() {
     image: '/prayer/saobenedito.jpeg',
     route: '/saint-benedict',
     productName: null, // Sempre livre (ou pode usar "San Benito Player" se quiser verificar também)
+    purchaseUrl: `https://donate.stripe.com/6oUcN48h50P16ZQgR66kg07?prefilled_email=${user?.email || ''}`,
   },
     {
     id: 'carlos-acutis',
@@ -61,7 +62,7 @@ export function PrayersSlider() {
     image: '/prayer/padrepio.png',
     route: '/padre-pio',
     productName: 'Oração Padre Pio',
-    purchaseUrl: `https://buy.stripe.com/14A6oGcxl9lxckadEU6kg02?prefilled_email=${user?.email || ''}`,
+    purchaseUrl: `https://donate.stripe.com/9B6cN41SH9lx3NEbwM6kg08?prefilled_email=${user?.email || ''}`,
   }
 
 ];
@@ -78,9 +79,12 @@ export function PrayersSlider() {
 
   useEffect(() => {
     if (!emblaApi) return;
-    onSelect();
     emblaApi.on('select', onSelect);
     emblaApi.on('reInit', onSelect);
+    return () => {
+      emblaApi.off('select', onSelect);
+      emblaApi.off('reInit', onSelect);
+    };
   }, [emblaApi, onSelect]);
 
   return (
