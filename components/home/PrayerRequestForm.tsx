@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Send, Clock } from "lucide-react";
 import { createClient } from "@/utils/supabase/client";
+import Link from "next/link";
 
 export default function PrayerRequestForm() {
   const t = useTranslations("PrayerRequest");
@@ -31,7 +32,7 @@ export default function PrayerRequestForm() {
       const supabase = createClient();
       
       // Link de pagamento da Hotmart - ajuste conforme necessário
-      const paymentLink = "https://buy.stripe.com/aFafZg2WL7dpgAqcAQ6kg00";
+      const paymentLink = "https://donate.stripe.com/6oUcN48h5apBesi8kA6kg09";
 
       const { data, error } = await supabase
         .from("prayer_requests")
@@ -71,7 +72,7 @@ export default function PrayerRequestForm() {
         <div className="text-center py-8">
           <p className="text-gray-600 mb-4">Por favor, faça login para fazer seu pedido de oração.</p>
           <Button asChild className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold">
-            <a href="/login">Fazer Login</a>
+            <Link href="/login">Fazer Login</Link>
           </Button>
         </div>
       </Card>

@@ -371,7 +371,7 @@ export function Challenge21Days() {
           {/* Botão de CTA */}
           <div className="space-y-4">
             <a
-              href={`https://buy.stripe.com/aFa6oG7d169l1FwcAQ6kg01?prefilled_email=${user?.email || ''}`}
+              href={`https://donate.stripe.com/4gM14meFt9lxac2bwM6kg06?prefilled_email=${user?.email || ''}`}
               target="_blank"
               rel="noopener noreferrer"
               className="block"

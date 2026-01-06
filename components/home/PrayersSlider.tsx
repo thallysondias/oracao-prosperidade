@@ -53,7 +53,7 @@ export function PrayersSlider() {
     route: '/carlos-acutis',
 /* productName: 'Oração do Carlo Acutis', */
      productName: null, 
-    purchaseUrl: `https://buy.stripe.com/6oUbJ0eFtfJV5VMgR66kg03?prefilled_email=${user?.email || ''}`,
+    purchaseUrl: `https://donate.stripe.com/6oUbJ0eFtfJV5VMgR66kg03?prefilled_email=${user?.email || ''}`,
   },
   {
     id: 'padre-pio',
