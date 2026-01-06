@@ -6,16 +6,16 @@ import Link from 'next/link';
 
 const OracionPadrePio = () => {
   const searchParams = useSearchParams();
-  
+
   // Pega o nome da URL e extrai apenas a primeira parte
   const nombre = useMemo(() => {
     const fname = searchParams.get('FNAME');
     if (fname) {
       // Pega apenas a primeira parte do nome (antes do primeiro espaço)
       const firstName = fname.trim().split(' ')[0];
-      return firstName || 'filho';
+      return firstName || 'hijo';
     }
-    return 'filho'; // Padrão quando não há nome na URL
+    return 'hijo'; // Padrão quando não há nome na URL
   }, [searchParams]);
 
   const fechaHoy = useMemo(
@@ -29,18 +29,18 @@ const OracionPadrePio = () => {
         .toUpperCase(),
     []
   );
-  
+
   const tuNombre = "Padre Juan";
 
   return (
     <div className="min-h-screen bg-white font-serif text-gray-900">
-        <img src="/selling_pages/padre-header.png" alt="Padre Pío" className="w-full object-cover mx-auto" />
+      <img src="/selling_pages/padre-header.png" alt="Padre Pío" className="w-full object-cover mx-auto" />
 
       {/* --- HERO SECTION --- */}
       <section className="relative bg-[#001a33] py-12 md:py-20 overflow-hidden">
         {/* Luz Dourada de Fundo */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle,_rgba(255,215,0,0.15)_0%,_transparent_70%)]"></div>
-      
+
         <div className="max-w-4xl mx-auto px-6 relative z-10 text-center">
           <h1 className="text-3xl md:text-5xl font-bold text-white leading-tight uppercase tracking-tight">
             <span className="text-yellow-500">{nombre}</span>, UN PUNTO SECRETO EN TU ALMA HA SIDO ACTIVADO POR EL <span className="text-yellow-500">PADRE PÍO…</span>
@@ -53,7 +53,7 @@ const OracionPadrePio = () => {
 
       {/* --- CONTEÚDO PRINCIPAL + SIDEBAR --- */}
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-0 border-x border-gray-100 shadow-2xl">
-        
+
         {/* COLUNA ESQUERDA: TEXTO PRINCIPAL */}
         <main className="lg:col-span-2 bg-white p-6 md:p-12 text-lg leading-relaxed">
           <div className="space-y-6">
@@ -64,7 +64,7 @@ const OracionPadrePio = () => {
             <p>
               Una <span className="bg-yellow-100 font-bold px-1">oración secreta</span> que él guardaba en su corazón y usaba en privado para invocar su intercesión poderosa – trayendo sanación profunda, protección contra todo mal y milagros que cambian vidas – ha sido revelada de forma rara e intensa en este preciso momento.
             </p>
-            
+
             <div className="bg-blue-50 border-l-4 border-blue-900 p-4 italic text-blue-900">
               Invoca la intercesión del santo de los estigmas. El Padre Pío trae sanación, protección y milagros para aquellos que buscan su ayuda espiritual con fe genuina.
             </div>
@@ -75,7 +75,7 @@ const OracionPadrePio = () => {
 
             {/* IMAGEM SUGERIDA */}
             <div className="my-10 flex flex-col items-center">
-            <img src="/selling_pages/chave.png" alt="Padre Pío con estigmas iluminados por la luz divina" className="w-full h-80 rounded-lg shadow-2xl" />
+              <img src="/selling_pages/chave.png" alt="Padre Pío con estigmas iluminados por la luz divina" className="w-full h-80 rounded-lg shadow-2xl" />
               <p className="text-sm text-gray-500 mt-2 italic">Padre Pío con estigmas iluminados por la luz divina</p>
             </div>
 
@@ -124,18 +124,33 @@ const OracionPadrePio = () => {
 
             <p className="font-bold italic text-center text-xl py-6">
               "No seas quien se arrepienta."
-            </p>        
+            </p>
+            <div className="hidden lg:block">
+              <img src="/selling_pages/arrow-down.png" alt="Padre Pío" className="w-20  object-cover mx-auto" />
+              <div className="bg-white p-6 rounded-lg shadow-xl border-2 border-yellow-500 text-center lg:top-6 ">
+                <p className="text-sm uppercase tracking-widest text-gray-500 font-bold">Precio único hoy</p>
+                <div className="flex justify-center items-center gap-3 my-2">
+                  <span className="text-gray-400 line-through text-lg">$49 USD</span>
+                  <span className="text-4xl font-black text-green-600">$9 USD</span>
+                </div>
+                <p className="text-xs text-red-600 font-bold mb-4 uppercase">Solo hasta medianoche</p>
+                <Link href="https://donate.stripe.com/9B6cN41SH9lx3NEbwM6kg08" className=" relative  block w-full bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-4 rounded shadow-lg transition-transform hover:scale-105 uppercase text-sm tracking-tighter">
 
-            
+                  Recibir mi Oración
+                </Link>
+              </div>
+            </div>
+
+
           </div>
         </main>
 
         {/* COLUNA DIREITA: SIDEBAR (TESTEMUNHOS + PREÇO) */}
         <aside className="bg-slate-50 p-6 md:p-8 border-l border-gray-100 lg:self-start">
 
-        <img src="/selling_pages/arrow-down.png" alt="Padre Pío" className="w-20  object-cover mx-auto" />
+          <img src="/selling_pages/arrow-down.png" alt="Padre Pío" className="w-20  object-cover mx-auto" />
           <div className="space-y-8">
-            
+
             {/* PREÇO E BOTÃO */}
             <div className="bg-white p-6 rounded-lg shadow-xl border-2 border-yellow-500 text-center lg:sticky lg:top-6 z-50">
               <p className="text-sm uppercase tracking-widest text-gray-500 font-bold">Precio único hoy</p>
@@ -144,34 +159,30 @@ const OracionPadrePio = () => {
                 <span className="text-4xl font-black text-green-600">$9 USD</span>
               </div>
               <p className="text-xs text-red-600 font-bold mb-4 uppercase">Solo hasta medianoche</p>
-              <Link href="https://donate.stripe.com/9B6cN41SH9lx3NEbwM6kg08"  className=" relative  block w-full bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-4 rounded shadow-lg transition-transform hover:scale-105 uppercase text-sm tracking-tighter">
-              
-              Recibir mi Oración
+              <Link href="https://donate.stripe.com/9B6cN41SH9lx3NEbwM6kg08" className=" relative  block w-full bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-4 rounded shadow-lg transition-transform hover:scale-105 uppercase text-sm tracking-tighter">
+
+                Recibir mi Oración
               </Link>
-
-
-   
-  
             </div>
 
             {/* TESTEMUNHOS */}
             <div className="space-y-6">
               <h3 className="font-bold uppercase text-blue-900 text-sm border-b pb-2">Miles de Personas Satisfechas en Todo el Mundo</h3>
-              
+
               {[
-                { 
+                {
                   t: "Querido Padre Juan, no sé cómo funciona exactamente esta oración secreta del Padre Pío, pero realmente funciona. El año pasado fue como un milagro después de recibir la oración personalizada y seguir sus consejos. Mi esposo y yo estábamos pasando por una crisis muy difícil en nuestro matrimonio, y gracias a esta oración encontramos el camino de vuelta el uno al otro. Ahora vivimos en un mundo mejor, lleno de amor y comprensión. La protección que sentimos es real y palpable.",
                   n: "Laura & Marc, California"
                 },
-                { 
+                {
                   t: "Recibí mi primera oración personalizada del Padre Pío hace varios meses y luego otra vez hace poco. Debo admitir que era escéptica sobre este tipo de cosas espirituales, pero para mi asombro, ambas veces punto por punto las cosas sucedieron exactamente como se predijo en la oración. Mi salud mejoró de manera que los médicos no podían explicar, y encontré la paz interior que había estado buscando durante años. No creo en tales coincidencias, así que gracias Padre Juan, definitivamente continuaré usando sus servicios en el futuro.",
                   n: "Christine, Países Bajos"
                 },
-                { 
+                {
                   t: "El Padre Pío me ayudó a encontrar el camino correcto en mi carrera, que había sido un problema enorme durante toda mi vida. Después de recibir la oración personalizada encontré confianza en mis fortalezas y la capacidad de avanzar, ¡y finalmente pude hacerlo! Todavía vuelvo a mi oración, que es muy perspicaz y útil en la vida cotidiana. La protección espiritual que siento es increíble, y mi trabajo ahora prospera de una manera que nunca pensé posible.",
                   n: "Francis, Irlanda"
                 },
-                { 
+                {
                   t: "Hiciste un trabajo extraordinario. Cuando te contacté por primera vez estaba pasando por un momento muy difícil en mi vida y tu guía y la oración del Padre Pío me mostraron cómo resolver las cosas. Ahora estoy viviendo cómodamente, estoy con un hombre absolutamente increíble y tengo todo lo que siempre he querido en mi vida. No sé dónde estaría sin tu ayuda y estoy tan agradecida por guiarme hasta donde estoy ahora. No puedo agradecerte lo suficiente por el maravilloso trabajo que has hecho y también por tu apoyo. Espero que puedas cambiar la vida de muchas personas como has cambiado la mía y quiero animarte a hacerlo.",
                   n: "Kim, Singapur"
                 }
@@ -193,7 +204,7 @@ const OracionPadrePio = () => {
         </aside>
       </div>
 
- 
+
 
 
       {/* FOOTER */}
