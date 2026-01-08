@@ -345,4 +345,74 @@
     "arrowAlt": "Padre Pio"
   }
 
+,
+  "CarloAcutisSelling": {
+    "fallbackName": "child",
+    "heroTitleAfterName": "A SECRET POINT IN YOUR SOUL HAS BEEN ACTIVATED BY CARLO ACUTIS",
+    "heroSubtitle": "WHAT THIS SECRET PRAYER REVEALS ONLY UNTIL MIDNIGHT ON {date}",
+    "p1Before": "Last night, while I prayed over the names on our list, something exceptional happened. The spirit of ",
+    "p1Strong": "Carlo Acutis, the blessed of the Eucharist and modern miracles",
+    "p1After": " brought me an urgent and personal message for you.",
+    "p2Before": "A ",
+    "secretPrayer": "secret prayer",
+    "p2After": "that he kept in his heart and used privately to invoke his powerful intercession ? bringing healing from illness, spiritual protection in the digital age, and life-changing miracles ? has been revealed in a rare and intense way at this very moment.",
+    "callout": "Invoke the intercession of Blessed Carlo Acutis. Carlo brings healing, protection, and miracles for those who seek his spiritual help with genuine faith, inspired by the Eucharist and holy technology.",
+    "p3Before": "this is not a common prayer. It is a ",
+    "keyLabel": "secret spiritual key",
+    "p3After": "activated now in a unique divine moment (at the beginning of 2026, when graces flow with maximum intensity for those who seize them).",
+    "keyAlt": "Carlo Acutis with divine light and eucharistic elements",
+    "keyCaption": "Carlo Acutis with divine light and eucharistic elements",
+    "p4": "I saw, in deep prayer, how this secret prayer opens doors that remain closed for most. Healing from cancer and serious illnesses, protection against modern evils, spiritual prosperity, release from heavy burdens? precise events you cannot afford to miss.",
+    "urgency": "But there is a detail that worries me for you: this activation window is short. It is open only until midnight today.",
+    "revealTitle": "{name}, THIS IS EXACTLY WHAT CARLO ACUTIS' SECRET PRAYER SHOWED ME FOR YOU",
+    "revealItems": [
+      {
+        "title": "Location of the secret point:",
+        "text": "Carlo illuminates your soul with his eucharistic devotion, activating protection and healing that remain hidden."
+      },
+      {
+        "title": "Three-layer introspection:",
+        "text": "Mental (against modern doubts), emotional (healing of wounds), and spiritual (eucharistic protection)."
+      },
+      {
+        "title": "Roadmap 2026:",
+        "text": "What to invoke for healing and protection miracles, key dates inspired by Carlo's life."
+      }
+    ],
+    "secretAlt": "Carlo Acutis Secret Prayer",
+    "mustSeeTitle": "{name}, YOU MUST SEE THIS PRAYER BEFORE MIDNIGHT",
+    "mustSeeText": "The secret point that Carlo Acutis has opened in your soul must be taken before midnight. If not, it closes for a full year, and what you have not invoked will repeat with greater force.",
+    "quote": "Don't be the one who regrets it.",
+    "priceTitle": "One-time price today",
+    "priceLimit": "Only until midnight",
+    "cta": "Receive my Prayer",
+    "donationTextLine1": "This $9 donation is a symbolic contribution and helps cover costs.",
+    "donationTextLine2": "It sustains the mission of offering prayer and spiritual support to those who suffer, reaching the sick and the families most in need, always in service of the Holy Faith.",
+    "donationTextLine3": "Your generosity keeps this work alive.",
+    "testimonialsTitle": "Thousands of Satisfied People Worldwide",
+    "testimonials": [
+      {
+        "t": "Dear Father Juan, Carlo Acutis' secret prayer has been a miracle in my life. After receiving it, I felt immediate spiritual protection against the illnesses that plagued me. My cancer went into remission in an inexplicable way, and now I live with renewed faith, inspired by Carlo's eucharistic devotion.",
+        "n": "Laura, Spain"
+      },
+      {
+        "t": "I was skeptical, but Carlo Acutis' personalized prayer opened my eyes. My family was in crisis, and thanks to this intercession, we found emotional healing and protection in our daily life. Carlo, the modern blessed, has blessed us with miracles doctors cannot explain.",
+        "n": "Marc, Italy"
+      },
+      {
+        "t": "Carlo's secret prayer gave me the strength to overcome a serious illness. His message of protection in the digital age helped me balance my spiritual and daily life. Now my health is better than ever, and I feel his presence guiding me each day.",
+        "n": "Christine, France"
+      },
+      {
+        "t": "Carlo Acutis helped me find healing and protection in difficult moments. After the prayer, my son recovered from an illness that seemed incurable. We are eternally grateful for this miraculous and modern intercession.",
+        "n": "Kim, United States"
+      }
+    ],
+    "finalNotice": "Carlo Acutis does not negotiate. The window closes soon.",
+    "footerRights": "? 2026 Carlo Acutis Mission. All rights reserved.",
+    "footerDisclaimer": "This site is not part of the Facebook website or Facebook Inc. Additionally, this site is NOT endorsed by Facebook in any way. FACEBOOK is a trademark of FACEBOOK, Inc.",
+    "headerAlt": "Carlo Acutis",
+    "arrowAlt": "Carlo Acutis"
+  }
+
 }

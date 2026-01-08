@@ -345,4 +345,74 @@
     "arrowAlt": "Padre P?o"
   }
 
+,
+  "CarloAcutisSelling": {
+    "fallbackName": "hijo",
+    "heroTitleAfterName": "UN PUNTO SECRETO EN TU ALMA HA SIDO ACTIVADO POR CARLO ACUTIS",
+    "heroSubtitle": "QUE REVELA ESTA ORACI?N SECRETA SOLO HASTA MEDIANOCHE DEL {date}",
+    "p1Before": "Anoche, mientras oraba por los nombres de nuestra lista, algo excepcional ocurri?. El esp?ritu de ",
+    "p1Strong": "Carlo Acutis, el beato de la Eucarist?a y los milagros modernos",
+    "p1After": " me trajo un mensaje urgente y personal para ti.",
+    "p2Before": "Una ",
+    "secretPrayer": "oraci?n secreta",
+    "p2After": "que ?l guardaba en su coraz?n y usaba en privado para invocar su intercesi?n poderosa ? trayendo cura de enfermedades, protecci?n espiritual en la era digital y milagros que cambian vidas ? ha sido revelada de forma rara e intensa en este preciso momento.",
+    "callout": "Invoca la intercesi?n del beato Carlo Acutis. Carlo trae cura, protecci?n y milagros para quienes buscan su ayuda espiritual con fe genuina, inspirados en la Eucarist?a y la tecnolog?a santa.",
+    "p3Before": "esto no es una oraci?n com?n. Es una ",
+    "keyLabel": "llave espiritual secreta",
+    "p3After": "activada ahora en un momento divino ?nico (al inicio de 2026, cuando las gracias fluyen con m?xima intensidad para quien las agarra).",
+    "keyAlt": "Carlo Acutis con luz divina y elementos eucar?sticos",
+    "keyCaption": "Carlo Acutis con luz divina y elementos eucar?sticos",
+    "p4": "Vi, en oraci?n profunda, c?mo esta oraci?n secreta abre puertas que permanecen cerradas para la mayor?a. Cura de c?ncer y enfermedades graves, protecci?n contra males modernos, prosperidad espiritual, liberaci?n de cargas pesadas? eventos precisos que no puedes dejar pasar.",
+    "urgency": "Pero hay un detalle que me preocupa por ti: esta ventana de activaci?n es corta. Est? abierta solo hasta medianoche de hoy.",
+    "revealTitle": "{name}, ESTO ES EXACTAMENTE LO QUE LA ORACI?N SECRETA DE CARLO ACUTIS ME MOSTR? PARA TI",
+    "revealItems": [
+      {
+        "title": "Localizaci?n del punto secreto:",
+        "text": "Carlo ilumina tu alma con su devoci?n eucar?stica, activando protecci?n y cura que permanecen ocultas."
+      },
+      {
+        "title": "Introspecci?n en tres capas:",
+        "text": "Mental (contra dudas modernas), emocional (cura de heridas) y espiritual (protecci?n eucar?stica)."
+      },
+      {
+        "title": "Roadmap 2026:",
+        "text": "Qu? invocar para milagros de cura y protecci?n, fechas clave inspiradas en la vida de Carlo."
+      }
+    ],
+    "secretAlt": "Oraci?n Secreta de Carlo Acutis",
+    "mustSeeTitle": "{name}, DEBES VER ESTA ORACI?N ANTES DE MEDIANOCHE",
+    "mustSeeText": "El punto secreto que Carlo Acutis ha abierto en tu alma tiene que ser tomado antes de medianoche. Si no, se cierra por un a?o entero, y lo que no hayas invocado se repetir? con m?s fuerza.",
+    "quote": "No seas quien se arrepienta.",
+    "priceTitle": "Precio ?nico hoy",
+    "priceLimit": "Solo hasta medianoche",
+    "cta": "Recibir mi Oraci?n",
+    "donationTextLine1": "Esta donaci?n de $9 es una contribuci?n simb?lica y ayuda a cubrir los costos.",
+    "donationTextLine2": "Contin?a la misi?n de brindar oraci?n y apoyo espiritual a quienes sufren, llegando a los enfermos y a las familias m?s necesitadas, siempre al servicio de la Santa Fe.",
+    "donationTextLine3": "Su generosidad mantiene viva esta labor.",
+    "testimonialsTitle": "Miles de Personas Satisfechas en Todo el Mundo",
+    "testimonials": [
+      {
+        "t": "Querido Padre Juan, la oraci?n secreta de Carlo Acutis ha sido un milagro en mi vida. Despu?s de recibirla, sent? una protecci?n espiritual inmediata contra las enfermedades que me acosaban. Mi c?ncer remiti? de manera inexplicable, y ahora vivo con fe renovada, inspirado en la devoci?n eucar?stica de Carlo.",
+        "n": "Laura, Espa?a"
+      },
+      {
+        "t": "Era esc?ptico, pero la oraci?n personalizada de Carlo Acutis me abri? los ojos. Mi familia estaba en crisis, y gracias a esta intercesi?n, encontramos cura emocional y protecci?n en nuestra vida diaria. Carlo, el beato moderno, nos ha bendecido con milagros que los m?dicos no explican.",
+        "n": "Marc, Italia"
+      },
+      {
+        "t": "La oraci?n secreta de Carlo me dio la fuerza para superar una enfermedad grave. Su mensaje de protecci?n en la era digital me ayud? a equilibrar mi vida espiritual y cotidiana. Ahora, mi salud es mejor que nunca, y siento su presencia gui?ndome cada d?a.",
+        "n": "Christine, Francia"
+      },
+      {
+        "t": "Carlo Acutis me ayud? a encontrar cura y protecci?n en momentos dif?ciles. Despu?s de la oraci?n, mi hijo se recuper? de una enfermedad que parec?a incurable. Estamos eternamente agradecidos por esta intercesi?n milagrosa y moderna.",
+        "n": "Kim, Estados Unidos"
+      }
+    ],
+    "finalNotice": "Carlo Acutis no negocia. La ventana se cierra pronto.",
+    "footerRights": "? 2026 Misi?n Carlo Acutis. Todos los derechos reservados.",
+    "footerDisclaimer": "Este sitio no forma parte del sitio web de Facebook o Facebook Inc. Adem?s, este sitio NO est? respaldado por Facebook de ninguna manera. FACEBOOK es una marca comercial de FACEBOOK, Inc.",
+    "headerAlt": "Carlo Acutis",
+    "arrowAlt": "Carlo Acutis"
+  }
+
 }
