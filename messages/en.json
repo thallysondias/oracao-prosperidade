@@ -278,4 +278,71 @@
     "buyAllPrayers": "Buy All Prayers",
     "unlockDescription": "Unlock all exclusive prayers and meditations"
   }
+,
+  "PadrePioSelling": {
+    "fallbackName": "child",
+    "heroTitleAfterName": "A SECRET POINT IN YOUR SOUL HAS BEEN ACTIVATED BY PADRE PIO",
+    "heroSubtitle": "WHAT THIS SECRET PRAYER REVEALS ONLY UNTIL MIDNIGHT ON {date}",
+    "p1Before": "Last night, while I prayed over the names on our list, something exceptional happened. The spirit of ",
+    "p1Strong": "Padre Pio, the saint of the stigmata",
+    "p1After": " brought me an urgent and personal message for you.",
+    "p2Before": "A ",
+    "secretPrayer": "secret prayer",
+    "p2After": "that he kept in his heart and used privately to invoke his powerful intercession ? bringing deep healing, protection against all evil, and life-changing miracles ? has been revealed in a rare and intense way at this very moment.",
+    "callout": "Invoke the intercession of the saint of the stigmata. Padre Pio brings healing, protection, and miracles for those who seek his spiritual help with genuine faith.",
+    "p3Before": "this is not a common prayer. It is a ",
+    "keyLabel": "secret spiritual key",
+    "p3After": "activated now in a unique divine moment (at the beginning of 2026, when graces flow with maximum intensity for those who seize them).",
+    "keyAlt": "Padre Pio with stigmata illuminated by divine light",
+    "keyCaption": "Padre Pio with stigmata illuminated by divine light",
+    "p4": "I saw, in deep prayer, how this secret prayer opens doors that remain closed for most. Love, health, prosperity, release from heavy burdens? precise events you cannot afford to miss.",
+    "urgency": "But there is a detail that worries me for you: this activation window is short. It is open only until midnight today.",
+    "revealTitle": "{name}, THIS IS EXACTLY WHAT PADRE PIO'S SECRET PRAYER SHOWED ME FOR YOU",
+    "revealItems": [
+      {
+        "title": "Location of the secret point:",
+        "text": "This key acts only once a year, illuminating what normally remains hidden in your soul."
+      },
+      {
+        "title": "Three-layer introspection:",
+        "text": "Mental guidance (your thoughts), emotional (what you keep silent), and spiritual (energy blockages)."
+      },
+      {
+        "title": "Roadmap 2026:",
+        "text": "What to invoke in the first months, key dates for miracles, and how to align your path."
+      }
+    ],
+    "secretAlt": "Padre Pio Secret Prayer",
+    "mustSeeTitle": "{name}, YOU MUST SEE THIS PRAYER BEFORE MIDNIGHT",
+    "mustSeeText": "The secret point that Padre Pio has opened in your soul must be taken before midnight. If not, it closes for a full year, and what you have not invoked will repeat with greater force.",
+    "quote": "Don't be the one who regrets it.",
+    "priceTitle": "One-time price today",
+    "priceLimit": "Only until midnight",
+    "cta": "Receive my Prayer",
+    "testimonialsTitle": "Thousands of Satisfied People Worldwide",
+    "testimonials": [
+      {
+        "t": "Dear Father Juan, I don't know exactly how this secret prayer of Padre Pio works, but it truly works. Last year felt like a miracle after receiving the personalized prayer and following your guidance. My husband and I were going through a very difficult crisis in our marriage, and thanks to this prayer we found our way back to each other. Now we live in a better world, full of love and understanding. The protection we feel is real and tangible.",
+        "n": "Laura & Marc, California"
+      },
+      {
+        "t": "I received my first personalized prayer from Padre Pio several months ago and then again recently. I must admit I was skeptical about these spiritual things, but to my amazement, both times the events happened exactly as predicted. My health improved in ways doctors could not explain, and I found the inner peace I had been searching for for years. I do not believe in such coincidences, so thank you Father Juan, I will definitely keep using your services in the future.",
+        "n": "Christine, Netherlands"
+      },
+      {
+        "t": "Padre Pio helped me find the right path in my career, which had been a huge problem throughout my life. After receiving the personalized prayer I found confidence in my strengths and the ability to move forward, and I finally did it! I still return to my prayer, which is very insightful and useful in daily life. The spiritual protection I feel is incredible, and my work now prospers in a way I never thought possible.",
+        "n": "Francis, Ireland"
+      },
+      {
+        "t": "You did extraordinary work. When I first contacted you I was going through a very difficult time in my life and your guidance and Padre Pio's prayer showed me how to resolve things. Now I am living comfortably, I am with an absolutely amazing man, and I have everything I have always wanted. I don't know where I would be without your help and I am so grateful for guiding me to where I am now. I can't thank you enough for the wonderful work you have done and for your support. I hope you can change many lives as you changed mine, and I want to encourage you to do so.",
+        "n": "Kim, Singapore"
+      }
+    ],
+    "finalNotice": "Padre Pio does not negotiate. The window closes soon.",
+    "footerRights": "? 2026 Padre Pio Mission. All rights reserved.",
+    "footerDisclaimer": "This site is not part of the Facebook website or Facebook Inc. Additionally, this site is NOT endorsed by Facebook in any way. FACEBOOK is a trademark of FACEBOOK, Inc.",
+    "headerAlt": "Padre Pio",
+    "arrowAlt": "Padre Pio"
+  }
+
 }

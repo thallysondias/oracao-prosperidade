@@ -278,4 +278,71 @@
     "buyAllPrayers": "Compre Todas as Orações",
     "unlockDescription": "Desbloqueie todas as orações e meditações exclusivas"
   }
+,
+  "PadrePioSelling": {
+    "fallbackName": "filho",
+    "heroTitleAfterName": "UM PONTO SECRETO NA SUA ALMA FOI ATIVADO PELO PADRE PIO",
+    "heroSubtitle": "O QUE ESTA ORA??O SECRETA REVELA SOMENTE AT? MEIA-NOITE DE {date}",
+    "p1Before": "Ontem ? noite, enquanto eu orava pelos nomes da nossa lista, algo excepcional aconteceu. O esp?rito do ",
+    "p1Strong": "Padre Pio, o santo dos estigmas",
+    "p1After": " me trouxe uma mensagem urgente e pessoal para voc?.",
+    "p2Before": "Uma ",
+    "secretPrayer": "ora??o secreta",
+    "p2After": "que ele guardava no cora??o e usava em particular para invocar sua intercess?o poderosa ? trazendo cura profunda, prote??o contra todo mal e milagres que mudam vidas ? foi revelada de forma rara e intensa neste exato momento.",
+    "callout": "Invoque a intercess?o do santo dos estigmas. Padre Pio traz cura, prote??o e milagres para quem busca sua ajuda espiritual com f? genu?na.",
+    "p3Before": "isso n?o ? uma ora??o comum. ? uma ",
+    "keyLabel": "chave espiritual secreta",
+    "p3After": "ativada agora em um momento divino ?nico (no in?cio de 2026, quando as gra?as fluem com m?xima intensidade para quem as agarra).",
+    "keyAlt": "Padre Pio com estigmas iluminados pela luz divina",
+    "keyCaption": "Padre Pio com estigmas iluminados pela luz divina",
+    "p4": "Vi, em ora??o profunda, como esta ora??o secreta abre portas que permanecem fechadas para a maioria. Amor, sa?de, prosperidade, liberta??o de cargas pesadas? eventos precisos que voc? n?o pode deixar passar.",
+    "urgency": "Mas h? um detalhe que me preocupa por voc?: esta janela de ativa??o ? curta. Est? aberta apenas at? meia-noite de hoje.",
+    "revealTitle": "{name}, ISTO ? EXATAMENTE O QUE A ORA??O SECRETA DO PADRE PIO ME MOSTROU PARA VOC?",
+    "revealItems": [
+      {
+        "title": "Localiza??o do ponto secreto:",
+        "text": "Esta chave age apenas uma vez por ano, iluminando o que normalmente permanece oculto na sua alma."
+      },
+      {
+        "title": "Introspec??o em tr?s camadas:",
+        "text": "Guia mental (seus pensamentos), emocional (o que voc? cala) e espiritual (bloqueios de energia)."
+      },
+      {
+        "title": "Roadmap 2026:",
+        "text": "O que invocar nos primeiros meses, datas-chave para milagres e como alinhar o seu caminho."
+      }
+    ],
+    "secretAlt": "Ora??o Secreta do Padre Pio",
+    "mustSeeTitle": "{name}, VOC? PRECISA VER ESTA ORA??O ANTES DA MEIA-NOITE",
+    "mustSeeText": "O ponto secreto que o Padre Pio abriu na sua alma precisa ser tomado antes da meia-noite. Se n?o, ele se fecha por um ano inteiro, e o que voc? n?o invocou se repetir? com mais for?a.",
+    "quote": "N?o seja quem se arrepende.",
+    "priceTitle": "Pre?o ?nico hoje",
+    "priceLimit": "S? at? meia-noite",
+    "cta": "Receber minha Ora??o",
+    "testimonialsTitle": "Milhares de Pessoas Satisfeitas no Mundo Todo",
+    "testimonials": [
+      {
+        "t": "Querido Padre Juan, n?o sei como funciona exatamente esta ora??o secreta do Padre Pio, mas ela realmente funciona. O ano passado foi como um milagre depois de receber a ora??o personalizada e seguir seus conselhos. Meu esposo e eu est?vamos passando por uma crise muito dif?cil no nosso casamento, e gra?as a esta ora??o encontramos o caminho de volta um para o outro. Agora vivemos em um mundo melhor, cheio de amor e compreens?o. A prote??o que sentimos ? real e palp?vel.",
+        "n": "Laura & Marc, Calif?rnia"
+      },
+      {
+        "t": "Recebi minha primeira ora??o personalizada do Padre Pio h? v?rios meses e depois novamente h? pouco tempo. Devo admitir que era c?tica sobre esse tipo de coisas espirituais, mas, para meu espanto, nas duas vezes os eventos aconteceram exatamente como foi previsto. Minha sa?de melhorou de um jeito que os m?dicos n?o conseguiram explicar, e encontrei a paz interior que estava procurando h? anos. N?o acredito em tais coincid?ncias, ent?o obrigada Padre Juan, certamente continuarei usando seus servi?os no futuro.",
+        "n": "Christine, Pa?ses Baixos"
+      },
+      {
+        "t": "Padre Pio me ajudou a encontrar o caminho certo na minha carreira, que tinha sido um problema enorme por toda a minha vida. Depois de receber a ora??o personalizada encontrei confian?a nas minhas for?as e a capacidade de avan?ar, e finalmente consegui! Ainda volto ? minha ora??o, que ? muito perspicaz e ?til no dia a dia. A prote??o espiritual que sinto ? incr?vel, e meu trabalho agora prospera de uma maneira que eu nunca imaginei poss?vel.",
+        "n": "Francis, Irlanda"
+      },
+      {
+        "t": "Voc? fez um trabalho extraordin?rio. Quando entrei em contato pela primeira vez, eu estava passando por um momento muito dif?cil na minha vida e sua orienta??o e a ora??o do Padre Pio me mostraram como resolver as coisas. Agora estou vivendo confortavelmente, estou com um homem absolutamente incr?vel e tenho tudo o que sempre quis na minha vida. N?o sei onde eu estaria sem sua ajuda e sou muito grata por me guiar at? onde estou agora. N?o consigo agradecer o suficiente pelo trabalho maravilhoso que voc? fez e pelo seu apoio. Espero que voc? possa mudar a vida de muitas pessoas como mudou a minha e quero encorajar voc? a fazer isso.",
+        "n": "Kim, Singapura"
+      }
+    ],
+    "finalNotice": "Padre Pio n?o negocia. A janela se fecha em breve.",
+    "footerRights": "? 2026 Miss?o Padre Pio. Todos os direitos reservados.",
+    "footerDisclaimer": "Este site n?o faz parte do site do Facebook ou Facebook Inc. Al?m disso, este site N?O ? endossado pelo Facebook de forma alguma. FACEBOOK ? uma marca comercial da FACEBOOK, Inc.",
+    "headerAlt": "Padre Pio",
+    "arrowAlt": "Padre Pio"
+  }
+
 }
