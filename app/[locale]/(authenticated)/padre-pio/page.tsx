@@ -7,7 +7,7 @@ import { ChevronLeft, Play, Pause, Volume2, Heart, ChevronDown } from 'lucide-re
 
 import PadrePio from '@/components/oracao/PadrePio';
 
-export default function PadrePioPage() {
+export default function SaintBenedictPage() {
   const router = useRouter();
   const t = useTranslations('SaintBenedict');
   const [isPlaying, setIsPlaying] = useState(false);
@@ -17,7 +17,7 @@ export default function PadrePioPage() {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const image = '/prayer/padrepio.png';
-  const audioUrl = '/prayer/padrepio.mp3'; // Placeholder
+  const audioUrl = '/prayer/padrepio.MP3'; // Placeholder
 
   const handlePlayPause = () => {
     if (videoRef.current) {
@@ -84,7 +84,7 @@ export default function PadrePioPage() {
             <div className="aspect-square rounded-lg overflow-hidden shadow-2xl">
               <img
                 src={image}
-                alt="Padre Pío"
+                alt={t('title')}
                 width={400}
                 height={400}
                 className="w-full h-full object-cover aspect-square"
@@ -96,8 +96,8 @@ export default function PadrePioPage() {
           <div className="mb-6">
             <div className="flex items-start justify-between mb-2">
               <div className="flex-1">
-                <h1 className="text-2xl font-bold text-white mb-2">Oración al Padre Pío</h1>
-                <p className="text-gray-300 text-sm">Santo de los Estigmas</p>
+                <h1 className="text-2xl font-bold text-white mb-2">Oración al Ángel de mi Guarda</h1>
+                <p className="text-gray-300 text-sm">Carlos Acutis</p>
               </div>
               <button
                 onClick={() => setIsFavorite(!isFavorite)}
@@ -108,7 +108,7 @@ export default function PadrePioPage() {
                 />
               </button>
             </div>
-          </div> 
+          </div>
         </div>
 
         {/* Hidden video element */}
@@ -126,9 +126,9 @@ export default function PadrePioPage() {
       {/* Prayer Text Section */}
       <div>
         {/* Sticky Controls + Progress Bar */}
-       <div className='sticky top-0 z-50 bg-black border-b border-yellow-500/20 px-4 py-2'>
+        <div className='sticky top-0 z-50 bg-black border-b border-yellow-500/20 px-4 py-2'>
           <div className="max-w-2xl mx-auto flex items-center justify-between gap-4">
-      
+            {/* Play Button */}
             <button
               onClick={handlePlayPause}
               className="bg-yellow-500 hover:bg-yellow-600 text-black rounded-full p-2 transition transform hover:scale-105 shrink-0"
@@ -140,7 +140,7 @@ export default function PadrePioPage() {
               )}
             </button>
 
-    
+            {/* Progress Bar */}
             <div className="flex items-center justify-between gap-2 flex-1">
               <span className="text-xs text-gray-400 whitespace-nowrap">{formatTime(played * duration)}</span>
               <input
@@ -157,12 +157,14 @@ export default function PadrePioPage() {
           </div>
         </div>
 
- 
+        {/* Animated Down Arrow */}
         <div className="flex justify-center py-8 bg-black">
           <div className="animate-bounce">
             <ChevronDown className="h-8 w-8 text-yellow-500" />
           </div>
-        </div> 
+        </div>
+
+
         
         <PadrePio />
       </div>

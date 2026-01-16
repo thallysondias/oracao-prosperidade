@@ -42,7 +42,7 @@ export function PrayersSlider() {
     descriptionKey: 'saintBenedictDescription',
     image: '/prayer/saobenedito.jpeg',
     route: '/saint-benedict',
-    productName: null, // Sempre livre (ou pode usar "San Benito Player" se quiser verificar também)
+    productName: 'San Benito Player', // Sempre livre (ou pode usar "San Benito Player" se quiser verificar também)
     purchaseUrl: `https://donate.stripe.com/6oUcN48h50P16ZQgR66kg07?prefilled_email=${user?.email || ''}`,
   },
     {
@@ -52,7 +52,7 @@ export function PrayersSlider() {
     image: '/prayer/carlosacuri.jpeg',
     route: '/carlos-acutis',
 /* productName: 'Oração do Carlo Acutis', */
-     productName: null, 
+    productName: null, 
     purchaseUrl: `https://donate.stripe.com/6oUbJ0eFtfJV5VMgR66kg03?prefilled_email=${user?.email || ''}`,
   },
   {
@@ -61,7 +61,7 @@ export function PrayersSlider() {
     descriptionKey: 'padrePioDescription',
     image: '/prayer/padrepio.png',
     route: '/padre-pio',
-    productName: 'Oração Padre Pio',
+    productName: 'Padre Pio',
     purchaseUrl: `https://donate.stripe.com/9B6cN41SH9lx3NEbwM6kg08?prefilled_email=${user?.email || ''}`,
   }
 
