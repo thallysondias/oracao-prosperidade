@@ -22,8 +22,29 @@ if (!STRIPE_WEBHOOK_SECRET) {
 }
 
 const stripe = new Stripe(STRIPE_SECRET_KEY, {
-  apiVersion: '2025-11-17.clover',
+  apiVersion: '2025-12-15.clover',
 });
+
+// Mapeamento de nomes de produtos do Stripe para nomes padronizados
+const STRIPE_PRODUCT_NAMES: Record<string, string> = {
+  'Oración de San Benito': 'Oración de San Benito',
+  'Padre Pio': 'Padre Pio',
+  'Pedido de Oración Personalizado': 'Pedido de Oración Personalizado',
+  '21 Días de Oración y Milagros en Vivo': '21 Días de Oración y Milagros en Vivo',
+  'Decreto de Riqueza de Salomón': 'Decreto de Riqueza de Salomón',
+  'Oración de Carlos Acutis': 'Oración de Carlos Acutis',
+};
+
+// Função para normalizar o nome do produto
+function normalizeProductName(stripeName: string): string {
+  // Procura por correspondência parcial no nome do produto
+  for (const [key, value] of Object.entries(STRIPE_PRODUCT_NAMES)) {
+    if (stripeName.includes(key) || key.includes(stripeName)) {
+      return value;
+    }
+  }
+  return stripeName;
+}
 
 type NormalizedStripePayload = {
   email: string;
@@ -65,7 +86,8 @@ function normalizeStripeEvent(event: Stripe.Event): NormalizedStripePayload | nu
         session.metadata?.buyer_name ||
         'Cliente Stripe';
       const productId = session.metadata?.product_id || 'stripe_product';
-      const productName = session.metadata?.product_name || session.metadata?.productId || 'Produto Stripe';
+      const rawProductName = session.metadata?.product_name || session.metadata?.productId || 'Produto Stripe';
+      const productName = normalizeProductName(rawProductName);
       const status = mapStripeStatus(event.type);
       const transactionId = session.payment_intent?.toString() || session.id;
 
@@ -100,7 +122,8 @@ function normalizeStripeEvent(event: Stripe.Event): NormalizedStripePayload | nu
           (intent.customer as string)) ??
         'Cliente Stripe';
       const productId = intent.metadata?.product_id || 'stripe_product';
-      const productName = intent.metadata?.product_name || 'Produto Stripe';
+      const rawProductName = intent.metadata?.product_name || 'Produto Stripe';
+      const productName = normalizeProductName(rawProductName);
       const status = mapStripeStatus(event.type);
 
       return {
@@ -130,7 +153,8 @@ function normalizeStripeEvent(event: Stripe.Event): NormalizedStripePayload | nu
         (charge.metadata?.customer_name as string | undefined) ||
         'Cliente Stripe';
       const productId = charge.metadata?.product_id || 'stripe_product';
-      const productName = charge.metadata?.product_name || 'Produto Stripe';
+      const rawProductName = charge.metadata?.product_name || 'Produto Stripe';
+      const productName = normalizeProductName(rawProductName);
       const status = mapStripeStatus(event.type);
 
       return {
@@ -153,6 +177,9 @@ async function addToMailingBoss(email: string, name: string, tag: string) {
     const [firstName, ...lastNameParts] = name.split(' ');
     const lastName = lastNameParts.join(' ') || '';
 
+    // Adicionar tag 'stripe' junto com o status
+    const tags = `${tag},stripe`;
+
     const response = await fetch(`${MAILINGBOSS_API_URL}/${MAILINGBOSS_TOKEN}`, {
       method: 'POST',
       headers: {
@@ -163,7 +190,7 @@ async function addToMailingBoss(email: string, name: string, tag: string) {
         list_uid: MAILINGBOSS_LIST_UID,
         fname: firstName,
         lname: lastName,
-        taginternals: tag,
+        taginternals: tags,
       }),
     });
 
@@ -278,6 +305,7 @@ export async function POST(request: Request) {
     product_name: productName,
     transaction_id: transactionId,
     status,
+    payment_gateway: 'stripe',
     purchase_data: event,
     purchased_at: purchasedAt,
   });

@@ -171,6 +171,7 @@ export async function POST(request: Request) {
       product_name: product.name,
       transaction_id: purchase.transaction,
       status: mappedStatus,
+      payment_gateway: "hotmart",
       purchase_data: body,
       purchased_at: purchasedAt.toISOString(),
     });
