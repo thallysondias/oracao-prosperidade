@@ -14,6 +14,20 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  skipTrailingSlashRedirect: true,
+  async headers() {
+    return [
+      {
+        source: '/api/webhooks/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'no-store, must-revalidate',
+          },
+        ],
+      },
+    ];
+  },
 };
  
 const withNextIntl = createNextIntlPlugin();
