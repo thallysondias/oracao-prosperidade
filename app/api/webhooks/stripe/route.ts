@@ -1,5 +1,3 @@
-'use server';
-
 import { headers } from 'next/headers';
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
@@ -7,7 +5,7 @@ import Stripe from 'stripe';
 import { createClient } from '@/utils/supabase/server';
 
 const MAILINGBOSS_TOKEN = process.env.MAILINGBOSS_TOKEN || '75537:6ddeb64d3ac1a0e5a93cde784e73e243';
-const MAILINGBOSS_LIST_UID = process.env.MAILINGBOSS_LIST_UID || 'vh485p76so057';
+const MAILINGBOSS_LIST_UID = '696f4ee812328'; 
 const MAILINGBOSS_API_URL = 'https://member.mailingboss.com/integration/index.php/lists/subscribers/create';
 
 const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
