@@ -52,13 +52,48 @@ type NormalizedStripePayload = {
   transactionId: string;
   status: 'approved' | 'pending' | 'cancelled' | 'refunded' | 'chargeback';
   purchasedAt: string;
+  subscriptionItems?: Array<{
+    priceId: string;
+    productId: string;
+    productName: string;
+  }>;
 };
+
+/**
+ * Processa os itens de uma subscription e retorna array com todos os produtos
+ */
+async function getSubscriptionItems(subscriptionId: string): Promise<Array<{ priceId: string; productId: string; productName: string }>> {
+  try {
+    const subscription = await stripe.subscriptions.retrieve(subscriptionId, {
+      expand: ['items.data.price.product'],
+    });
+
+    return subscription.items.data.map((item) => {
+      const priceId = item.price.id;
+      const product = item.price.product as Stripe.Product;
+      const productId = typeof product === 'string' ? product : product.id;
+      
+      // Usa o nickname do price ou nome do produto como fallback
+      const productName = item.price.nickname || product.name || 'Produto Stripe';
+
+      return {
+        priceId,
+        productId,
+        productName,
+      };
+    });
+  } catch (error) {
+    console.error('Error fetching subscription items:', error);
+    return [];
+  }
+}
 
 function mapStripeStatus(eventType: string): NormalizedStripePayload['status'] {
   switch (eventType) {
     case 'checkout.session.completed':
     case 'payment_intent.succeeded':
     case 'invoice.payment_succeeded':
+    case 'customer.subscription.created':
       return 'approved';
     case 'charge.refunded':
       return 'refunded';
@@ -73,7 +108,7 @@ function mapStripeStatus(eventType: string): NormalizedStripePayload['status'] {
   }
 }
 
-function normalizeStripeEvent(event: Stripe.Event): NormalizedStripePayload | null {
+async function normalizeStripeEvent(event: Stripe.Event): Promise<NormalizedStripePayload | null> {
   switch (event.type) {
     case 'checkout.session.completed': {
       const session = event.data.object as Stripe.Checkout.Session;
@@ -83,14 +118,33 @@ function normalizeStripeEvent(event: Stripe.Event): NormalizedStripePayload | nu
         session.metadata?.customer_name ||
         session.metadata?.buyer_name ||
         'Cliente Stripe';
-      const productId = session.metadata?.product_id || 'stripe_product';
-      const rawProductName = session.metadata?.product_name || session.metadata?.productId || 'Produto Stripe';
-      const productName = normalizeProductName(rawProductName);
+      
+      if (!email) {
+        return null;
+      }
+
       const status = mapStripeStatus(event.type);
       const transactionId = session.payment_intent?.toString() || session.id;
 
-      if (!email) {
-        return null;
+      // Se for uma subscription, busca os itens da subscription
+      let subscriptionItems: Array<{ priceId: string; productId: string; productName: string }> = [];
+      
+      if (session.subscription && typeof session.subscription === 'string') {
+        subscriptionItems = await getSubscriptionItems(session.subscription);
+      }
+
+      // Se tiver itens da subscription, usa o primeiro como principal e adiciona os outros
+      let productId: string;
+      let productName: string;
+
+      if (subscriptionItems.length > 0) {
+        productId = subscriptionItems[0].productId;
+        productName = subscriptionItems[0].productName;
+      } else {
+        // Fallback para metadata
+        productId = session.metadata?.product_id || 'stripe_product';
+        const rawProductName = session.metadata?.product_name || session.metadata?.productId || 'Produto Stripe';
+        productName = normalizeProductName(rawProductName);
       }
 
       return {
@@ -101,6 +155,61 @@ function normalizeStripeEvent(event: Stripe.Event): NormalizedStripePayload | nu
         transactionId,
         status,
         purchasedAt: new Date((session.created || Math.floor(Date.now() / 1000)) * 1000).toISOString(),
+        subscriptionItems: subscriptionItems.length > 0 ? subscriptionItems : undefined,
+      };
+    }
+    case 'customer.subscription.created': {
+      const subscription = event.data.object as Stripe.Subscription;
+      
+      // Busca o customer para pegar o email
+      let email: string | undefined;
+      let name: string = 'Cliente Stripe';
+      
+      try {
+        const customer = await stripe.customers.retrieve(subscription.customer as string);
+        if (customer && !customer.deleted) {
+          email = customer.email ?? undefined;
+          name = customer.name || name;
+        }
+      } catch (error) {
+        console.error('Error fetching customer:', error);
+        return null;
+      }
+
+      if (!email) {
+        return null;
+      }
+
+      const status = mapStripeStatus(event.type);
+      const transactionId = subscription.id;
+
+      // Processa os itens da subscription
+      const subscriptionItems = subscription.items.data.map((item) => {
+        const priceId = item.price.id;
+        const product = item.price.product as Stripe.Product;
+        const productId = typeof product === 'string' ? product : product.id;
+        const productName = item.price.nickname || (typeof product !== 'string' ? product.name : null) || 'Produto Stripe';
+
+        return {
+          priceId,
+          productId,
+          productName,
+        };
+      });
+
+      // Usa o primeiro item como principal
+      const productId = subscriptionItems[0]?.productId || 'stripe_product';
+      const productName = subscriptionItems[0]?.productName || 'Produto Stripe';
+
+      return {
+        email,
+        name,
+        productId,
+        productName,
+        transactionId,
+        status,
+        purchasedAt: new Date((subscription.created || Math.floor(Date.now() / 1000)) * 1000).toISOString(),
+        subscriptionItems,
       };
     }
     case 'payment_intent.succeeded':
@@ -227,7 +336,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Invalid signature' }, { status: 400 });
   }
 
-  const normalized = normalizeStripeEvent(event);
+  const normalized = await normalizeStripeEvent(event);
 
   if (!normalized) {
     console.log('Stripe event ignored (missing data or unsupported type):', event.type);
@@ -235,7 +344,7 @@ export async function POST(request: Request) {
   }
 
   const supabase = await createClient();
-  const { email, name, productId, productName, transactionId, status, purchasedAt } = normalized;
+  const { email, name, productId, productName, transactionId, status, purchasedAt, subscriptionItems } = normalized;
 
   const { data: existingProfile } = await supabase
     .from('profiles')
@@ -266,6 +375,89 @@ export async function POST(request: Request) {
     profileId = existingProfile.id;
   }
 
+  // Se tiver múltiplos itens de subscription, cria uma compra para cada
+  if (subscriptionItems && subscriptionItems.length > 0) {
+    const purchasePromises = subscriptionItems.map(async (item, index) => {
+      const itemTransactionId = `${transactionId}_item_${index}`;
+      
+      const { data: existingPurchase } = await supabase
+        .from('purchases')
+        .select('id')
+        .eq('transaction_id', itemTransactionId)
+        .single();
+
+      if (existingPurchase) {
+        return supabase
+          .from('purchases')
+          .update({
+            status,
+            purchase_data: event,
+            updated_at: new Date().toISOString(),
+          })
+          .eq('transaction_id', itemTransactionId);
+      }
+
+      return supabase.from('purchases').insert({
+        profile_id: profileId,
+        email,
+        product_id: item.productId,
+        product_name: item.productName,
+        transaction_id: itemTransactionId,
+        status,
+        payment_gateway: 'stripe',
+        purchase_data: event,
+        purchased_at: purchasedAt,
+      });
+    });
+
+    const results = await Promise.all(purchasePromises);
+    const hasError = results.some((result) => result.error);
+
+    if (hasError) {
+      console.error('Error creating/updating some Stripe purchases:', results);
+      return NextResponse.json({ error: 'Failed to process some purchases' }, { status: 500 });
+    }
+
+    await addToMailingBoss(email, name, status);
+
+    // Verifica se algum dos produtos é "Pedido de Oração"
+    const hasPrayerRequest = subscriptionItems.some(
+      (item) =>
+        item.productName.includes('Pedido de Oración') ||
+        item.productName.includes('Pedido Personalizado') ||
+        item.productName.includes('Pedido de Oração')
+    );
+
+    if (status === 'approved' && hasPrayerRequest) {
+      const { error: updatePrayerError } = await supabase
+        .from('prayer_requests')
+        .update({
+          status: 'approved',
+          transaction_id: transactionId,
+          updated_at: new Date().toISOString(),
+        })
+        .eq('email', email)
+        .eq('status', 'pending')
+        .order('created_at', { ascending: false })
+        .limit(1);
+
+      if (updatePrayerError) {
+        console.error('Error updating prayer request (Stripe):', updatePrayerError);
+      } else {
+        console.log('Prayer request updated to approved (Stripe):', email);
+      }
+    }
+
+    return NextResponse.json({
+      success: true,
+      action: 'processed_subscription',
+      transaction: transactionId,
+      items: subscriptionItems.length,
+      status,
+    });
+  }
+
+  // Processamento para compras únicas (sem subscription items)
   const { data: existingPurchase } = await supabase
     .from('purchases')
     .select('id')
