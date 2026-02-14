@@ -17,7 +17,7 @@ export default function SaintBenedictPage() {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const image = '/prayer/padrepio.png';
-  const audioUrl = '/prayer/padrepio.MP3'; // Placeholder
+  const audioUrl = '/prayer/padrepio.mp3'; // Placeholder
 
   const handlePlayPause = () => {
     if (videoRef.current) {
@@ -97,7 +97,7 @@ export default function SaintBenedictPage() {
             <div className="flex items-start justify-between mb-2">
               <div className="flex-1">
                 <h1 className="text-2xl font-bold text-white mb-2">Oración al Ángel de mi Guarda</h1>
-                <p className="text-gray-300 text-sm">Carlos Acutis</p>
+                <p className="text-gray-300 text-sm">Padre Pio</p>
               </div>
               <button
                 onClick={() => setIsFavorite(!isFavorite)}
