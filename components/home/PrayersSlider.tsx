@@ -36,16 +36,17 @@ export function PrayersSlider() {
 
 
   const prayerCards: PrayerCard[] = [
-  {
-    id: 'saint-benedict',
-    titleKey: 'saintBenedictTitle',
-    descriptionKey: 'saintBenedictDescription',
-    image: '/prayer/saobenedito.jpeg',
-    route: '/saint-benedict',
-    productName: 'San Benito Player', // Sempre livre (ou pode usar "San Benito Player" se quiser verificar também)
-    purchaseUrl: `https://donate.stripe.com/6oUcN48h50P16ZQgR66kg07?prefilled_email=${user?.email || ''}`,
-  },
     {
+    id: 'padre-pio',
+    titleKey: 'padrePioTitle',
+    descriptionKey: 'padrePioDescription',
+    image: '/prayer/padrepio.png',
+    route: '/padre-pio',
+    /* productName: 'Padre Pio', */
+     productName: null, 
+    purchaseUrl: `https://donate.stripe.com/9B6cN41SH9lx3NEbwM6kg08?prefilled_email=${user?.email || ''}`,
+  },
+   {
     id: 'carlos-acutis',
     titleKey: 'carlosAcutisTitle',
     descriptionKey: 'carlosAcutisDescription',
@@ -56,13 +57,13 @@ export function PrayersSlider() {
     purchaseUrl: `https://donate.stripe.com/6oUbJ0eFtfJV5VMgR66kg03?prefilled_email=${user?.email || ''}`,
   },
   {
-    id: 'padre-pio',
-    titleKey: 'padrePioTitle',
-    descriptionKey: 'padrePioDescription',
-    image: '/prayer/padrepio.png',
-    route: '/padre-pio',
-    productName: 'Padre Pio',
-    purchaseUrl: `https://donate.stripe.com/9B6cN41SH9lx3NEbwM6kg08?prefilled_email=${user?.email || ''}`,
+    id: 'saint-benedict',
+    titleKey: 'saintBenedictTitle',
+    descriptionKey: 'saintBenedictDescription',
+    image: '/prayer/saobenedito.jpeg',
+    route: '/saint-benedict',
+    productName: 'San Benito Player', // Sempre livre (ou pode usar "San Benito Player" se quiser verificar também)
+    purchaseUrl: `https://donate.stripe.com/6oUcN48h50P16ZQgR66kg07?prefilled_email=${user?.email || ''}`,
   }
 
 ];
