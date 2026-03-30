@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Oracao e Prosperidade",
-  description: "Aplicativo de oracoes, reflexao espiritual e jornadas guiadas de fe e prosperidade.",
+  title: "Oracao e Reflexao",
+  description: "Aplicativo de oracoes, reflexao espiritual e conteudos guiados de fe.",
 };
 
 

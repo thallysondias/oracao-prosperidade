@@ -285,7 +285,7 @@ export function Challenge21Days() {
         <div className="relative overflow-hidden rounded-3xl shadow-2xl">
           <div className="relative h-96">
             <img
-              src="/cardeal/cardeal.png"
+              src="/cardeal/21dias.jpg"
               alt="Cardeal Giovanni Battista Re"
               className="w-full h-full object-cover object-center"
             />
@@ -405,7 +405,7 @@ export function Challenge21Days() {
         {/* Imagem de fundo com overlay */}
         <div className="relative h-80">
           <img
-            src="/cardeal/cardeal.png"
+            src="/cardeal/21dias.jpg"
             alt="Cardeal Giovanni Battista Re"
             className="w-full h-full object-cover object-center"
           />

@@ -23,7 +23,7 @@ export function PrayerRequest() {
       <div className="relative overflow-hidden rounded-2xl mb-8 shadow-xl">
         <div className="relative h-64">
           <img
-            src="/cardeal/cardeal-oracao.jpg"
+            src="/cardeal/cardeal.jpg"
             alt="Cardeal"
             className="w-full h-full object-cover object-center"
           />

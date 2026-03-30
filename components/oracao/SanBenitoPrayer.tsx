@@ -1,143 +1,149 @@
 import React from "react";
-import { useTranslations } from 'next-intl';
 
 export const SanBenitoPrayer: React.FC = () => {
-  const t = useTranslations('SaintBenedictPrayer');
-  
   return (
     <div className="max-w-3xl mx-auto p-6 text-white/90 leading-relaxed">
       <h1 className="text-3xl font-bold text-center text-yellow-700 mb-2">
-        {t('title')}
+        Oracion inspirada en San Benito
       </h1>
 
       <h3 className="text-center text-lg text-white/50 mb-8">
-        {t('subtitle')}
+        Un momento de recogimiento y fe
       </h3>
 
       <div className="flex justify-center gap-4 text-sm mb-8">
-        <span className="bg-white/10 text-yellow-700 px-3 py-1 rounded-full">{t('tags.prosperity')}</span>
-        <span className="bg-white/10 text-yellow-700 px-3 py-1 rounded-full">{t('tags.health')}</span>
-        <span className="bg-white/10 text-yellow-700  px-3 py-1 rounded-full">{t('tags.love')}</span>
-        <span className="bg-white/10 text-yellow-700 px-3 py-1 rounded-full">{t('tags.protection')}</span>
+        <span className="bg-white/10 text-yellow-700 px-3 py-1 rounded-full">Fe</span>
+        <span className="bg-white/10 text-yellow-700 px-3 py-1 rounded-full">Discernimiento</span>
+        <span className="bg-white/10 text-yellow-700 px-3 py-1 rounded-full">Calma</span>
+        <span className="bg-white/10 text-yellow-700 px-3 py-1 rounded-full">Reflexion</span>
       </div>
 
-      <p>{t('intro1')}</p>
-      <p className="mt-3">{t('intro2')}</p>
-      <p className="mt-3">{t('intro3')}</p>
+      <p>
+        San Benito, acompaname en este momento de oracion. Quiero hacer una
+        pausa, aquietar mi corazon y recordar que la fe tambien se construye en
+        el silencio, en la constancia y en la vida cotidiana.
+      </p>
 
-      {/* Invocación */}
+      <p className="mt-3">
+        Que este contenido me ayude a mirar mi jornada con mayor serenidad y a
+        fortalecer mi disposicion para actuar con prudencia, paciencia y
+        bondad.
+      </p>
+
+      <p className="mt-3">
+        No busco formulas ni promesas, sino un espacio sincero de reflexion que
+        me acerque a Dios y me ayude a vivir con mas presencia.
+      </p>
+
       <h2 className="text-2xl font-semibold text-yellow-700 mt-10 mb-4">
-        {t('invocationTitle')}
+        Inicio de la oracion
       </h2>
 
-      <p>{t('invocation1')}</p>
-      <p className="mt-3">{t('invocation2')}</p>
-      <p className="mt-3">{t('invocation3')}</p>
+      <p>
+        Ensename a reconocer aquello que hoy necesito cuidar en mi interior:
+        mis pensamientos, mis palabras, mis decisiones y mi manera de tratar a
+        quienes me rodean.
+      </p>
 
-      {/* Primera Petición */}
+      <p className="mt-3">
+        Que la oracion me ayude a salir del ruido y a recuperar una mirada mas
+        simple, mas humilde y mas atenta a lo esencial.
+      </p>
+
+      <p className="mt-3">
+        Que en los momentos de cansancio pueda encontrar aqui una pausa para
+        respirar, agradecer y seguir adelante con mayor claridad.
+      </p>
+
       <h2 className="text-2xl font-semibold text-yellow-700 mt-10 mb-4">
-        {t('firstPetitionTitle')}
+        Vida cotidiana
       </h2>
 
-      <h3 className="text-xl font-semibold text-yellow-600 mt-4">{t('workBlessingTitle')}</h3>
-      <p>{t('workBlessing')}</p>
+      <h3 className="text-xl font-semibold text-yellow-600 mt-4">
+        Trabajo y responsabilidades
+      </h3>
+      <p>
+        Ayudame a vivir mis responsabilidades diarias con honestidad,
+        equilibrio y dedicacion. Que pueda actuar con respeto hacia mi propio
+        proceso y hacia el camino de los demas.
+      </p>
 
-      <h3 className="text-xl font-semibold text-yellow-600 mt-4">{t('breakChainsTitle')}</h3>
-      <p>{t('breakChains')}</p>
+      <h3 className="text-xl font-semibold text-yellow-600 mt-4">
+        Pensamientos y decisiones
+      </h3>
+      <p>
+        Que aprenda a observar mis pensamientos con mas calma y a tomar
+        decisiones con menos impulso y mas discernimiento.
+      </p>
 
-      <h3 className="text-xl font-semibold text-yellow-600 mt-4">{t('multiplicationTitle')}</h3>
-      <p>{t('multiplication')}</p>
+      <h3 className="text-xl font-semibold text-yellow-600 mt-4">
+        Constancia interior
+      </h3>
+      <p>
+        Que la fe me sostenga en lo sencillo: en una palabra amable, en una
+        actitud paciente y en la capacidad de empezar de nuevo cada dia.
+      </p>
 
-      <p className="mt-3">{t('prosperity1')}</p>
-      <p className="italic mt-3">"{t('prosperity2')}"</p>
-      <p className="mt-3">{t('prosperity3')}</p>
+      <p className="mt-3">
+        Que este tiempo de oracion no me aparte de la realidad, sino que me
+        ayude a vivirla con mas equilibrio, responsabilidad y esperanza.
+      </p>
 
-      {/* Segunda Petición */}
       <h2 className="text-2xl font-semibold text-yellow-700 mt-10 mb-4">
-        {t('secondPetitionTitle')}
+        Relaciones y convivencia
       </h2>
 
-      <p>{t('health1')}</p>
+      <p>
+        Que pueda cuidar mis vinculos con mas escucha, mansedumbre y respeto.
+        Que en mis conversaciones haya mas verdad, paciencia y apertura al
+        dialogo.
+      </p>
 
-      <ul className="list-disc pl-6 mt-3 space-y-2">
-        <li><strong>{t('healthEyes')}</strong></li>
-        <li><strong>{t('healthEars')}</strong></li>
-        <li><strong>{t('healthHeart')}</strong></li>
-        <li><strong>{t('healthMind')}</strong></li>
-      </ul>
+      <p className="mt-3">
+        Ayudame a reconocer cuando necesito pedir perdon, hacer silencio o
+        volver a empezar con mas humildad.
+      </p>
 
-      <p className="mt-3">{t('health2')}</p>
-      <p className="mt-3">{t('health3')}</p>
-      <p className="mt-3">{t('health4')}</p>
+      <p className="mt-3">
+        Que mi presencia sea un signo de calma y no de prisa, de acogida y no
+        de dureza.
+      </p>
 
-      {/* Tercera Petición */}
       <h2 className="text-2xl font-semibold text-yellow-700 mt-10 mb-4">
-        {t('thirdPetitionTitle')}
+        Cuidado interior
       </h2>
 
-      <p>{t('love1')}</p>
+      <p>
+        Que aprenda a escuchar mi interior sin miedo y sin exigirme respuestas
+        inmediatas. Que la oracion sea para mi un refugio de pausa, conciencia y
+        confianza.
+      </p>
 
-      <h3 className="text-xl font-semibold text-yellow-600 mt-4">{t('soulCleansingTitle')}</h3>
-      <p>{t('soulCleansing')}</p>
+      <p className="mt-3">
+        Dame serenidad para atravesar los dias complejos y gratitud para
+        reconocer los pequenos bienes de cada jornada.
+      </p>
 
-      <h3 className="text-xl font-semibold text-yellow-600 mt-4">{t('heartHealingTitle')}</h3>
-      <p>{t('heartHealing')}</p>
+      <p className="mt-3">
+        Que pueda sostener mis procesos con paciencia y seguir cultivando una
+        vida espiritual simple y constante.
+      </p>
 
-      <h3 className="text-xl font-semibold text-yellow-600 mt-4">{t('divineMeetingTitle')}</h3>
-      <p>{t('divineMeeting')}</p>
-
-      <h3 className="text-xl font-semibold text-yellow-600 mt-4">{t('bondsBlessingTitle')}</h3>
-      <p>{t('bondsBlessing')}</p>
-
-      <p className="italic mt-3">"{t('love2')}"</p>
-
-      {/* Cuarta Petición */}
       <h2 className="text-2xl font-semibold text-yellow-700 mt-10 mb-4">
-        {t('fourthPetitionTitle')}
+        Gratitud final
       </h2>
 
-      <p>{t('protection1')}</p>
+      <p>
+        Gracias por este espacio de reflexion. Que lo vivido aqui me anime a
+        continuar con una fe mas serena, una mirada mas consciente y una
+        disposicion mas amable en mi vida diaria.
+      </p>
 
-      <h3 className="text-xl font-semibold text-yellow-600 mt-4">{t('breakSpellsTitle')}</h3>
-      <p>{t('breakSpells')}</p>
+      <p className="mt-3">
+        San Benito, inspiranos a vivir con firmeza interior, sencillez y paz.
+      </p>
 
-      <h3 className="text-xl font-semibold text-yellow-600 mt-4">{t('cancelWorksTitle')}</h3>
-      <p>{t('cancelWorks')}</p>
-
-      <h3 className="text-xl font-semibold text-yellow-600 mt-4">{t('transformDarknessTitle')}</h3>
-      <p>{t('transformDarkness')}</p>
-
-      <p className="mt-3">{t('protection2')}</p>
-      <p className="mt-3">{t('protection3')}</p>
-      <p className="mt-3">{t('protection4')}</p>
-
-      {/* Agradecimiento */}
-      <h2 className="text-2xl font-semibold text-yellow-700 mt-10 mb-4">
-        {t('thanksgivingTitle')}
-      </h2>
-
-      <p>{t('thanks1')}</p>
-      <p className="mt-3">{t('thanks2')}</p>
-      <p className="mt-3">{t('thanks3')}</p>
-
-      <div className="mt-6 space-y-2">
-        <p><strong>{t('faithPercentage')}</strong></p>
-        <p><strong>{t('protectionPercentage')}</strong></p>
-        <p><strong>{t('blessingPercentage')}</strong></p>
-      </div>
-
-      <h3 className="text-xl font-bold text-yellow-600 mt-6">{t('declarationTitle')}</h3>
-
-      <ul className="list-disc pl-6 mt-3 space-y-2">
-        <li>{t('declaration1')}</li>
-        <li>{t('declaration2')}</li>
-        <li>{t('declaration3')}</li>
-        <li>{t('declaration4')}</li>
-      </ul>
-
-      <p className="mt-4">{t('closing1')}</p>
-      <p className="font-semibold mt-4">{t('amen')}</p>
-      <p className="mt-3">{t('closing2')}</p>
+      <p className="font-semibold mt-4">Amen.</p>
     </div>
   );
 };

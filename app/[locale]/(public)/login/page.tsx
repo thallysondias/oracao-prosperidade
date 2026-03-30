@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { Alert } from "@/components/ui/alert";
 import { LightRays } from "@/components/ui/light-rays";
-import { Mail, Lock, Sparkles } from "lucide-react";
+import { Mail, Lock } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 export default function LoginPage() {
@@ -96,7 +96,7 @@ export default function LoginPage() {
           <div className="relative h-58 overflow-hidden">
             <img
               src="/products/saobenedito.jpeg"
-              alt="São Benedito"
+              alt={t("title")}
               className="w-full h-full object-cover opacity-50 bg-top"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent" />
