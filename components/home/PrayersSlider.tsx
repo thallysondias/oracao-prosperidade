@@ -13,7 +13,8 @@ import { useAuthStore } from '@/store/authStore';
 interface PrayerCard {
   id: string;
   titleKey: string;
-  descriptionKey: string;
+  descriptionKey?: string;
+  descriptions?: Record<string, string>;
   image: string;
   route: string;
   productName: string | null; // null = sempre livre
@@ -40,6 +41,11 @@ export function PrayersSlider() {
     id: 'padre-pio',
     titleKey: 'padrePioTitle',
     descriptionKey: 'padrePioDescription',
+    descriptions: {
+      pt: 'Uma oração inspirada na devoção ao Padre Pio para quem busca fé, consolo e fortalecimento espiritual.',
+      es: 'Una oración inspirada en la devoción al Padre Pío para quienes buscan fe, consuelo y fortalecimiento espiritual.',
+      en: 'A prayer inspired by devotion to Padre Pio for those seeking faith, comfort, and spiritual strengthening.',
+    },
     image: '/prayer/padrepio.png',
     route: '/padre-pio',
     /* productName: 'Padre Pio', */
@@ -50,6 +56,11 @@ export function PrayersSlider() {
     id: 'carlos-acutis',
     titleKey: 'carlosAcutisTitle',
     descriptionKey: 'carlosAcutisDescription',
+    descriptions: {
+      pt: 'Uma oração inspirada em Carlo Acutis para momentos de fé, reflexão e inspiração na vida diária.',
+      es: 'Una oración inspirada en Carlos Acutis para momentos de fe, reflexión e inspiración en la vida diaria.',
+      en: 'A prayer inspired by Carlo Acutis for moments of faith, reflection, and inspiration in daily life.',
+    },
     image: '/prayer/carlosacuri.jpeg',
     route: '/carlos-acutis',
 /* productName: 'Oração do Carlo Acutis', */
@@ -60,6 +71,11 @@ export function PrayersSlider() {
     id: 'saint-benedict',
     titleKey: 'saintBenedictTitle',
     descriptionKey: 'saintBenedictDescription',
+    descriptions: {
+      pt: 'Uma oração inspirada em São Bento para momentos de fé, reflexão e paz interior.',
+      es: 'Una oración inspirada en San Benito para momentos de fe, reflexión y paz interior.',
+      en: 'A prayer inspired by Saint Benedict for moments of faith, reflection, and inner peace.',
+    },
     image: '/prayer/saobenedito.jpeg',
     route: '/saint-benedict',
     productName: 'San Benito Player', // Sempre livre (ou pode usar "San Benito Player" se quiser verificar também)
@@ -123,7 +139,7 @@ export function PrayersSlider() {
 
                   {/* Description */}
                   <p className="text-sm text-white/80 leading-relaxed text-center mb-4 flex-1 min-h-[96px]">
-                    {t(card.descriptionKey)}
+                    {card.descriptions?.[locale] || t(card.descriptionKey || '')}
                   </p>
 
                   {/* Action Buttons */}

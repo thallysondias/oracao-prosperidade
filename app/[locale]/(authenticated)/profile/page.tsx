@@ -25,7 +25,7 @@ export default function ProfilePage() {
   const user = useAuthStore((state) => state.user);
 
   const handleLanguageChange = (value: string) => {
-    router.push(pathname, { locale: value as 'pt' | 'en' | 'es' });
+    router.replace(pathname, { locale: value as 'pt' | 'en' | 'es' });
   };
 
   const handleSupportClick = () => {
@@ -86,7 +86,7 @@ export default function ProfilePage() {
 
             <div className="space-y-2">
               <Label htmlFor="language-select">{t('profileLanguage')}</Label>
-              <Select defaultValue={locale} onValueChange={handleLanguageChange}>
+              <Select value={locale} onValueChange={handleLanguageChange}>
                 <SelectTrigger id="language-select">
                   <SelectValue placeholder={t('profileLanguagePlaceholder')} />
                 </SelectTrigger>

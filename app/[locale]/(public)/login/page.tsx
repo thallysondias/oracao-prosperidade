@@ -9,10 +9,11 @@ import { Card } from "@/components/ui/card";
 import { Alert } from "@/components/ui/alert";
 import { LightRays } from "@/components/ui/light-rays";
 import { Mail, Lock } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 export default function LoginPage() {
   const t = useTranslations("Login");
+  const locale = useLocale() as "pt" | "en" | "es";
   const router = useRouter();
   const login = useAuthStore((state) => state.login);
   
@@ -64,7 +65,7 @@ export default function LoginPage() {
       console.log("✅ Usuário salvo no Zustand");
 
       // Redirecionar para home
-      router.push("/es");
+      router.push(`/${locale}`);
       router.refresh();
     } catch (err) {
       console.error("Login error:", err);

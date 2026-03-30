@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { Share2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
@@ -28,6 +28,7 @@ export function DailyPrayerCard({
   onShareWhatsApp,
 }: DailyPrayerCardProps) {
   const t = useTranslations('HomePage');
+  const locale = useLocale();
   const [fakeCount, setFakeCount] = useState<string>('');
 
   useEffect(() => {
@@ -37,7 +38,7 @@ export function DailyPrayerCard({
   }, []);
 
   const handleSharePrayer = () => {
-    const verseUrl = `${window.location.origin}/es/verse/${verseId}`;
+    const verseUrl = `${window.location.origin}/${locale}/verse/${verseId}`;
     const message = `✨ Versículo do Dia ✨\n\n${verseReference}\n\n"${verseText}"\n\n${verseUrl}`;
     const encodedMessage = encodeURIComponent(message);
     window.open(`https://wa.me/?text=${encodedMessage}`, '_blank');

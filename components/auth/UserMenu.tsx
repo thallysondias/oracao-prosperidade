@@ -12,16 +12,18 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { LogOut, User, ShoppingBag } from "lucide-react";
+import { useLocale } from "next-intl";
 
 export function UserMenu() {
   const { user, isAuthenticated, logout, getActivePurchases } = useAuth();
+  const locale = useLocale() as "pt" | "en" | "es";
 
   if (!isAuthenticated || !user) {
     return (
       <Button
         variant="outline"
         size="sm"
-        onClick={() => (window.location.href = "/pt/login")}
+        onClick={() => (window.location.href = `/${locale}/login`)}
       >
         Entrar
       </Button>
