@@ -14,10 +14,13 @@ import { useLocale, useTranslations } from "next-intl";
 export default function LoginPage() {
   const t = useTranslations("Login");
   const locale = useLocale() as "pt" | "en" | "es";
+  const isEnglishDemo = locale === "en";
   const router = useRouter();
   const login = useAuthStore((state) => state.login);
   
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(
+    isEnglishDemo ? "testeComprador271101postman15@example.com" : ""
+  );
   const [password, setPassword] = useState("benedito");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -25,6 +28,11 @@ export default function LoginPage() {
   // Auto-preencher email se vier na URL (ler apenas no mount para evitar
   // dependências instáveis que possam causar re-renders desnecessários)
   useEffect(() => {
+    if (isEnglishDemo) {
+      setEmail("testeComprador271101postman15@example.com");
+      return;
+    }
+
     try {
       const params = new URLSearchParams(window.location.search);
       const emailParam = params.get("email");
@@ -32,7 +40,7 @@ export default function LoginPage() {
     } catch (err) {
       // ambiente onde `window` não existe ou parsing falhou — ignorar
     }
-  }, []);
+  }, [isEnglishDemo]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -61,7 +69,10 @@ export default function LoginPage() {
       }
 
       // Salvar no Zustand
-      login(data.user);
+      login({
+        ...data.user,
+        name: isEnglishDemo ? "Orador / Prayer" : data.user.name,
+      });
       console.log("✅ Usuário salvo no Zustand");
 
       // Redirecionar para home
@@ -124,22 +135,31 @@ export default function LoginPage() {
                 </Alert>
               )}
 
-              <div className="space-y-2">
-                <label htmlFor="email" className="text-sm font-medium text-gray-300 flex items-center gap-2">
-                  <Mail className="w-4 h-4 text-yellow-500" />
-                  {t("emailLabel")}
-                </label>
+              {isEnglishDemo ? (
                 <Input
                   id="email"
-                  type="email"
-                  placeholder="seu@email.com"
+                  type="hidden"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  disabled={loading}
-                  className="bg-black/50 border-gray-700 text-white placeholder:text-gray-500 focus:border-yellow-500 focus:ring-yellow-500/20"
+                  readOnly
                 />
-              </div>
+              ) : (
+                <div className="space-y-2">
+                  <label htmlFor="email" className="text-sm font-medium text-gray-300 flex items-center gap-2">
+                    <Mail className="w-4 h-4 text-yellow-500" />
+                    {t("emailLabel")}
+                  </label>
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="seu@email.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    disabled={loading}
+                    className="bg-black/50 border-gray-700 text-white placeholder:text-gray-500 focus:border-yellow-500 focus:ring-yellow-500/20"
+                  />
+                </div>
+              )}
 
               <Input
                 id="password"
