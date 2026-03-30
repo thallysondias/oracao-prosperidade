@@ -15,6 +15,11 @@ export default function LoginPage() {
   const t = useTranslations("Login");
   const locale = useLocale() as "pt" | "en" | "es";
   const isEnglishDemo = locale === "en";
+  const demoNameByLocale = {
+    pt: "Orador",
+    es: "Oración",
+    en: "Prayer",
+  } as const;
   const router = useRouter();
   const login = useAuthStore((state) => state.login);
   
@@ -71,7 +76,7 @@ export default function LoginPage() {
       // Salvar no Zustand
       login({
         ...data.user,
-        name: isEnglishDemo ? "Orador / Prayer" : data.user.name,
+        name: demoNameByLocale[locale],
       });
       console.log("✅ Usuário salvo no Zustand");
 
