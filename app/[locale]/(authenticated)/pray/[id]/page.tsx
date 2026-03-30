@@ -12,6 +12,7 @@ export default function PrayerPlayPage() {
   const router = useRouter();
   const locale = useLocale();
   const t = useTranslations('PrayerPlayer');
+  const disclaimer = useTranslations('AppDisclaimer');
   const prayerId = params.id as string;
   const normalizedId = `prayer_${prayerId.padStart(3, '0')}`;
 
@@ -149,7 +150,6 @@ export default function PrayerPlayPage() {
           <div className="flex items-start justify-between mb-2">
             <div className="flex-1">
               <h1 className="text-2xl font-bold text-white mb-2">{title}</h1>
-              <p className="text-gray-300 text-sm">{description}</p>
             </div>
             <button
               onClick={() => setIsFavorite(!isFavorite)}
@@ -206,6 +206,10 @@ export default function PrayerPlayPage() {
             className="w-24 h-1 bg-gray-600 rounded-full cursor-pointer accent-yellow-500"
           />
         </div>
+
+        <p className="mt-8 text-center text-xs text-gray-400 leading-relaxed">
+          {disclaimer('spiritualContent')}
+        </p>
       </div>
     </div>
   );

@@ -12,7 +12,7 @@ export async function POST(request: Request) {
     const { email, name, goal, prayerText, profileId } = body;
 
     // Validar dados
-    if (!email || !name || !goal || !prayerText) {
+    if (!email || !name || !prayerText) {
       return NextResponse.json(
         { error: "Campos obrigatórios faltando" },
         { status: 400 }
@@ -26,7 +26,7 @@ export async function POST(request: Request) {
         profile_id: profileId,
         email: email,
         name: name,
-        goal: goal,
+        goal: goal || "general",
         prayer_text: prayerText,
         status: "pending",
         payment_link: "https://go.hotmart.com/O102962155C",

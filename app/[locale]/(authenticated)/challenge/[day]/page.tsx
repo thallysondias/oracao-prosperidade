@@ -90,6 +90,7 @@ export default function ChallengeDayPage() {
   const params = useParams();
   const locale = useLocale();
   const t = useTranslations('Challenge21');
+  const disclaimer = useTranslations('AppDisclaimer');
   const user = useAuthStore((state) => state.user);
   
   const day = parseInt(params.day as string);
@@ -233,9 +234,6 @@ export default function ChallengeDayPage() {
                 <h1 className="text-2xl font-bold text-white mb-2">
                   {dayData.title}
                 </h1>
-                <p className="text-gray-300 text-sm">
-                  {t('cardinalName')}
-                </p>
               </div>
             </div>
           </div>
@@ -300,9 +298,6 @@ export default function ChallengeDayPage() {
         {/* Prayer Text Content */}
         <div className="max-w-2xl mx-auto px-4 pb-12">
           <div className="bg-gradient-to-b from-yellow-500/5 to-transparent rounded-xl p-8">
-            <h2 className="text-xl font-bold text-yellow-500 mb-6 text-center">
-              {t('reflectionTitle', { day })}
-            </h2>
             <div className="prose prose-invert prose-lg max-w-none">
               {dayData.text.split('\n\n').map((paragraph, index) => (
                 <p key={index} className="text-gray-300 leading-relaxed mb-4">
@@ -342,6 +337,15 @@ export default function ChallengeDayPage() {
               </div>
             </div>
           )}
+        </div>
+
+        <div className="pb-8">
+          <p className="text-center text-xs text-gray-400 leading-relaxed">
+            {disclaimer('spiritualContent')}
+          </p>
+          <p className="mt-3 text-center text-xs text-gray-500 leading-relaxed">
+            {disclaimer('challengeExperience')}
+          </p>
         </div>
       </div>
     </div>

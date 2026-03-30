@@ -11,6 +11,7 @@ import CarlosAcuti from '@/components/oracao/CarlosAcuti';
 export default function SaintBenedictPage() {
   const router = useRouter();
   const t = useTranslations('SaintBenedict');
+  const disclaimer = useTranslations('AppDisclaimer');
   const [isPlaying, setIsPlaying] = useState(false);
   const [duration, setDuration] = useState(600); // 10 minutes in seconds
   const [played, setPlayed] = useState(0);
@@ -98,7 +99,6 @@ export default function SaintBenedictPage() {
             <div className="flex items-start justify-between mb-2">
               <div className="flex-1">
                 <h1 className="text-2xl font-bold text-white mb-2">Oración al Ángel de mi Guarda</h1>
-                <p className="text-gray-300 text-sm">Carlos Acutis</p>
               </div>
               <button
                 onClick={() => setIsFavorite(!isFavorite)}
@@ -168,6 +168,12 @@ export default function SaintBenedictPage() {
 
         
         <CarlosAcuti />
+
+        <div className="max-w-2xl mx-auto px-4 pb-10">
+          <p className="text-center text-xs text-gray-400 leading-relaxed">
+            {disclaimer('spiritualContent')}
+          </p>
+        </div>
       </div>
 
     </div>

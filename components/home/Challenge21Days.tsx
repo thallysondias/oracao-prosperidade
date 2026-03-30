@@ -29,46 +29,46 @@ interface Testimonial {
   rating: number;
 }
 
-// Depoimentos reais e comoventes
+// Relatos de experi?ncia com foco em rotina e reflex?o
 const testimonials: Testimonial[] = [
   {
     id: 1,
-    name: "María Guadalupe Fernández",
-    location: "Ciudad de México, México",
+    name: "Mar?a Guadalupe Fern?ndez",
+    location: "Ciudad de M?xico, M?xico",
     image: "https://i.pravatar.cc/150?img=5",
-    text: "Comencé sin mucha fe, pero en el día 7 sentí una paz que nunca había experimentado. En el día 14, recibí una propuesta de trabajo inesperada que cambió mi situación financiera. Hoy, en el día 21, soy otra persona. Mi vida fue completamente transformada por la disciplina espiritual.",
+    text: "Reserv? unos minutos al d?a para escuchar los audios y eso me ayud? a crear una rutina de oraci?n m?s tranquila. La experiencia fue acompa?ada, respetuosa y muy ?til para mi momento personal.",
     rating: 5,
   },
   {
     id: 2,
-    name: "Carla Alberto Rodríguez",
+    name: "Carla Alberto Rodr?guez",
     location: "Buenos Aires, Argentina",
     image: "https://i.pravatar.cc/150?img=41",
-    text: "Estaba desempleado hace 8 meses y con deudas acumuladas. Decidí hacer el desafío sin expectativas. A partir del día 10, las oportunidades comenzaron a aparecer. Hoy tengo un empleo mejor de lo que imaginé y las deudas están siendo pagadas. ¡Esto funciona de verdad!",
+    text: "La propuesta de un audio por d?a me ayud? a tener m?s constancia. Me gust? seguir la secuencia y usar ese espacio diario como un momento de pausa, reflexi?n y fe.",
     rating: 5,
   },
   {
     id: 3,
     name: "Ana Patricia Morales",
-    location: "Guadalajara, México",
+    location: "Guadalajara, M?xico",
     image: "https://i.pravatar.cc/150?img=9",
-    text: "Mi matrimonio estaba por un hilo y me sentía completamente perdida. Las oraciones del Cardenal Giovanni tocaron mi corazón de una forma que no puedo explicar. Mi esposo comenzó a cambiar, yo comencé a cambiar. Hoy, renovamos nuestros votos y nuestra familia está unida nuevamente.",
+    text: "Me gust? mucho el tono de los contenidos y la forma en que acompa?an el d?a a d?a. Fue una manera sencilla de volver a reservar un momento para la oraci?n y la introspecci?n.",
     rating: 5,
   },
   {
     id: 4,
-    name: "José Luis Ramírez",
-    location: "Monterrey, México",
+    name: "Jos? Luis Ram?rez",
+    location: "Monterrey, M?xico",
     image: "https://i.pravatar.cc/150?img=15",
-    text: "Sufría de ansiedad y depresión durante años. Los médicos me decían que era crónico. Hice el desafío por recomendación de una amiga. Cada oración traía un alivio profundo. Hoy ya no tomo medicamentos y duermo en paz todas las noches. Fue un milagro en mi vida.",
+    text: "Escuchar los audios como parte de mi rutina nocturna me ayud? a desacelerar y a cerrar el d?a con m?s calma. Valoro que el contenido mantenga un enfoque espiritual e inspiracional.",
     rating: 5,
   },
   {
     id: 5,
-    name: "Lucía Fernanda Torres",
-    location: "Bogotá, Colombia",
+    name: "Luc?a Fernanda Torres",
+    location: "Bogot?, Colombia",
     image: "https://i.pravatar.cc/150?img=20",
-    text: "Tenía un problema de salud serio que los médicos no lograban diagnosticar. Comencé el desafío pidiendo por sanación. En el día 12, los síntomas comenzaron a disminuir. Hice nuevos exámenes y los médicos quedaron sorprendidos - estaba completamente curada. ¡Solo tengo gratitud!",
+    text: "La jornada me sirvi? para retomar una pr?ctica diaria de fe con m?s presencia. Los audios est?n bien organizados y me gust? avanzar un d?a a la vez.",
     rating: 5,
   },
 ];
@@ -236,6 +236,7 @@ function TestimonialsSlider() {
 
 export function Challenge21Days() {
   const t = useTranslations("Challenge21");
+  const disclaimer = useTranslations("AppDisclaimer");
   const user = useAuthStore((state) => state.user);
   const router = useRouter();
   const locale = useLocale();
@@ -381,7 +382,15 @@ export function Challenge21Days() {
                 {t("ctaButton")}
               </Button>
             </a>
+          </div>
 
+          <div className="space-y-3 pb-2">
+            <p className="text-center text-xs text-muted-foreground leading-relaxed">
+              {disclaimer("spiritualContent")}
+            </p>
+            <p className="text-center text-xs text-muted-foreground leading-relaxed">
+              {disclaimer("challengeExperience")}
+            </p>
           </div>
         </div>
       </div>
@@ -413,14 +422,9 @@ export function Challenge21Days() {
             </h1>
 
             {/* Informação do Cardeal */}
-            <div className="space-y-1">
-              <p className="text-base font-medium drop-shadow-lg">
-                {t("headerCardinal")} <span className="font-bold">{t("headerCardinalName")}</span>
-              </p>
-              <p className="text-sm text-gray-200 drop-shadow-md">
-                {t("headerCardinalTitle")}
-              </p>
-            </div>
+            <p className="text-sm text-gray-200 drop-shadow-md">
+              {t("headerQuote")}
+            </p>
           </div>
         </div>
       </div>
@@ -432,10 +436,10 @@ export function Challenge21Days() {
           <div className="space-y-3">
 
             <p className="text-sm text-white/60 leading-relaxed">
-              <span className="font-bold">{t("challengeText1")}</span> {t("challengeText1Emphasis")}
+              {t("challengeText1")}
             </p>
             <p className="text-sm text-white/60 leading-relaxed">
-              <span className="font-bold text-yellow-500">{t("challengeText2")}</span> {t("challengeText2Part1")} <span className="font-semibold">{t("challengeText2Desire")}</span> {t("challengeText2Part2")} <span className="font-semibold">{t("challengeText2Conquers")}</span> {t("challengeText2Part3")}
+              <span className="font-bold text-yellow-500">{t("challengeCommitmentLabel")}</span> {t("challengeCommitmentText")}
             </p>
             <div className="pt-6 border-t border-amber-200/50">             
               <Button
@@ -591,6 +595,12 @@ export function Challenge21Days() {
         </p>
         <p className="text-xs text-gray-500 mt-1">
           {days.filter((d) => d.isCompleted).length} {t("progressText")}
+        </p>
+        <p className="mt-4 text-xs text-muted-foreground leading-relaxed">
+          {disclaimer("spiritualContent")}
+        </p>
+        <p className="mt-3 text-xs text-muted-foreground leading-relaxed">
+          {disclaimer("challengeExperience")}
         </p>
       </div>
     </div>

@@ -12,6 +12,7 @@ import { useTranslations } from "next-intl";
 
 export function PrayerRequest() {
   const t = useTranslations("PrayerRequest");
+  const disclaimer = useTranslations("AppDisclaimer");
 
   return (
     <div className="mx-auto p-4">
@@ -110,6 +111,12 @@ export function PrayerRequest() {
 
       <div className="mt-6 p-4 rounded-lg">
         <p className="text-xs  text-center leading-relaxed">{t("footerInfo")}</p>
+      </div>
+
+      <div className="pb-4">
+        <p className="text-xs text-center text-muted-foreground leading-relaxed">
+          {disclaimer("spiritualContent")}
+        </p>
       </div>
     </div>
   );

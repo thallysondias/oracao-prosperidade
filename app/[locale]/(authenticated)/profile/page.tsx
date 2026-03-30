@@ -33,7 +33,7 @@ export default function ProfilePage() {
   };
 
   const handleBackHome = () => {
-    router.push(`/${locale}`);
+    router.push("/", { locale });
   };
 
   return (

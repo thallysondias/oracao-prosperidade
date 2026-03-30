@@ -14,7 +14,6 @@ import Link from "next/link";
 export default function PrayerRequestForm() {
   const t = useTranslations("PrayerRequest");
   const user = useAuthStore((state) => state.user);
-  const [prayerGoal, setPrayerGoal] = useState("");
   const [prayerText, setPrayerText] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -40,7 +39,7 @@ export default function PrayerRequestForm() {
           profile_id: user.id || null,
           email: user.email,
           name: user.name,
-          goal: prayerGoal,
+          goal: "general",
           prayer_text: prayerText,
           status: "pending",
           payment_link: paymentLink,
@@ -110,26 +109,6 @@ export default function PrayerRequestForm() {
         </div>
 
         <div>
-          <Label htmlFor="goal" className="text-gray-700 font-medium">
-            {t("goalLabel")} <span className="text-red-500">*</span>
-          </Label>
-          <select
-            id="goal"
-            value={prayerGoal}
-            onChange={(e) => setPrayerGoal(e.target.value)}
-            required
-            className="w-full mt-1.5 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
-          >
-            <option value="">{t("selectGoal")}</option>
-            <option value="health">{t("goalHealth")}</option>
-            <option value="prosperity">{t("goalProsperity")}</option>
-            <option value="family">{t("goalFamily")}</option>
-            <option value="protection">{t("goalProtection")}</option>
-            <option value="miracle">{t("goalMiracle")}</option>
-          </select>
-        </div>
-
-        <div>
           <Label htmlFor="prayer" className="text-gray-700 font-medium">
             {t("prayerLabel")} <span className="text-red-500">*</span>
           </Label>
@@ -149,7 +128,7 @@ export default function PrayerRequestForm() {
 
         <Button
           type="submit"
-          disabled={isSubmitting || !prayerGoal || !prayerText}
+          disabled={isSubmitting || !prayerText}
           className="w-full bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-3 text-lg shadow-lg hover:shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isSubmitting ? (
