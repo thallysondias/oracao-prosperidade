@@ -6,6 +6,7 @@ import { useRouter, useParams } from 'next/navigation';
 import { useTranslations, useLocale } from 'next-intl';
 import { ChevronLeft, Play, Pause, ChevronDown, Lock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { CHALLENGE_HERO_IMAGE } from '@/features/challenge/data';
 import { useAuthStore } from '@/store/authStore';
 import { getLocalizedAudioUrl, type ProductLocale } from '@/lib/products/oraciones';
 
@@ -202,7 +203,7 @@ export default function ChallengeDayPage() {
           <div className="mb-8">
             <div className="aspect-square rounded-lg overflow-hidden shadow-2xl">
               <Image
-                src="/cardeal/cardeal.png"
+                src={CHALLENGE_HERO_IMAGE}
                 alt={`Dia ${day}`}
                 width={400}
                 height={400}

@@ -3,7 +3,8 @@ import type { Testimonial } from '@/features/challenge/types';
 export const CHALLENGE_PRODUCT_NAME = '21 Días de Oración y Milagros en Vivo';
 export const CHALLENGE_CHECKOUT_URL =
   'https://donate.stripe.com/4gM14meFt9lxac2bwM6kg06';
-export const CHALLENGE_HERO_IMAGE = '/cardeal/21dias.jpg';
+export const CHALLENGE_HERO_IMAGE =
+  'https://images.unsplash.com/photo-1543525238-54e3d131f7ca?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
 export const CHALLENGE_DAY_CARD_IMAGE = '/prayer/oracione.jpeg';
 
 export const testimonials: Testimonial[] = [

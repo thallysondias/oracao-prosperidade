@@ -91,7 +91,7 @@ export default function LoginPage() {
         <Card className="bg-black/60 px-2 py-0 space-y-0 gap-0 backdrop-blur-sm border-none shadow-2xl overflow-hidden">
           <div className="relative h-58 overflow-hidden">
             <Image
-              src="/products/banner-inicial.jpeg"
+              src="/banner-inicial.jpeg"
               alt={t("title")}
               fill
               sizes="(max-width: 768px) 100vw, 448px"
