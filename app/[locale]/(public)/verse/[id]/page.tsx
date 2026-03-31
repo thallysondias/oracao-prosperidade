@@ -5,6 +5,7 @@ import { getTranslations } from 'next-intl/server';
 import { Button } from '@/components/ui/button';
 import { LightRays } from '@/components/ui/light-rays';
 import { getVerseById } from '@/lib/versiculos_traduzidos';
+import { OPEN_GRAPH_IMAGE_PATH } from '@/shared/config/metadata';
 import type { Locale } from '@/shared/config/locales';
 
 interface VersePageProps {
@@ -28,10 +29,7 @@ export async function generateMetadata({ params }: VersePageProps): Promise<Meta
   const verseText = verse.traducao[locale];
   const pageTitle =
     locale === 'pt' ? 'Versiculo do Dia' : locale === 'es' ? 'Versiculo del dia' : 'Verse of the Day';
-  const url = `${process.env.NEXT_PUBLIC_APP_URL || 'https://oracao-prosperidade.com'}/${locale}/verse/${id}`;
-  const backgroundImage =
-    'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&h=800&fit=crop';
-
+  const url = `${process.env.NEXT_PUBLIC_APP_URL || 'https://calmia.club'}/${locale}/verse/${id}`;
   return {
     title: `${verse.referencia} - ${pageTitle}`,
     description: verseText.substring(0, 160),
@@ -40,15 +38,8 @@ export async function generateMetadata({ params }: VersePageProps): Promise<Meta
       title: verse.referencia,
       description: verseText,
       url,
-      siteName: 'Oracao e Prosperidade',
-      images: [
-        {
-          url: backgroundImage,
-          width: 1200,
-          height: 800,
-          alt: verse.referencia,
-        },
-      ],
+      siteName: 'Calmia.club',
+      images: [OPEN_GRAPH_IMAGE_PATH],
       type: 'website',
       locale: locale === 'pt' ? 'pt_BR' : locale === 'es' ? 'es_ES' : 'en_US',
     },
@@ -56,7 +47,7 @@ export async function generateMetadata({ params }: VersePageProps): Promise<Meta
       card: 'summary_large_image',
       title: verse.referencia,
       description: verseText,
-      images: [backgroundImage],
+      images: [OPEN_GRAPH_IMAGE_PATH],
     },
   };
 }
