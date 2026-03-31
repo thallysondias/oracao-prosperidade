@@ -6,8 +6,11 @@ import { useTranslations, useLocale } from 'next-intl';
 import { ChevronLeft, Play, Pause, ChevronDown, Lock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuthStore } from '@/store/authStore';
+import { getLocalizedAudioUrl, type ProductLocale } from '@/lib/products/oraciones';
 
-const getDayData = (day: number) => {
+const LAST_AUDIO_DAY = 12;
+
+const getDayData = (day: number, locale: ProductLocale) => {
   const titles = [
     'Un comienzo con presencia',
     'Soltar el peso del dia',
@@ -59,21 +62,24 @@ const getDayData = (day: number) => {
   return {
     title: titles[day - 1] || 'Oracion del dia',
     text: texts[day - 1] || 'Texto de la oracion no disponible.',
-    audioUrl: `/desafio/dia${day}.MP3`,
+    audioUrl:
+      day <= LAST_AUDIO_DAY
+        ? getLocalizedAudioUrl(`/desafio/dia${day}.mp3`, locale)
+        : undefined,
   };
 };
 
 export default function ChallengeDayPage() {
   const router = useRouter();
   const params = useParams();
-  const locale = useLocale();
+  const locale = useLocale() as ProductLocale;
   const t = useTranslations('Challenge21');
   const disclaimer = useTranslations('AppDisclaimer');
   const user = useAuthStore((state) => state.user);
   const purchases = user?.purchases;
 
   const day = parseInt(params.day as string);
-  const dayData = getDayData(day);
+  const dayData = getDayData(day, locale);
 
   const challengePurchase = useMemo(() => {
     if (!purchases) return null;
@@ -129,7 +135,7 @@ export default function ChallengeDayPage() {
   }
 
   const handlePlayPause = () => {
-    if (videoRef.current) {
+    if (videoRef.current && dayData.audioUrl) {
       if (isPlaying) {
         videoRef.current.pause();
       } else {
@@ -140,6 +146,8 @@ export default function ChallengeDayPage() {
   };
 
   const handleProgressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!dayData.audioUrl) return;
+
     const newPlayed = parseFloat(e.target.value);
     setPlayed(newPlayed);
     if (videoRef.current) {
@@ -216,49 +224,53 @@ export default function ChallengeDayPage() {
           </div>
         </div>
 
-        <video
-          ref={videoRef}
-          src={dayData.audioUrl}
-          onTimeUpdate={handleTimeUpdate}
-          onLoadedMetadata={handleLoadedMetadata}
-          onEnded={() => setIsPlaying(false)}
-          className="hidden"
-        />
+        {dayData.audioUrl && (
+          <video
+            ref={videoRef}
+            src={dayData.audioUrl}
+            onTimeUpdate={handleTimeUpdate}
+            onLoadedMetadata={handleLoadedMetadata}
+            onEnded={() => setIsPlaying(false)}
+            className="hidden"
+          />
+        )}
       </div>
 
       <div>
-        <div className="sticky top-0 z-50 bg-black border-b border-yellow-500/20 px-4 py-2">
-          <div className="max-w-2xl mx-auto flex items-center justify-between gap-4">
-            <button
-              onClick={handlePlayPause}
-              className="bg-yellow-500 hover:bg-yellow-600 text-black rounded-full p-2 transition transform hover:scale-105 shrink-0"
-            >
-              {isPlaying ? (
-                <Pause className="h-4 w-4" />
-              ) : (
-                <Play className="h-4 w-4 ml-1" />
-              )}
-            </button>
+        {dayData.audioUrl && (
+          <div className="sticky top-0 z-50 bg-black border-b border-yellow-500/20 px-4 py-2">
+            <div className="max-w-2xl mx-auto flex items-center justify-between gap-4">
+              <button
+                onClick={handlePlayPause}
+                className="bg-yellow-500 hover:bg-yellow-600 text-black rounded-full p-2 transition transform hover:scale-105 shrink-0"
+              >
+                {isPlaying ? (
+                  <Pause className="h-4 w-4" />
+                ) : (
+                  <Play className="h-4 w-4 ml-1" />
+                )}
+              </button>
 
-            <div className="flex items-center justify-between gap-2 flex-1">
-              <span className="text-xs text-gray-400 whitespace-nowrap">
-                {formatTime(played * duration)}
-              </span>
-              <input
-                type="range"
-                min="0"
-                max="0.999999"
-                step="any"
-                value={played}
-                onChange={handleProgressChange}
-                className="flex-1 h-1 bg-gray-600 rounded-full cursor-pointer accent-yellow-500"
-              />
-              <span className="text-xs text-gray-400 whitespace-nowrap">
-                {formatTime(duration)}
-              </span>
+              <div className="flex items-center justify-between gap-2 flex-1">
+                <span className="text-xs text-gray-400 whitespace-nowrap">
+                  {formatTime(played * duration)}
+                </span>
+                <input
+                  type="range"
+                  min="0"
+                  max="0.999999"
+                  step="any"
+                  value={played}
+                  onChange={handleProgressChange}
+                  className="flex-1 h-1 bg-gray-600 rounded-full cursor-pointer accent-yellow-500"
+                />
+                <span className="text-xs text-gray-400 whitespace-nowrap">
+                  {formatTime(duration)}
+                </span>
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
         <div className="flex justify-center py-8 bg-black">
           <div className="animate-bounce">

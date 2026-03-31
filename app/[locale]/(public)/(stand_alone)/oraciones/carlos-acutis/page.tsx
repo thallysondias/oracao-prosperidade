@@ -2,13 +2,15 @@
 
 import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { ChevronLeft, Play, Pause, Heart, ChevronDown } from 'lucide-react';
 
 import CarlosAcuti from '@/components/oracao/CarlosAcuti';
+import { getLocalizedAudioUrl, type ProductLocale } from '@/lib/products/oraciones';
 
 export default function CarlosAcutisPage() {
   const router = useRouter();
+  const locale = useLocale() as ProductLocale;
   const t = useTranslations('SaintBenedict');
   const [isPlaying, setIsPlaying] = useState(false);
   const [duration, setDuration] = useState(600);
@@ -17,7 +19,7 @@ export default function CarlosAcutisPage() {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const image = '/prayer/carlosacuri.jpeg';
-  const audioUrl = '/prayer/oracaocarlos.MP3';
+  const audioUrl = getLocalizedAudioUrl('/prayer/oracaocarlos.mp3', locale);
 
   const handlePlayPause = () => {
     if (videoRef.current) {

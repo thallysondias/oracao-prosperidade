@@ -2,14 +2,16 @@
 
 import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { ChevronLeft, Play, Pause, Volume2, Heart, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import SanBenitoPrayer from '@/components/oracao/SanBenitoPrayer';
+import { getLocalizedAudioUrl, type ProductLocale } from '@/lib/products/oraciones';
 
 export default function SaintBenedictPage() {
   const router = useRouter();
+  const locale = useLocale() as ProductLocale;
   const t = useTranslations('SaintBenedict');
   const disclaimer = useTranslations('AppDisclaimer');
   const [isPlaying, setIsPlaying] = useState(false);
@@ -19,7 +21,7 @@ export default function SaintBenedictPage() {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const image = '/products/saobenedito.jpeg';
-  const audioUrl = '/prayer/saobenedicto.mp3'; // Placeholder
+  const audioUrl = getLocalizedAudioUrl('/prayer/saobenedicto.mp3', locale);
 
   const handlePlayPause = () => {
     if (videoRef.current) {

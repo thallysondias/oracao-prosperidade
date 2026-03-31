@@ -16,6 +16,27 @@ export interface Product {
   isLocked: boolean;
 }
 
+export type ProductLocale = 'pt' | 'en' | 'es';
+
+export function getLocalizedAudioUrl(
+  audioUrl: string | undefined,
+  locale: ProductLocale,
+) {
+  if (!audioUrl) {
+    return undefined;
+  }
+
+  if (locale !== 'en') {
+    return audioUrl;
+  }
+
+  return audioUrl.replace(/(\.[^.]+)$/i, '-en.mp3');
+}
+
+export function getProductAudioUrl(product: Product, locale: ProductLocale) {
+  return getLocalizedAudioUrl(product.audioUrl, locale);
+}
+
 export const products: Product[] = [
   {
     id: "prayer_001",

@@ -2,13 +2,15 @@
 
 import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { ChevronLeft, Play, Pause, Volume2, Heart, ChevronDown } from 'lucide-react';
 
 import PadrePio from '@/components/oracao/PadrePio';
+import { getLocalizedAudioUrl, type ProductLocale } from '@/lib/products/oraciones';
 
 export default function SaintBenedictPage() {
   const router = useRouter();
+  const locale = useLocale() as ProductLocale;
   const t = useTranslations('SaintBenedict');
   const disclaimer = useTranslations('AppDisclaimer');
   const [isPlaying, setIsPlaying] = useState(false);
@@ -18,7 +20,7 @@ export default function SaintBenedictPage() {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const image = '/prayer/padrepio.png';
-  const audioUrl = '/prayer/padrepio.mp3'; // Placeholder
+  const audioUrl = getLocalizedAudioUrl('/prayer/padrepio.mp3', locale);
 
   const handlePlayPause = () => {
     if (videoRef.current) {
