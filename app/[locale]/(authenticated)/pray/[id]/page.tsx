@@ -1,28 +1,40 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState } from 'react';
+
+import Image from 'next/image';
 import { useParams, useRouter } from 'next/navigation';
-import { useTranslations, useLocale } from 'next-intl';
-import { products } from '@/lib/products/oraciones';
+import { ChevronLeft, Heart, Pause, Play, Volume2 } from 'lucide-react';
+import { useLocale, useTranslations } from 'next-intl';
+
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, Play, Pause, Volume2, Heart } from 'lucide-react';
+import { useAudioPlayer } from '@/features/prayer-player/useAudioPlayer';
+import { formatAudioTime } from '@/features/prayer-player/utils';
+import { getLocalizedProductText } from '@/features/prayers/helpers';
+import { products } from '@/lib/products/oraciones';
 
 export default function PrayerPlayPage() {
   const params = useParams();
   const router = useRouter();
-  const locale = useLocale();
+  const locale = useLocale() as 'pt' | 'en' | 'es';
   const t = useTranslations('PrayerPlayer');
   const disclaimer = useTranslations('AppDisclaimer');
   const prayerId = params.id as string;
   const normalizedId = `prayer_${prayerId.padStart(3, '0')}`;
-
-  const prayer = products.find((p) => p.id === normalizedId);
-
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [duration, setDuration] = useState(0);
-  const [played, setPlayed] = useState(0);
   const [isFavorite, setIsFavorite] = useState(false);
-  const audioRef = useRef<HTMLAudioElement>(null);
+
+  const prayer = products.find((product) => product.id === normalizedId);
+  const {
+    audioRef,
+    duration,
+    handleEnded,
+    handleLoadedMetadata,
+    handlePlayPause,
+    handleProgressChange,
+    handleTimeUpdate,
+    isPlaying,
+    played,
+  } = useAudioPlayer();
 
   if (!prayer) {
     return (
@@ -37,68 +49,11 @@ export default function PrayerPlayPage() {
     );
   }
 
-  // Obter título e descrição baseado no locale
-  const getLocalizedText = () => {
-    switch (locale) {
-      case 'pt':
-        return { title: prayer.titlePt, description: prayer.descriptionPt };
-      case 'es':
-        return { title: prayer.titleEs, description: prayer.descriptionEs };
-      case 'en':
-        return { title: prayer.titleEn, description: prayer.descriptionEn };
-      default:
-        return { title: prayer.titlePt, description: prayer.descriptionPt };
-    }
-  };
+  const { title } = getLocalizedProductText(prayer, locale);
 
-  const { title, description } = getLocalizedText();
-
-  const handlePlayPause = () => {
+  const handleVolumeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!audioRef.current) return;
-
-    if (isPlaying) {
-      audioRef.current.pause();
-    } else {
-      audioRef.current.play();
-    }
-    setIsPlaying(!isPlaying);
-  };
-
-  const handleProgressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!audioRef.current) return;
-
-    const newPlayed = parseFloat(e.target.value);
-    setPlayed(newPlayed);
-    audioRef.current.currentTime = newPlayed * duration;
-  };
-
-  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!audioRef.current) return;
-
-    const volume = parseFloat(e.target.value);
-    audioRef.current.volume = volume;
-  };
-
-  const handleTimeUpdate = () => {
-    if (!audioRef.current) return;
-    setPlayed(audioRef.current.currentTime / duration);
-  };
-
-  const handleLoadedMetadata = () => {
-    if (!audioRef.current) return;
-    setDuration(audioRef.current.duration);
-  };
-
-  const formatTime = (seconds: number) => {
-    if (isNaN(seconds)) return '0:00';
-    const date = new Date(seconds * 1000);
-    const hh = date.getUTCHours();
-    const mm = date.getUTCMinutes();
-    const ss = ('0' + date.getUTCSeconds()).slice(-2);
-    if (hh) {
-      return `${hh}:${('0' + mm).slice(-2)}:${ss}`;
-    }
-    return `${mm}:${ss}`;
+    audioRef.current.volume = parseFloat(event.target.value);
   };
 
   return (
@@ -110,19 +65,16 @@ export default function PrayerPlayPage() {
         backgroundPosition: 'center',
       }}
     >
-      {/* Hidden Audio Player */}
       <audio
         ref={audioRef}
-        src={prayer?.audioUrl || ''}
+        src={prayer.audioUrl || ''}
         onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleLoadedMetadata}
-        onEnded={() => setIsPlaying(false)}
+        onEnded={handleEnded}
         style={{ display: 'none' }}
       />
 
-      {/* Player Card - Spotify Style */}
       <div className="w-full max-w-md mx-auto px-4">
-        {/* Header with back button */}
         <div className="flex items-center justify-between mb-8">
           <button
             onClick={() => router.back()}
@@ -134,18 +86,18 @@ export default function PrayerPlayPage() {
           <div className="w-6" />
         </div>
 
-        {/* Album Art */}
         <div className="mb-8">
           <div className="aspect-square rounded-lg overflow-hidden shadow-2xl">
-            <img
+            <Image
               src={prayer.image || 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=400&fit=crop'}
               alt={title}
+              width={400}
+              height={400}
               className="w-full h-full object-cover"
             />
           </div>
         </div>
 
-        {/* Song Info */}
         <div className="mb-6">
           <div className="flex items-start justify-between mb-2">
             <div className="flex-1">
@@ -162,10 +114,11 @@ export default function PrayerPlayPage() {
           </div>
         </div>
 
-        {/* Progress Bar */}
         <div className="mb-6">
           <div className="flex items-center gap-2">
-            <span className="text-xs text-gray-400">{formatTime(played * duration)}</span>
+            <span className="text-xs text-gray-400">
+              {formatAudioTime(played * duration)}
+            </span>
             <input
               type="range"
               min="0"
@@ -175,11 +128,10 @@ export default function PrayerPlayPage() {
               onChange={handleProgressChange}
               className="flex-1 h-1 bg-gray-600 rounded-full cursor-pointer accent-yellow-500"
             />
-            <span className="text-xs text-gray-400">{formatTime(duration)}</span>
+            <span className="text-xs text-gray-400">{formatAudioTime(duration)}</span>
           </div>
         </div>
 
-        {/* Controls */}
         <div className="flex items-center justify-center gap-6 mb-6">
           <button
             onClick={handlePlayPause}
@@ -193,7 +145,6 @@ export default function PrayerPlayPage() {
           </button>
         </div>
 
-        {/* Volume Control */}
         <div className="flex items-center justify-center gap-3">
           <Volume2 className="h-4 w-4 text-gray-400" />
           <input

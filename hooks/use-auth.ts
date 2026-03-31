@@ -1,10 +1,13 @@
 "use client";
 
+import { usePathname, useRouter } from "next/navigation";
+
+import { getHomePath, getLoginPath, resolveLocaleFromPath } from "@/features/auth/navigation";
 import { useAuthStore } from "@/store/authStore";
-import { useRouter } from "next/navigation";
 
 export function useAuth() {
   const router = useRouter();
+  const pathname = usePathname();
   const {
     user,
     isAuthenticated,
@@ -13,15 +16,16 @@ export function useAuth() {
     hasPurchase,
     getActivePurchases,
   } = useAuthStore();
+  const locale = resolveLocaleFromPath(pathname);
 
   const logout = () => {
     storeLogout();
-    router.push("/pt/login");
+    router.push(getLoginPath(locale));
   };
 
   const requireAuth = () => {
     if (!isAuthenticated) {
-      router.push("/pt/login");
+      router.push(getLoginPath(locale));
       return false;
     }
     return true;
@@ -29,11 +33,11 @@ export function useAuth() {
 
   const requireProduct = (productId: string) => {
     if (!isAuthenticated) {
-      router.push("/pt/login");
+      router.push(getLoginPath(locale));
       return false;
     }
     if (!hasPurchase(productId)) {
-      router.push("/pt");
+      router.push(getHomePath(locale));
       return false;
     }
     return true;

@@ -27,8 +27,8 @@ export default function UpdateCheckoutPage() {
       const text = await response.text();
       setResult(text);
       setStatus(response.ok ? 'success' : 'error');
-    } catch (error) {
-      setResult('Erro de conexão. Verifique internet.');
+    } catch {
+      setResult('Erro de conexao. Verifique a internet.');
       setStatus('error');
     }
   };
@@ -92,8 +92,6 @@ export default function UpdateCheckoutPage() {
                 </div>
               )}
             </form>
-
-           
           </div>
         </div>
       </div>

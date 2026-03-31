@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useMemo } from 'react';
+import Image from 'next/image';
 import { useRouter, useParams } from 'next/navigation';
 import { useTranslations, useLocale } from 'next-intl';
 import { ChevronLeft, Play, Pause, ChevronDown, Lock } from 'lucide-react';
@@ -200,7 +201,7 @@ export default function ChallengeDayPage() {
 
           <div className="mb-8">
             <div className="aspect-square rounded-lg overflow-hidden shadow-2xl">
-              <img
+              <Image
                 src="/cardeal/cardeal.png"
                 alt={`Dia ${day}`}
                 width={400}

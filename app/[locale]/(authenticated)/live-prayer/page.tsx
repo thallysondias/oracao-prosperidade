@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { ChevronLeft, Radio, Users } from 'lucide-react';
@@ -21,7 +22,9 @@ interface ChatMessage extends PrayerRequest {
 export default function LivePrayerPage() {
   const router = useRouter();
   const t = useTranslations('LivePrayerPage');
-  const [viewerCount, setViewerCount] = useState(0);
+  const [viewerCount, setViewerCount] = useState(
+    () => Math.floor(Math.random() * 500) + 100
+  );
   const [isLive, setIsLive] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState('');
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
@@ -29,10 +32,6 @@ export default function LivePrayerPage() {
   const usedRequestsRef = useRef<Set<number>>(new Set());
 
   useEffect(() => {
-    // Simulate viewer count
-    const randomViewers = Math.floor(Math.random() * 500) + 100;
-    setViewerCount(randomViewers);
-
     // Check if live is active
     const checkLiveStatus = () => {
       const now = new Date();
@@ -210,9 +209,11 @@ export default function LivePrayerPage() {
                   className="flex gap-3 animate-in fade-in slide-in-from-bottom-2 duration-500"
                 >
                   {/* Avatar */}
-                  <img 
+                  <Image 
                     src={message.avatar} 
                     alt={message.name}
+                    width={40}
+                    height={40}
                     className="w-10 h-10 rounded-full shrink-0 border-2 border-yellow-500/30"
                   />
                   

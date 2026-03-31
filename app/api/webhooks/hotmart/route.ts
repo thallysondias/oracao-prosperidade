@@ -1,80 +1,24 @@
-import { createClient } from "@/utils/supabase/server";
 import { NextResponse } from "next/server";
 
-const MAILINGBOSS_TOKEN = process.env.MAILINGBOSS_TOKEN || "75537:6ddeb64d3ac1a0e5a93cde784e73e243";
-const MAILINGBOSS_LIST_UID = process.env.MAILINGBOSS_LIST_UID || "vh485p76so057";
-const MAILINGBOSS_API_URL = "https://member.mailingboss.com/integration/index.php/lists/subscribers/create";
-
-type HotmartStatus = "approved" | "cancelled" | "refunded" | "chargeback" | "pending";
-
-interface HotmartWebhook {
-  id: string;
-  event: string;
-  creation_date: number;
-  data: {
-    buyer: {
-      email: string;
-      name: string;
-    };
-    product: {
-      id: string;
-      name: string;
-    };
-    purchase: {
-      transaction: string;
-      status: HotmartStatus;
-      approved_date?: number;
-    };
-  };
-}
-
-function mapHotmartStatus(event: string, status: HotmartStatus): string {
-  if (event === "PURCHASE_CANCELED") return "cancelled";
-  if (event === "PURCHASE_REFUNDED") return "refunded";
-  if (event === "PURCHASE_CHARGEBACK") return "chargeback";
-  if (event === "PURCHASE_APPROVED") return "approved";
-  if (status === "approved") return "approved";
-  return "pending";
-}
-
-async function addToMailingBoss(email: string, name: string, tag: string) {
-  try {
-    const [firstName, ...lastNameParts] = name.split(" ");
-    const lastName = lastNameParts.join(" ") || "";
-
-    const response = await fetch(`${MAILINGBOSS_API_URL}/${MAILINGBOSS_TOKEN}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: email,
-        list_uid: MAILINGBOSS_LIST_UID,
-        fname: firstName,
-        taginternals: tag,
-      }),
-    });
-
-    const data = await response.json();
-
-    if (response.ok && data.status === "success") {
-      console.log("Lead added to MailingBoss:", {
-        email,
-        subscriber_uid: data.data?.subscriber_uid,
-      });
-      return { success: true, data };
-    } else {
-      console.error("MailingBoss API error:", data);
-      return { success: false, error: data };
-    }
-  } catch (error) {
-    console.error("Error adding to MailingBoss:", error);
-    return { success: false, error };
-  }
-}
+import type { HotmartWebhook } from "@/features/webhooks/hotmart/types";
+import {
+  isApprovedPrayerRequestProduct,
+  mapHotmartStatus,
+  resolvePurchasedAt,
+} from "@/features/webhooks/hotmart/utils";
+import {
+  getImportedUserPassword,
+  isUsingLegacyImportedPassword,
+} from "@/features/auth/server/imported-user-password";
+import { addToMailingBoss } from "@/features/webhooks/shared/mailingboss";
+import { createClient } from "@/utils/supabase/server";
 
 export async function POST(request: Request) {
   try {
+    if (isUsingLegacyImportedPassword()) {
+      console.warn("Using legacy imported user password fallback. Configure DEFAULT_IMPORTED_USER_PASSWORD.");
+    }
+
     const supabase = await createClient();
     const body: HotmartWebhook = await request.json();
 
@@ -101,7 +45,7 @@ export async function POST(request: Request) {
         .insert({
           email: buyer.email,
           name: buyer.name,
-          password: "benedito",
+          password: getImportedUserPassword(),
         })
         .select("id")
         .single();
@@ -143,7 +87,6 @@ export async function POST(request: Request) {
         );
       }
 
-      console.log("Updating MailingBoss tag:", { email: buyer.email, status: mappedStatus });
       await addToMailingBoss(buyer.email, buyer.name, mappedStatus);
 
       return NextResponse.json({
@@ -151,17 +94,6 @@ export async function POST(request: Request) {
         action: "updated",
         transaction: purchase.transaction,
       });
-    }
-
-    // 3. Create new purchase
-    // Hotmart pode enviar timestamp em segundos ou milissegundos
-    let purchasedAt = new Date();
-    if (purchase.approved_date) {
-      // Se timestamp tem mais de 13 dígitos, já está em milissegundos
-      const timestamp = purchase.approved_date;
-      purchasedAt = timestamp > 9999999999 
-        ? new Date(timestamp) 
-        : new Date(timestamp * 1000);
     }
 
     const { error: purchaseError } = await supabase.from("purchases").insert({
@@ -173,7 +105,7 @@ export async function POST(request: Request) {
       status: mappedStatus,
       payment_gateway: "hotmart",
       purchase_data: body,
-      purchased_at: purchasedAt.toISOString(),
+      purchased_at: resolvePurchasedAt(purchase.approved_date),
     });
 
     if (purchaseError) {
@@ -184,11 +116,9 @@ export async function POST(request: Request) {
       );
     }
 
-    console.log("Adding lead to MailingBoss with status tag:", { email: buyer.email, status: mappedStatus });
     await addToMailingBoss(buyer.email, buyer.name, mappedStatus);
 
-    // 5. Update prayer request status if product is approved "Pedido de Oración Personalizado"
-    if (mappedStatus === "approved" && (product.name.includes("Pedido de Oración") || product.name.includes("Pedido Personalizado"))) {
+    if (mappedStatus === "approved" && isApprovedPrayerRequestProduct(product.name)) {
       const { error: updatePrayerError } = await supabase
         .from("prayer_requests")
         .update({
@@ -203,8 +133,6 @@ export async function POST(request: Request) {
 
       if (updatePrayerError) {
         console.error("Error updating prayer request:", updatePrayerError);
-      } else {
-        console.log("Prayer request updated to approved for:", buyer.email);
       }
     }
 

@@ -11,7 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { LogOut, User, ShoppingBag } from "lucide-react";
+import { LogOut, ShoppingBag } from "lucide-react";
 import { useLocale } from "next-intl";
 
 export function UserMenu() {

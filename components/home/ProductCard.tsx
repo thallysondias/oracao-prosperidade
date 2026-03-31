@@ -20,11 +20,9 @@ interface ProductCardProps {
 export function ProductCard({
   id,
   title,
-  description,
   image,
   isLocked = false,
   duration = '2-5 minutos',
-  tags = [],
   onClick,
 }: ProductCardProps) {
   const t = useTranslations('HomePage');
@@ -48,9 +46,11 @@ export function ProductCard({
 
       {/* Right Image */}
       <div className="relative w-24 h-24 shrink-0">
-        <img
+        <Image
           src={image}
           alt={title}
+          fill
+          sizes="96px"
           className="object-cover rounded-lg aspect-square"
         />
       </div>

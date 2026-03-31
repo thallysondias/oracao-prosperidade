@@ -1,11 +1,10 @@
 import { createClient } from "@/utils/supabase/server";
 import { NextResponse } from "next/server";
-
-const MAILINGBOSS_TOKEN = process.env.MAILINGBOSS_TOKEN || "75537:6ddeb64d3ac1a0e5a93cde784e73e243";
-const MAILINGBOSS_LIST_UID = process.env.MAILINGBOSS_LIST_UID || "vh485p76so057";
-const MAILINGBOSS_API_URL = "https://member.mailingboss.com/integration/index.php/lists/subscribers/create";
-
-type KiwifyStatus = "approved" | "paid" | "refunded" | "chargedback" | "refused" | "pending";
+import {
+  getImportedUserPassword,
+  isUsingLegacyImportedPassword,
+} from "@/features/auth/server/imported-user-password";
+import { addToMailingBoss } from "@/features/webhooks/shared/mailingboss";
 
 interface KiwifyWebhook {
   id?: string;
@@ -57,38 +56,12 @@ function mapKiwifyStatus(event: string | undefined, status: string): string {
   return "pending";
 }
 
-async function addToMailingBoss(email: string, name: string, tag: string) {
-  try {
-    const [firstName] = name.split(" ");
-
-    const response = await fetch(`${MAILINGBOSS_API_URL}/${MAILINGBOSS_TOKEN}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email,
-        list_uid: MAILINGBOSS_LIST_UID,
-        fname: firstName,
-        taginternals: tag,
-      }),
-    });
-
-    const data = await response.json();
-
-    if (response.ok && data.status === "success") {
-      console.log("Lead added to MailingBoss:", { email, subscriber_uid: data.data?.subscriber_uid });
-      return { success: true, data };
-    } else {
-      console.error("MailingBoss API error:", data);
-      return { success: false, error: data };
-    }
-  } catch (error) {
-    console.error("Error adding to MailingBoss:", error);
-    return { success: false, error };
-  }
-}
-
 export async function POST(request: Request) {
   try {
+    if (isUsingLegacyImportedPassword()) {
+      console.warn("Using legacy imported user password fallback. Configure DEFAULT_IMPORTED_USER_PASSWORD.");
+    }
+
     const supabase = await createClient();
     const body: KiwifyWebhook = await request.json();
 
@@ -125,7 +98,7 @@ export async function POST(request: Request) {
         .insert({
           email,
           name,
-          password: "benedito",
+          password: getImportedUserPassword(),
         })
         .select("id")
         .single();

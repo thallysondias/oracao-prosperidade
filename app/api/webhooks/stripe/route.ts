@@ -2,6 +2,10 @@ import { headers } from 'next/headers';
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
 
+import {
+  getImportedUserPassword,
+  isUsingLegacyImportedPassword,
+} from '@/features/auth/server/imported-user-password';
 import { createClient } from '@/utils/supabase/server';
 
 const MAILINGBOSS_TOKEN = process.env.MAILINGBOSS_TOKEN || '75537:6ddeb64d3ac1a0e5a93cde784e73e243';
@@ -10,18 +14,19 @@ const MAILINGBOSS_API_URL = 'https://member.mailingboss.com/integration/index.ph
 
 const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
 const STRIPE_WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET;
+const stripe = STRIPE_SECRET_KEY
+  ? new Stripe(STRIPE_SECRET_KEY, {
+      apiVersion: '2025-12-15.clover',
+    })
+  : null;
 
-if (!STRIPE_SECRET_KEY) {
-  throw new Error('Missing STRIPE_SECRET_KEY env');
+function getStripeClient() {
+  if (!stripe) {
+    throw new Error('Stripe webhook is not configured');
+  }
+
+  return stripe;
 }
-
-if (!STRIPE_WEBHOOK_SECRET) {
-  throw new Error('Missing STRIPE_WEBHOOK_SECRET env');
-}
-
-const stripe = new Stripe(STRIPE_SECRET_KEY, {
-  apiVersion: '2025-12-15.clover',
-});
 
 // Mapeamento de nomes de produtos do Stripe para nomes padronizados
 const STRIPE_PRODUCT_NAMES: Record<string, string> = {
@@ -64,7 +69,7 @@ type NormalizedStripePayload = {
  */
 async function getSubscriptionItems(subscriptionId: string): Promise<Array<{ priceId: string; productId: string; productName: string }>> {
   try {
-    const subscription = await stripe.subscriptions.retrieve(subscriptionId, {
+    const subscription = await getStripeClient().subscriptions.retrieve(subscriptionId, {
       expand: ['items.data.price.product'],
     });
 
@@ -166,7 +171,7 @@ async function normalizeStripeEvent(event: Stripe.Event): Promise<NormalizedStri
       let name: string = 'Cliente Stripe';
       
       try {
-        const customer = await stripe.customers.retrieve(subscription.customer as string);
+        const customer = await getStripeClient().customers.retrieve(subscription.customer as string);
         if (customer && !customer.deleted) {
           email = customer.email ?? undefined;
           name = customer.name || name;
@@ -321,6 +326,15 @@ async function addToMailingBoss(email: string, name: string, tag: string) {
 }
 
 export async function POST(request: Request) {
+  if (!STRIPE_SECRET_KEY || !STRIPE_WEBHOOK_SECRET || !stripe) {
+    console.error('Missing Stripe webhook configuration.');
+    return NextResponse.json({ error: 'Stripe webhook is not configured' }, { status: 500 });
+  }
+
+  if (isUsingLegacyImportedPassword()) {
+    console.warn('Using legacy imported user password fallback. Configure DEFAULT_IMPORTED_USER_PASSWORD.');
+  }
+
   const signature = (await headers()).get('stripe-signature');
   const payload = await request.text();
 
@@ -360,7 +374,7 @@ export async function POST(request: Request) {
       .insert({
         email,
         name,
-        password: 'benedito',
+        password: getImportedUserPassword(),
       })
       .select('id')
       .single();

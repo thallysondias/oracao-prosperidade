@@ -1,8 +1,15 @@
-import { createClient } from "@/utils/supabase/server";
 import { NextResponse } from "next/server";
 
-const HOTMART_PRODUCT_ID = "pedido-oracion-personalizado";
-const HOTMART_PAYMENT_URL = "https://pay.hotmart.com/X102941563H?checkoutMode=10"; // Substitua pelo link correto
+import {
+  PRAYER_REQUEST_FALLBACK_PAYMENT_LINK,
+  PRAYER_REQUEST_PAYMENT_LINK,
+  PRAYER_REQUEST_PRODUCT_ID,
+} from "@/features/prayer-requests/config";
+import {
+  createPrayerRequest,
+  getLatestPrayerRequest,
+} from "@/features/prayer-requests/server/create-prayer-request";
+import { createClient } from "@/utils/supabase/server";
 
 export async function POST(request: Request) {
   try {
@@ -11,7 +18,6 @@ export async function POST(request: Request) {
 
     const { email, name, goal, prayerText, profileId } = body;
 
-    // Validar dados
     if (!email || !name || !prayerText) {
       return NextResponse.json(
         { error: "Campos obrigatórios faltando" },
@@ -19,20 +25,16 @@ export async function POST(request: Request) {
       );
     }
 
-    // Criar pedido de oração no banco
-    const { data: prayerRequest, error: insertError } = await supabase
-      .from("prayer_requests")
-      .insert({
-        profile_id: profileId,
-        email: email,
-        name: name,
-        goal: goal || "general",
-        prayer_text: prayerText,
-        status: "pending",
-        payment_link: "https://go.hotmart.com/O102962155C",
-      })
-      .select()
-      .single();
+    const { data: prayerRequest, error: insertError } = await createPrayerRequest(
+      supabase,
+      {
+        profileId,
+        email,
+        name,
+        goal,
+        prayerText,
+      }
+    );
 
     if (insertError) {
       console.error("Error creating prayer request:", insertError);
@@ -42,11 +44,11 @@ export async function POST(request: Request) {
       );
     }
 
-    // Retornar sucesso com link de pagamento
     return NextResponse.json({
       success: true,
       prayerRequestId: prayerRequest.id,
-      paymentLink: "https://go.hotmart.com/O102962155C",
+      paymentLink: PRAYER_REQUEST_PAYMENT_LINK || PRAYER_REQUEST_FALLBACK_PAYMENT_LINK,
+      productId: PRAYER_REQUEST_PRODUCT_ID,
     });
   } catch (error) {
     console.error("Prayer request error:", error);
@@ -70,14 +72,10 @@ export async function GET(request: Request) {
       );
     }
 
-    // Buscar último pedido do usuário
-    const { data: prayerRequest, error } = await supabase
-      .from("prayer_requests")
-      .select("id, status, goal, prayer_text, payment_link, created_at")
-      .eq("email", email)
-      .order("created_at", { ascending: false })
-      .limit(1)
-      .single();
+    const { data: prayerRequest, error } = await getLatestPrayerRequest(
+      supabase,
+      email
+    );
 
     if (error && error.code !== "PGRST116") {
       console.error("Error fetching prayer request:", error);

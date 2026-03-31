@@ -1,20 +1,22 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+
+import { MessageCircle, X } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
-import { useAuthStore } from '@/store/authStore';
-import { Header } from '@/components/home/Header';
-import { PrayersSlider } from '@/components/home/PrayersSlider';
-import { DailyPrayerCard } from '@/components/home/DailyPrayerCard';
-import { RelatedScripturesSection } from '@/components/home/RelatedScripturesSection';
-import { Challenge21Days } from '@/components/home/Challenge21Days';
-import { PrayerRequest } from '@/components/home/PrayerRequest';
+
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
 import { Tabs, TabsContent } from '@/components/ui/tabs';
+import { Challenge21Days } from '@/components/home/Challenge21Days';
+import { PrayersSlider } from '@/components/home/PrayersSlider';
+import { RelatedScripturesSection } from '@/components/home/RelatedScripturesSection';
+import { Header } from '@/features/home-feed/components/Header';
+import { DailyPrayerCard } from '@/features/home-feed/components/DailyPrayerCard';
+import { PrayerRequest } from '@/features/prayer-requests/components/PrayerRequest';
 import { products } from '@/lib/products/oraciones';
 import { getTodayVerse } from '@/lib/versiculos_traduzidos';
-import { Button } from '@/components/ui/button';
-import { MessageCircle, X } from 'lucide-react';
-import { Card } from '@/components/ui/card';
+import { useAuthStore } from '@/store/authStore';
 
 export default function HomePage() {
   const t = useTranslations('HomePage');
@@ -27,10 +29,14 @@ export default function HomePage() {
   const todayVerseText = todayVerse.traducao[locale];
   const dailyPrayerAuthorName =
     locale === 'pt'
-      ? 'Cultive uma rotina de reflexão'
+      ? 'Cultive uma rotina de reflexao'
       : locale === 'es'
-        ? 'Cultiva una rutina de reflexión'
+        ? 'Cultiva una rutina de reflexion'
         : 'Build a reflection routine';
+  const anonymousUserName =
+    locale === 'pt' ? 'Usuario' : locale === 'es' ? 'Usuario' : 'User';
+  const minutesLabel =
+    locale === 'pt' ? 'minutos' : locale === 'es' ? 'minutos' : 'minutes';
 
   const formattedProducts = useMemo(() => {
     return products.map((product, index) => ({
@@ -47,10 +53,10 @@ export default function HomePage() {
         'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop',
       isLocked: product.isLocked,
       daysCount: index + 1,
-      duration: `${product.durationMinutes} minutos`,
+      duration: `${product.durationMinutes} ${minutesLabel}`,
       tags: locale === 'pt' ? product.tagsPt : locale === 'en' ? product.tagsEn : product.tagsEs,
     }));
-  }, [locale]);
+  }, [locale, minutesLabel]);
 
   const handleSupportClick = () => {
     window.open('https://wa.me/5531973130289', '_blank');
@@ -60,8 +66,7 @@ export default function HomePage() {
     <div className="min-h-screen bg-gray-50 dark:bg-black overflow-x-hidden">
       <div className="relative z-10 max-w-5xl mx-auto px-2">
         <Header
-          userName={user?.name || user?.email || 'Usuário'}
-          notificationCount={1}
+          userName={user?.name || user?.email || anonymousUserName}
           activeTab={activeTab}
           onTabChange={setActiveTab}
         />
@@ -77,7 +82,7 @@ export default function HomePage() {
               authorName={dailyPrayerAuthorName}
               authorImage="https://images.unsplash.com/5/unsplash-kitsune-4.jpg?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjEyMDd9&s=fb86e2e09fceac9b363af536b93a1275"
               backgroundImage="/prayer/oracione.jpeg"
-              duration="2-5 minutos"
+              duration={`2-5 ${minutesLabel}`}
             />
 
             <RelatedScripturesSection

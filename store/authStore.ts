@@ -1,20 +1,6 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
-
-export interface UserPurchase {
-  product_id: string;
-  product_name: string;
-  transaction_id: string;
-  status: string;
-  purchased_at?: string; // ISO date string
-}
-
-export interface UserProfile {
-  id: string;
-  name: string;
-  email: string;
-  purchases: UserPurchase[];
-}
+import type { UserProfile, UserPurchase } from '@/features/auth/types';
 
 interface AuthStore {
   user: UserProfile | null;
@@ -61,3 +47,5 @@ export const useAuthStore = create<AuthStore>()(
     }
   )
 );
+
+export type { UserProfile, UserPurchase };

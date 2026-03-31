@@ -1,6 +1,7 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
+import Image from 'next/image';
 import { useMemo } from 'react';
 import Link from 'next/link';
 import { useLocale, useTranslations } from 'next-intl';
@@ -40,9 +41,11 @@ const OracionCarloAcutis = () => {
 
   return (
     <div className="min-h-screen bg-white font-serif text-gray-900">
-      <img
+      <Image
         src="/selling_pages/father-doug.png"
         alt={t('headerAlt')}
+        width={1600}
+        height={900}
         className="w-full object-cover mx-auto"
       />
 
@@ -89,9 +92,11 @@ const OracionCarloAcutis = () => {
 
             {/* IMAGEM SUGERIDA */}
             <div className="my-10 flex flex-col items-center">
-              <img
+              <Image
                 src="/selling_pages/acutis.png"
                 alt={t('keyAlt')}
+                width={1200}
+                height={720}
                 className="w-full h-80 rounded-lg shadow-2xl"
               />
               <p className="text-sm text-gray-500 mt-2 italic">{t('keyCaption')}</p>
@@ -123,9 +128,11 @@ const OracionCarloAcutis = () => {
 
             {/* IMAGEM SUGERIDA 2 */}
             <div className="my-10 bg-gray-100 h-64 rounded-lg flex items-center justify-center text-7xl grayscale opacity-80 border-2 border-dashed border-gray-300">
-              <img
+              <Image
                 src="/selling_pages/arcanjo.png"
                 alt={t('secretAlt')}
+                width={1200}
+                height={600}
                 className="w-full h-full object-cover"
               />
             </div>
@@ -136,9 +143,9 @@ const OracionCarloAcutis = () => {
 
             <p>{t('mustSeeText')}</p>
 
-            <p className="font-bold italic text-center text-xl py-6">"{t('quote')}"</p>
+            <p className="font-bold italic text-center text-xl py-6">&ldquo;{t('quote')}&rdquo;</p>
             <div className="hidden lg:block">
-              <img src="/selling_pages/arrow-down.png" alt={t('arrowAlt')} className="w-20 object-cover mx-auto" />
+              <Image src="/selling_pages/arrow-down.png" alt={t('arrowAlt')} width={80} height={80} className="w-20 object-cover mx-auto" />
               <div className="bg-white p-6 rounded-lg shadow-xl border-2 border-yellow-500 text-center lg:top-6 ">
                 <p className="text-sm uppercase tracking-widest text-gray-500 font-bold">{t('priceTitle')}</p>
                 <div className="flex justify-center items-center gap-3 my-2">
@@ -159,7 +166,7 @@ const OracionCarloAcutis = () => {
 
         {/* COLUNA DIREITA: SIDEBAR (TESTEMUNHOS + PREÇO) */}
         <aside className="bg-slate-50 p-6 md:p-8 border-l border-gray-100 lg:self-start">
-          <img src="/selling_pages/arrow-down.png" alt={t('arrowAlt')} className="w-20 object-cover mx-auto" />
+          <Image src="/selling_pages/arrow-down.png" alt={t('arrowAlt')} width={80} height={80} className="w-20 object-cover mx-auto" />
           <div className="space-y-8">
             {/* PREÇO E BOTÃO */}
             <div className="bg-white p-6 rounded-lg shadow-xl border-2 border-yellow-500 text-center lg:sticky lg:top-6 z-50">
@@ -197,9 +204,9 @@ const OracionCarloAcutis = () => {
                   key={`${test.n}-${index}`}
                   className="bg-blue-50 p-5 rounded-lg border-2 border-blue-200 shadow-sm text-sm leading-relaxed relative"
                 >
-                  <div className="absolute top-2 left-3 text-blue-300 text-3xl font-serif">"</div>
+                  <div className="absolute top-2 left-3 text-blue-300 text-3xl font-serif">&ldquo;</div>
                   <p className="italic text-gray-800 pl-6 pr-6 pt-2 pb-2">{test.t}</p>
-                  <div className="absolute bottom-2 right-3 text-blue-300 text-3xl font-serif rotate-180">"</div>
+                  <div className="absolute bottom-2 right-3 text-blue-300 text-3xl font-serif rotate-180">&rdquo;</div>
                   <span className="block font-bold not-italic mt-3 text-orange-700 text-xs text-right pr-2">
                     — {test.n}
                   </span>

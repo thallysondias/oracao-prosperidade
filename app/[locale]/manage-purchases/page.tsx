@@ -5,7 +5,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Trash2, Plus, Save, Search } from 'lucide-react';
+import { Save, Search } from 'lucide-react';
+import { getImportedUserPassword } from '@/features/auth/server/imported-user-password';
 import { createClient } from '@/utils/supabase/client';
 
 // Lista de produtos disponíveis (baseado nos seus produtos Stripe)
@@ -143,7 +144,7 @@ export default function ManagePurchasesPage() {
           .insert({
             email,
             name: email.split('@')[0],
-            password: 'benedito',
+            password: getImportedUserPassword(),
           })
           .select('id')
           .single();

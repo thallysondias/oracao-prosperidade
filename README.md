@@ -1,36 +1,50 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Oracao Prosperidade
 
-## Getting Started
+Aplicação Next.js para catálogo de orações, conteúdo autenticado, pedidos personalizados e processamento de compras via webhooks.
 
-First, run the development server:
+## Stack
+
+- Next.js App Router
+- React 19
+- TypeScript
+- Supabase
+- next-intl
+- Zustand
+- Stripe
+
+## Estrutura atual
+
+```text
+app/                 rotas e handlers
+components/          UI existente
+features/            domínio por área de negócio
+shared/config/       locales, links e configuração transversal
+lib/                 compatibilidade com imports legados
+docs/                documentação técnica
+```
+
+## Domínios principais
+
+- `features/auth`: tipos de usuário e navegação autenticada
+- `features/prayers`: catálogo e cards em destaque
+- `features/prayer-requests`: criação e consulta de pedidos
+- `features/webhooks`: integrações e normalização de eventos
+
+## Scripts
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run build
+npm run lint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Próximos passos de organização
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Migrar mais componentes de `components/` para `features/.../components`
+- Extrair os webhooks restantes para serviços dedicados
+- Padronizar nomenclatura de rotas, assets e textos
+- Revisar autenticação e remover senha importada de fallback
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Documentação
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Arquitetura: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)

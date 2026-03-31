@@ -1,5 +1,4 @@
 import { Metadata } from 'next';
-import { useTranslations } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import { Button } from '@/components/ui/button';
 import { LightRays } from '@/components/ui/light-rays';
@@ -90,7 +89,7 @@ export default async function VersePage({ searchParams, params }: VersePageProps
           </p>
           <h1 className="text-4xl md:text-5xl font-bold text-foreground">{verseReference}</h1>
           <p className="text-lg md:text-xl font-serif italic leading-relaxed text-foreground">
-            "{verseText}"
+            &ldquo;{verseText}&rdquo;
           </p>
         </div>
 

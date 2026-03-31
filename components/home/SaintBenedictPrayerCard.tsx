@@ -1,9 +1,8 @@
 'use client';
 
-import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { useLocale } from 'next-intl';
-import { Share2, Clock, Play } from 'lucide-react';
+import { Play } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -11,7 +10,6 @@ import Link from 'next/link';
 export function SaintBenedictPrayerCard() {
   const t = useTranslations('SaintBenedict');
   const locale = useLocale();
-  const [isFavorited, setIsFavorited] = useState(false);
 
   const image = '/products/saobenedito.jpeg';
 
@@ -23,9 +21,11 @@ export function SaintBenedictPrayerCard() {
         {/* Avatar positioned absolute above */}
         <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
           <div className="relative w-32 h-32 rounded-2xl overflow-hidden shadow-lg ring-4 ring-white dark:ring-slate-900">
-            <img
+            <Image
               src={image}
               alt={t('title')}
+              fill
+              sizes="128px"
               className="w-full h-full object-cover object-center"
             />
           </div>
