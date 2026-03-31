@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 
 import type { HotmartWebhook } from "@/features/webhooks/hotmart/types";
 import {
-  isApprovedPrayerRequestProduct,
   mapHotmartStatus,
   resolvePurchasedAt,
 } from "@/features/webhooks/hotmart/utils";
@@ -11,6 +10,7 @@ import {
   isUsingLegacyImportedPassword,
 } from "@/features/auth/server/imported-user-password";
 import { addToMailingBoss } from "@/features/webhooks/shared/mailingboss";
+import { isApprovedPrayerRequestProduct } from "@/features/webhooks/shared/products";
 import { createClient } from "@/utils/supabase/server";
 
 export async function POST(request: Request) {

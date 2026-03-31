@@ -1,5 +1,7 @@
 import type { HotmartStatus } from '@/features/webhooks/hotmart/types';
 
+export { isApprovedPrayerRequestProduct } from '@/features/webhooks/shared/products';
+
 export function mapHotmartStatus(event: string, status: HotmartStatus): string {
   if (event === 'PURCHASE_CANCELED') return 'cancelled';
   if (event === 'PURCHASE_REFUNDED') return 'refunded';
@@ -20,11 +22,4 @@ export function resolvePurchasedAt(approvedDate?: number) {
       : new Date(approvedDate * 1000);
 
   return date.toISOString();
-}
-
-export function isApprovedPrayerRequestProduct(productName: string) {
-  return (
-    productName.includes('Pedido de Oración') ||
-    productName.includes('Pedido Personalizado')
-  );
 }

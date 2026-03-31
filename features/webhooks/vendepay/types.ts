@@ -1,0 +1,33 @@
+export interface VendePayWebhook {
+  event?: string;
+  id?: string;
+  createdAt?: string;
+  produtoId?: string;
+  cupomDescontoId?: string | null;
+  vendedorId?: string;
+  checkoutId?: string;
+  idepotentialCheckoutId?: string;
+  emailComprador?: string;
+  nomeComprador?: string;
+  sobrenomeComprador?: string;
+  telefoneComprador?: string;
+  cpfComprador?: string;
+  metodoPagamento?: number;
+  moeda?: number;
+  status?: number;
+  valorPago?: number;
+  postalCode?: string;
+  state?: string;
+  city?: string;
+  district?: string;
+  address?: string;
+  number?: string;
+  complement?: string;
+  src?: string;
+  sck?: string;
+  utmSource?: string;
+  utmCampaign?: string;
+  utmMedium?: string;
+  utmContent?: string;
+  utmTerm?: string;
+}
