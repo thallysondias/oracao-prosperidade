@@ -1,16 +1,19 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { ChevronDown, ChevronLeft, Heart, Pause, Play } from 'lucide-react';
 
 import { useAudioPlayer } from '@/features/prayer-player/useAudioPlayer';
-import { formatAudioTime } from '@/features/prayer-player/utils';
+import {
+  formatAudioTime,
+  resolveAudioSourceCandidates,
+} from '@/features/prayer-player/utils';
 
 interface AudioPrayerPageProps {
-  audioSrc?: string;
+  audioSrc?: string | string[];
   children: React.ReactNode;
   disclaimer?: string;
   imageAlt: string;
@@ -32,6 +35,8 @@ export function AudioPrayerPage({
 }: AudioPrayerPageProps) {
   const router = useRouter();
   const [isFavorite, setIsFavorite] = useState(false);
+  const audioSources = useMemo(() => resolveAudioSourceCandidates(audioSrc), [audioSrc]);
+  const [audioSourceIndex, setAudioSourceIndex] = useState(0);
   const {
     audioRef,
     duration,
@@ -43,6 +48,18 @@ export function AudioPrayerPage({
     isPlaying,
     played,
   } = useAudioPlayer();
+
+  useEffect(() => {
+    setAudioSourceIndex(0);
+  }, [audioSrc]);
+
+  const currentAudioSrc = audioSources[audioSourceIndex];
+
+  const handleAudioError = () => {
+    if (audioSourceIndex < audioSources.length - 1) {
+      setAudioSourceIndex((currentIndex) => currentIndex + 1);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-black">
@@ -91,10 +108,12 @@ export function AudioPrayerPage({
 
         <audio
           ref={audioRef}
-          src={audioSrc}
+          key={currentAudioSrc}
+          src={currentAudioSrc}
           onTimeUpdate={handleTimeUpdate}
           onLoadedMetadata={handleLoadedMetadata}
           onEnded={handleEnded}
+          onError={handleAudioError}
           className="hidden"
         />
       </div>

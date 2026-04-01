@@ -2,14 +2,14 @@ import type { LocalizedPrayerContent } from '@/features/prayer-content/types';
 
 export const sanBenitoPrayerContent: LocalizedPrayerContent = {
   pt: {
-    title: 'Oracao inspirada em Sao Bento',
+    title: 'Guia de Fe e Reflexao inspirado em Sao Benedito',
     subtitle: 'Um momento de recolhimento e fe',
     tags: ['Fe', 'Discernimento', 'Calma', 'Reflexao'],
     sections: [
       {
         title: '',
         paragraphs: [
-          'Sao Bento, acompanha este momento de oracao. Quero fazer uma pausa, aquietar o coracao e recordar que a fe tambem se constroi no silencio, na constancia e na vida cotidiana.',
+          'Sao Benedito, acompanha este momento de oracao. Quero fazer uma pausa, aquietar o coracao e recordar que a fe tambem se constroi no silencio, na constancia e na vida cotidiana.',
           'Que este conteudo me ajude a olhar para minha jornada com mais serenidade e a fortalecer minha disposicao para agir com prudencia, paciencia e bondade.',
           'Nao busco formulas nem promessas, mas um espaco sincero de reflexao que me aproxime de Deus e me ajude a viver com mais presenca.',
         ],
@@ -51,14 +51,14 @@ export const sanBenitoPrayerContent: LocalizedPrayerContent = {
         title: 'Gratidao final',
         paragraphs: [
           'Obrigado por este espaco de reflexao. Que o vivido aqui me anime a continuar com uma fe mais serena, um olhar mais consciente e uma disposicao mais amavel em minha vida diaria.',
-          'Sao Bento, inspira-nos a viver com firmeza interior, simplicidade e paz.',
+          'Sao Benedito, inspira-nos a viver com firmeza interior, simplicidade e paz.',
         ],
       },
     ],
     amen: 'Amem.',
   },
   es: {
-    title: 'Oracion inspirada en San Benito',
+    title: 'Guia de Fe y Reflexion inspirada en San Benito',
     subtitle: 'Un momento de recogimiento y fe',
     tags: ['Fe', 'Discernimiento', 'Calma', 'Reflexion'],
     sections: [
@@ -114,7 +114,7 @@ export const sanBenitoPrayerContent: LocalizedPrayerContent = {
     amen: 'Amen.',
   },
   en: {
-    title: 'Prayer inspired by Saint Benedict',
+    title: 'Faith and Reflection Guide inspired by Saint Benedict',
     subtitle: 'A moment of recollection and faith',
     tags: ['Faith', 'Discernment', 'Calm', 'Reflection'],
     sections: [

@@ -1,23 +1,23 @@
 export const PLATFORM_ACCESS_PRODUCTS = [
   {
     id: 'prod_TTfl4ccopmSAnb',
-    name: 'Oración de Carlos Acutis',
+    name: 'Guia de Fe y Reflexion inspirada en Carlo Acutis',
   },
   {
     id: 'prod_TTfxYqIhvEeiKa',
-    name: '21 Días de Oración y Milagros en Vivo',
+    name: '21 Dias de Oracion y Milagros en Vivo',
   },
   {
     id: 'prod_TTgOHAIhXSbdjI',
-    name: 'Pedido de Oración Personalizado',
+    name: 'Pedido de Oracion Personalizado',
   },
   {
     id: 'prod_padre_pio',
-    name: 'Padre Pio',
+    name: 'Guia de Fe y Reflexion inspirada en Padre Pio',
   },
   {
     id: 'prod_san_benito',
-    name: 'Oración de San Benito',
+    name: 'Guia de Fe y Reflexion inspirada en San Benito',
   },
 ] as const;
 
@@ -72,7 +72,7 @@ export function resolveProductNameById(productId?: string | null, fallbackName?:
 
 export function isApprovedPrayerRequestProduct(productName: string) {
   return (
-    productName.includes('Pedido de Oración') ||
+    productName.includes('Pedido de Oracion') ||
     productName.includes('Pedido de Oração') ||
     productName.includes('Pedido Personalizado')
   );

@@ -2,7 +2,7 @@ import type { LocalizedPrayerContent } from '@/features/prayer-content/types';
 
 export const carloAcutisPrayerContent: LocalizedPrayerContent = {
   pt: {
-    title: 'Oracao inspirada em Carlo Acutis',
+    title: 'Guia de Fe e Reflexao inspirado em Carlo Acutis',
     subtitle: 'Carlo Acutis',
     tags: ['Presenca', 'Guia', 'Reflexao', 'Fe'],
     sections: [
@@ -47,7 +47,7 @@ export const carloAcutisPrayerContent: LocalizedPrayerContent = {
     amen: 'Amem.',
   },
   es: {
-    title: 'Oracion inspirada en Carlo Acutis',
+    title: 'Guia de Fe y Reflexion inspirada en Carlo Acutis',
     subtitle: 'Carlo Acutis',
     tags: ['Presencia', 'Guia', 'Reflexion', 'Fe'],
     sections: [
@@ -92,7 +92,7 @@ export const carloAcutisPrayerContent: LocalizedPrayerContent = {
     amen: 'Amen.',
   },
   en: {
-    title: 'Prayer inspired by Carlo Acutis',
+    title: 'Faith and Reflection Guide inspired by Carlo Acutis',
     subtitle: 'Carlo Acutis',
     tags: ['Presence', 'Guidance', 'Reflection', 'Faith'],
     sections: [

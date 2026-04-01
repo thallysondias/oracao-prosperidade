@@ -15,7 +15,7 @@ export default function SaintBenedictPage() {
     <AudioPrayerPage
       audioSrc={getLocalizedAudioUrl('/prayer/saobenedicto.mp3', locale)}
       imageAlt={t('title')}
-      imageSrc="/products/saobenedito.jpeg"
+      imageSrc="/products/san-benedito.jpeg"
       playingLabel={t('playingNow')}
       title={t('title')}
       disclaimer={disclaimer('spiritualContent')}

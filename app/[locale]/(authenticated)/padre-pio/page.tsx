@@ -8,16 +8,17 @@ import { getLocalizedAudioUrl, type ProductLocale } from '@/lib/products/oracion
 
 export default function PadrePioPage() {
   const locale = useLocale() as ProductLocale;
-  const t = useTranslations('SaintBenedict');
+  const slider = useTranslations('PrayersSlider');
+  const common = useTranslations('SaintBenedict');
   const disclaimer = useTranslations('AppDisclaimer');
 
   return (
     <AudioPrayerPage
       audioSrc={getLocalizedAudioUrl('/prayer/padrepio.mp3', locale)}
-      imageAlt={t('title')}
-      imageSrc="/prayer/padrepio.png"
-      playingLabel={t('playingNow')}
-      title="Oración al Padre Pio"
+      imageAlt={slider('padrePioTitle')}
+      imageSrc="/products/padre-pio.jpeg"
+      playingLabel={common('playingNow')}
+      title={slider('padrePioTitle')}
       disclaimer={disclaimer('spiritualContent')}
     >
       <PadrePio />

@@ -2,7 +2,7 @@ import type { LocalizedPrayerContent } from '@/features/prayer-content/types';
 
 export const padrePioPrayerContent: LocalizedPrayerContent = {
   pt: {
-    title: 'Oracao ao Padre Pio',
+    title: 'Guia de Fe e Reflexao inspirado em Padre Pio',
     subtitle: 'Inspirada em seu testemunho de fe',
     tags: ['Reflexao', 'Consolo', 'Esperanca', 'Fe'],
     sections: [
@@ -42,7 +42,7 @@ export const padrePioPrayerContent: LocalizedPrayerContent = {
     amen: 'Amem.',
   },
   es: {
-    title: 'Oracion al Padre Pio',
+    title: 'Guia de Fe y Reflexion inspirada en Padre Pio',
     subtitle: 'Inspirada en su testimonio de fe',
     tags: ['Reflexion', 'Consuelo', 'Esperanza', 'Fe'],
     sections: [
@@ -82,7 +82,7 @@ export const padrePioPrayerContent: LocalizedPrayerContent = {
     amen: 'Amen.',
   },
   en: {
-    title: 'Prayer to Padre Pio',
+    title: 'Faith and Reflection Guide inspired by Padre Pio',
     subtitle: 'Inspired by his witness of faith',
     tags: ['Reflection', 'Comfort', 'Hope', 'Faith'],
     sections: [

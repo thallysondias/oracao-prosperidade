@@ -13,3 +13,28 @@ export function formatAudioTime(seconds: number): string {
 
   return `${minutes}:${secs.toString().padStart(2, '0')}`;
 }
+
+export function resolveAudioSourceCandidates(
+  audioSrc?: string | string[]
+): string[] {
+  const sources = Array.isArray(audioSrc) ? audioSrc : audioSrc ? [audioSrc] : [];
+  const candidates: string[] = [];
+
+  for (const source of sources) {
+    if (!source) {
+      continue;
+    }
+
+    candidates.push(source);
+
+    if (source.endsWith('.mp3')) {
+      candidates.push(source.replace(/\.mp3$/, '.MP3'));
+    }
+
+    if (source.endsWith('.MP3')) {
+      candidates.push(source.replace(/\.MP3$/, '.mp3'));
+    }
+  }
+
+  return [...new Set(candidates)];
+}

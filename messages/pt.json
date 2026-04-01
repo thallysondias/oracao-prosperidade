@@ -11,12 +11,12 @@
     "secureAccess": "Acesso simples aos seus conteudos."
   },
   "PrayersSlider": {
-    "saintBenedictTitle": "Oracao de Sao Benedito",
-    "saintBenedictDescription": "Uma oracao inspirada em Sao Benedito para momentos de fe, reflexao e paz interior.",
-    "padrePioTitle": "Oracao de Padre Pio",
-    "padrePioDescription": "Uma oracao inspirada na devocao ao Padre Pio para quem busca fe, consolo e fortalecimento espiritual.",
-    "carlosAcutisTitle": "Oracao de Carlo Acutis",
-    "carlosAcutisDescription": "Uma oracao inspirada em Carlo Acutis para momentos de fe, reflexao e inspiracao na vida diaria.",
+    "saintBenedictTitle": "Guia de Fe e Reflexao inspirado em Sao Benedito",
+    "saintBenedictDescription": "Um guia de fe e reflexao inspirado em Sao Benedito para momentos de recolhimento, presenca e paz interior.",
+    "padrePioTitle": "Guia de Fe e Reflexao inspirado em Padre Pio",
+    "padrePioDescription": "Um guia de fe e reflexao inspirado em Padre Pio para quem busca serenidade, consolo e fortalecimento espiritual.",
+    "carlosAcutisTitle": "Guia de Fe e Reflexao inspirado em Carlo Acutis",
+    "carlosAcutisDescription": "Um guia de fe e reflexao inspirado em Carlo Acutis para momentos de fe, reflexao e inspiracao na vida diaria.",
     "listenPrayer": "Ouvir oracao",
     "buyPrayer": "Comprar oracao"
   },
@@ -73,9 +73,9 @@
     }
   },
   "SaintBenedict": {
-    "title": "Oracao inspirada em Sao Benedito",
-    "description": "Uma oracao inspirada em Sao Benedito para momentos de fe, reflexao e paz interior.",
-    "cardDescription": "Uma oracao inspirada em Sao Benedito para momentos de fe, reflexao e paz interior.",
+    "title": "Guia de Fe e Reflexao inspirado em Sao Benedito",
+    "description": "Um guia de fe e reflexao inspirado em Sao Benedito para momentos de recolhimento, presenca e paz interior.",
+    "cardDescription": "Um guia de fe e reflexao inspirado em Sao Benedito para momentos de recolhimento, presenca e paz interior.",
     "duration": "10 min",
     "listenPrayer": "Ouvir oracao",
     "playingNow": "Tocando agora",
@@ -83,7 +83,7 @@
     "fullText": "Sao Benedito, acompanhe este momento de oracao e recolhimento.\n\nQue eu possa viver este dia com mais serenidade, discernimento e constancia.\n\nAjude-me a cuidar dos meus pensamentos, das minhas palavras e da maneira como caminho na fe.\n\nQue esta oracao seja um convite a pausa, a reflexao e a paz interior.\n\nAmem."
   },
   "SaintBenedictPrayer": {
-    "title": "Oracao inspirada em Sao Benedito",
+    "title": "Guia de Fe e Reflexao inspirado em Sao Benedito",
     "subtitle": "Para momentos de fe, calma e reflexao",
     "tags": {
       "prosperity": "Fe",
@@ -359,7 +359,7 @@
         "text": "Orientacoes simples para continuar sua rotina de oracao com constancia."
       }
     ],
-    "secretAlt": "Oracao de Padre Pio",
+    "secretAlt": "Guia de Fe e Reflexao inspirado em Padre Pio",
     "mustSeeTitle": "{name}, VEJA ESTE MOMENTO DE ORACAO COM CALMA",
     "mustSeeText": "Este conteudo continua disponivel para voce como uma experiencia espiritual e reflexiva. Siga no seu ritmo.",
     "quote": "Aproveite este momento se ele fizer sentido para a sua rotina.",
@@ -424,7 +424,7 @@
         "text": "Orientacoes simples para continuar sua rotina de oracao com constancia."
       }
     ],
-    "secretAlt": "Oracao de Carlo Acutis",
+    "secretAlt": "Guia de Fe e Reflexao inspirado em Carlo Acutis",
     "mustSeeTitle": "{name}, VEJA ESTE MOMENTO DE ORACAO COM CALMA",
     "mustSeeText": "Este conteudo continua disponivel para voce como uma experiencia espiritual e reflexiva. Siga no seu ritmo.",
     "quote": "Aproveite este momento se ele fizer sentido para a sua rotina.",

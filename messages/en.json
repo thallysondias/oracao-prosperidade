@@ -11,12 +11,12 @@
     "secureAccess": "Simple access to your content."
   },
   "PrayersSlider": {
-    "saintBenedictTitle": "Prayer of Saint Benedict",
-    "saintBenedictDescription": "A prayer inspired by Saint Benedict for moments of faith, reflection, and inner peace.",
-    "padrePioTitle": "Padre Pio Prayer",
-    "padrePioDescription": "A prayer inspired by devotion to Padre Pio for those seeking faith, comfort, and spiritual strengthening.",
-    "carlosAcutisTitle": "Carlos Acutis Prayer",
-    "carlosAcutisDescription": "A prayer inspired by Carlo Acutis for moments of faith, reflection, and inspiration in daily life.",
+    "saintBenedictTitle": "Faith and Reflection Guide inspired by Saint Benedict",
+    "saintBenedictDescription": "A faith and reflection guide inspired by Saint Benedict for moments of recollection, presence, and inner peace.",
+    "padrePioTitle": "Faith and Reflection Guide inspired by Padre Pio",
+    "padrePioDescription": "A faith and reflection guide inspired by Padre Pio for those seeking serenity, comfort, and spiritual strengthening.",
+    "carlosAcutisTitle": "Faith and Reflection Guide inspired by Carlo Acutis",
+    "carlosAcutisDescription": "A faith and reflection guide inspired by Carlo Acutis for moments of faith, reflection, and inspiration in daily life.",
     "listenPrayer": "Listen to Prayer",
     "buyPrayer": "Buy Prayer"
   },
@@ -73,9 +73,9 @@
     }
   },
   "SaintBenedict": {
-    "title": "Prayer inspired by Saint Benedict",
-    "description": "A prayer inspired by Saint Benedict for moments of faith, reflection, and inner peace.",
-    "cardDescription": "A prayer inspired by Saint Benedict for moments of faith, reflection, and inner peace.",
+    "title": "Faith and Reflection Guide inspired by Saint Benedict",
+    "description": "A faith and reflection guide inspired by Saint Benedict for moments of recollection, presence, and inner peace.",
+    "cardDescription": "A faith and reflection guide inspired by Saint Benedict for moments of recollection, presence, and inner peace.",
     "duration": "10 min",
     "listenPrayer": "Listen to Prayer",
     "playingNow": "Playing now",
@@ -83,7 +83,7 @@
     "fullText": "Saint Benedict, accompany this moment of prayer and recollection.\n\nMay I live this day with more serenity, discernment, and consistency.\n\nHelp me care for my thoughts, my words, and the way I walk in faith.\n\nMay this prayer be an invitation to pause, reflection, and inner peace.\n\nAmen."
   },
   "SaintBenedictPrayer": {
-    "title": "Prayer inspired by Saint Benedict",
+    "title": "Faith and Reflection Guide inspired by Saint Benedict",
     "subtitle": "For moments of faith, calm, and reflection",
     "tags": {
       "prosperity": "Faith",

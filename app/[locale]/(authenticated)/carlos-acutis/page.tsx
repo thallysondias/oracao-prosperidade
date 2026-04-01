@@ -8,16 +8,17 @@ import { getLocalizedAudioUrl, type ProductLocale } from '@/lib/products/oracion
 
 export default function CarlosAcutisPage() {
   const locale = useLocale() as ProductLocale;
-  const t = useTranslations('SaintBenedict');
+  const slider = useTranslations('PrayersSlider');
+  const common = useTranslations('SaintBenedict');
   const disclaimer = useTranslations('AppDisclaimer');
 
   return (
     <AudioPrayerPage
       audioSrc={getLocalizedAudioUrl('/prayer/oracaocarlos.mp3', locale)}
-      imageAlt="Carlos Acutis"
-      imageSrc="/prayer/carlosacuri.jpeg"
-      playingLabel={t('playingNow')}
-      title="Oración al Ángel de mi Guarda"
+      imageAlt={slider('carlosAcutisTitle')}
+      imageSrc="/products/carlo-acutis.jpeg"
+      playingLabel={common('playingNow')}
+      title={slider('carlosAcutisTitle')}
       disclaimer={disclaimer('spiritualContent')}
     >
       <CarlosAcuti />

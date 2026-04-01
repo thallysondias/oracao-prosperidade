@@ -11,12 +11,12 @@
     "secureAccess": "Acceso simple a tus contenidos."
   },
   "PrayersSlider": {
-    "saintBenedictTitle": "Oracion de San Benito",
-    "saintBenedictDescription": "Una oracion inspirada en San Benito para momentos de fe, reflexion y paz interior.",
-    "padrePioTitle": "Oracion de Padre Pio",
-    "padrePioDescription": "Una oracion inspirada en la devocion al Padre Pio para quienes buscan fe, consuelo y fortalecimiento espiritual.",
-    "carlosAcutisTitle": "Oracion de Carlo Acutis",
-    "carlosAcutisDescription": "Una oracion inspirada en Carlo Acutis para momentos de fe, reflexion e inspiracion en la vida diaria.",
+    "saintBenedictTitle": "Guia de Fe y Reflexion inspirada en San Benito",
+    "saintBenedictDescription": "Una guia de fe y reflexion inspirada en San Benito para momentos de recogimiento, presencia y paz interior.",
+    "padrePioTitle": "Guia de Fe y Reflexion inspirada en Padre Pio",
+    "padrePioDescription": "Una guia de fe y reflexion inspirada en Padre Pio para quienes buscan serenidad, consuelo y fortalecimiento espiritual.",
+    "carlosAcutisTitle": "Guia de Fe y Reflexion inspirada en Carlo Acutis",
+    "carlosAcutisDescription": "Una guia de fe y reflexion inspirada en Carlo Acutis para momentos de fe, reflexion e inspiracion en la vida diaria.",
     "listenPrayer": "Escuchar oracion",
     "buyPrayer": "Comprar oracion"
   },
@@ -73,9 +73,9 @@
     }
   },
   "SaintBenedict": {
-    "title": "Oracion inspirada en San Benito",
-    "description": "Una oracion inspirada en San Benito para momentos de fe, reflexion y paz interior.",
-    "cardDescription": "Una oracion inspirada en San Benito para momentos de fe, reflexion y paz interior.",
+    "title": "Guia de Fe y Reflexion inspirada en San Benito",
+    "description": "Una guia de fe y reflexion inspirada en San Benito para momentos de recogimiento, presencia y paz interior.",
+    "cardDescription": "Una guia de fe y reflexion inspirada en San Benito para momentos de recogimiento, presencia y paz interior.",
     "duration": "10 min",
     "listenPrayer": "Escuchar oracion",
     "playingNow": "Reproduciendo ahora",
@@ -83,7 +83,7 @@
     "fullText": "San Benito, acompana este momento de oracion y recogimiento.\n\nQue pueda vivir este dia con mas serenidad, discernimiento y constancia.\n\nAyudame a cuidar mis pensamientos, mis palabras y la forma en que camino en la fe.\n\nQue esta oracion sea una invitacion a la pausa, la reflexion y la paz interior.\n\nAmen."
   },
   "SaintBenedictPrayer": {
-    "title": "Oracion inspirada en San Benito",
+    "title": "Guia de Fe y Reflexion inspirada en San Benito",
     "subtitle": "Para momentos de fe, calma y reflexion",
     "tags": {
       "prosperity": "Fe",
@@ -424,7 +424,7 @@
         "text": "Orientaciones simples para continuar tu rutina de oracion con constancia."
       }
     ],
-    "secretAlt": "Oracion de Carlo Acutis",
+    "secretAlt": "Guia de Fe y Reflexion inspirada en Carlo Acutis",
     "mustSeeTitle": "{name}, MIRA ESTE MOMENTO DE ORACION CON CALMA",
     "mustSeeText": "Este contenido sigue disponible para ti como una experiencia espiritual y reflexiva. Avanza a tu ritmo.",
     "quote": "Toma este momento si tiene sentido para tu rutina.",
