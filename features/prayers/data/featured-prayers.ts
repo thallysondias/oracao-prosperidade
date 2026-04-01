@@ -57,7 +57,7 @@ export function getFeaturedPrayerCards(userEmail?: string): FeaturedPrayerCard[]
       },
       image: '/products/san-benedito.jpeg',
       route: '/saint-benedict',
-      productName: 'Guia de Fe y Reflexion inspirada en San Benito',
+      productName: null,
       purchaseUrl: withPrefilledEmail(STRIPE_LINKS.saintBenedict, userEmail),
     },
   ];
