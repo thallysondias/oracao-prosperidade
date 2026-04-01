@@ -6,7 +6,7 @@ import { useLocale, useTranslations } from 'next-intl';
 
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
-export type HomeTabs = 'today' | 'prayer-request' | 'challenge-21';
+export type HomeTabs = 'today' | 'guia-devocional' | 'challenge-21' | 'prayer-request';
 
 interface HeaderProps {
   userName: string;
@@ -47,8 +47,9 @@ export function Header({
           <div className="overflow-x-auto scrollbar-hide">
             <TabsList className="flex min-w-max gap-2">
               <TabsTrigger value="today">{t('prayers')}</TabsTrigger>
-              <TabsTrigger value="prayer-request">{t('prayerRequest')}</TabsTrigger>
+              <TabsTrigger value="guia-devocional">{t('devotionalGuideTab')}</TabsTrigger>
               <TabsTrigger value="challenge-21">{t('challenge21Days')}</TabsTrigger>
+              <TabsTrigger value="prayer-request">{t('prayerRequest')}</TabsTrigger>
             </TabsList>
           </div>
         </Tabs>

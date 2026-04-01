@@ -11,6 +11,8 @@ import { Tabs, TabsContent } from '@/components/ui/tabs';
 import { Challenge21Days } from '@/components/home/Challenge21Days';
 import { PrayersSlider } from '@/components/home/PrayersSlider';
 import { RelatedScripturesSection } from '@/components/home/RelatedScripturesSection';
+import { DevotionalGuideTab } from '@/features/devotional-guide/components/DevotionalGuideTab';
+import { hasDevotionalGuideAccess } from '@/features/devotional-guide/constants';
 import { Header } from '@/features/home-feed/components/Header';
 import { DailyPrayerCard } from '@/features/home-feed/components/DailyPrayerCard';
 import { PrayerRequest } from '@/features/prayer-requests/components/PrayerRequest';
@@ -22,7 +24,7 @@ export default function HomePage() {
   const t = useTranslations('HomePage');
   const locale = useLocale() as 'pt' | 'en' | 'es';
   const user = useAuthStore((state) => state.user);
-  const [activeTab, setActiveTab] = useState<'today' | 'prayer-request' | 'challenge-21'>('today');
+  const [activeTab, setActiveTab] = useState<'today' | 'guia-devocional' | 'challenge-21' | 'prayer-request'>('today');
   const [showSupportPopup, setShowSupportPopup] = useState(false);
 
   const todayVerse = useMemo(() => getTodayVerse(), []);
@@ -37,6 +39,7 @@ export default function HomePage() {
     locale === 'pt' ? 'Usuario' : locale === 'es' ? 'Usuario' : 'User';
   const minutesLabel =
     locale === 'pt' ? 'minutos' : locale === 'es' ? 'minutos' : 'minutes';
+  const hasGuideAccess = useMemo(() => hasDevotionalGuideAccess(user?.purchases), [user?.purchases]);
 
   const formattedProducts = useMemo(() => {
     return products.map((product, index) => ({
@@ -93,12 +96,16 @@ export default function HomePage() {
             />
           </TabsContent>
 
-          <TabsContent value="prayer-request">
-            <PrayerRequest />
+          <TabsContent value="guia-devocional">
+            <DevotionalGuideTab hasAccess={hasGuideAccess} />
           </TabsContent>
 
           <TabsContent value="challenge-21">
             <Challenge21Days />
+          </TabsContent>
+
+          <TabsContent value="prayer-request">
+            <PrayerRequest />
           </TabsContent>
         </Tabs>
 
