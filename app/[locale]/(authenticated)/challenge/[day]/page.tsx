@@ -6,11 +6,10 @@ import { useRouter, useParams } from 'next/navigation';
 import { useTranslations, useLocale } from 'next-intl';
 import { ChevronLeft, Play, Pause, ChevronDown, Lock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { getChallengeAudioSources } from '@/features/challenge/audio';
 import { CHALLENGE_HERO_IMAGE } from '@/features/challenge/data';
 import { useAuthStore } from '@/store/authStore';
-import { getLocalizedAudioUrl, type ProductLocale } from '@/lib/products/oraciones';
-
-const LAST_AUDIO_DAY = 12;
+import type { ProductLocale } from '@/lib/products/oraciones';
 
 const getDayData = (day: number, locale: ProductLocale) => {
   const titles = [
@@ -64,10 +63,7 @@ const getDayData = (day: number, locale: ProductLocale) => {
   return {
     title: titles[day - 1] || 'Oracion del dia',
     text: texts[day - 1] || 'Texto de la oracion no disponible.',
-    audioUrl:
-      day <= LAST_AUDIO_DAY
-        ? getLocalizedAudioUrl(`/desafio/dia${day}.mp3`, locale)
-        : undefined,
+    audioSources: getChallengeAudioSources(day, locale),
   };
 };
 
@@ -108,7 +104,10 @@ export default function ChallengeDayPage() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [duration, setDuration] = useState(0);
   const [played, setPlayed] = useState(0);
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const [audioSourceIndex, setAudioSourceIndex] = useState(0);
+
+  const currentAudioSrc = dayData.audioSources[audioSourceIndex];
 
   if (!challengePurchase || !dayUnlocked) {
     return (
@@ -137,36 +136,49 @@ export default function ChallengeDayPage() {
   }
 
   const handlePlayPause = () => {
-    if (videoRef.current && dayData.audioUrl) {
+    if (audioRef.current && currentAudioSrc) {
       if (isPlaying) {
-        videoRef.current.pause();
+        audioRef.current.pause();
       } else {
-        videoRef.current.play();
+        audioRef.current.play();
       }
       setIsPlaying(!isPlaying);
     }
   };
 
   const handleProgressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!dayData.audioUrl) return;
+    if (!currentAudioSrc) return;
 
     const newPlayed = parseFloat(e.target.value);
     setPlayed(newPlayed);
-    if (videoRef.current) {
-      videoRef.current.currentTime = newPlayed * duration;
+    if (audioRef.current) {
+      audioRef.current.currentTime = newPlayed * duration;
     }
   };
 
   const handleTimeUpdate = () => {
-    if (videoRef.current) {
-      setPlayed(videoRef.current.currentTime / duration);
+    if (audioRef.current) {
+      setPlayed(audioRef.current.currentTime / duration);
     }
   };
 
   const handleLoadedMetadata = () => {
-    if (videoRef.current) {
-      setDuration(videoRef.current.duration);
+    if (audioRef.current) {
+      setDuration(audioRef.current.duration);
     }
+  };
+
+  const handleAudioEnded = () => {
+    setIsPlaying(false);
+  };
+
+  const handleAudioError = () => {
+    if (audioSourceIndex < dayData.audioSources.length - 1) {
+      setAudioSourceIndex((currentIndex) => currentIndex + 1);
+      return;
+    }
+
+    setIsPlaying(false);
   };
 
   const formatTime = (seconds: number): string => {
@@ -226,20 +238,22 @@ export default function ChallengeDayPage() {
           </div>
         </div>
 
-        {dayData.audioUrl && (
-          <video
-            ref={videoRef}
-            src={dayData.audioUrl}
+        {currentAudioSrc && (
+          <audio
+            ref={audioRef}
+            key={currentAudioSrc}
+            src={currentAudioSrc}
             onTimeUpdate={handleTimeUpdate}
             onLoadedMetadata={handleLoadedMetadata}
-            onEnded={() => setIsPlaying(false)}
+            onEnded={handleAudioEnded}
+            onError={handleAudioError}
             className="hidden"
           />
         )}
       </div>
 
       <div>
-        {dayData.audioUrl && (
+        {currentAudioSrc && (
           <div className="sticky top-0 z-50 bg-black border-b border-yellow-500/20 px-4 py-2">
             <div className="max-w-2xl mx-auto flex items-center justify-between gap-4">
               <button
