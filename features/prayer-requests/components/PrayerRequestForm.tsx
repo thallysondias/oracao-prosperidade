@@ -1,6 +1,6 @@
 "use client";
 
-import { startTransition, useState } from "react";
+import { useState } from "react";
 
 import Link from "next/link";
 import { Clock, Send } from "lucide-react";
@@ -21,11 +21,9 @@ export default function PrayerRequestForm() {
   const [prayerText, setPrayerText] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showThankYou, setShowThankYou] = useState(false);
-  const [paymentLink, setPaymentLink] = useState<string>("");
   const loginRequiredMessage = t("loginRequiredMessage");
-  const submitErrorMessage = t("submitErrorMessage");
 
-  const handleSubmit = async (event: React.FormEvent) => {
+  const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
 
     if (!user?.email || !user?.name) {
@@ -34,45 +32,7 @@ export default function PrayerRequestForm() {
     }
 
     setIsSubmitting(true);
-
-    try {
-      const response = await fetch("/api/prayer-request", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          profileId: user.id,
-          email: user.email,
-          name: user.name,
-          goal: "general",
-          prayerText,
-        }),
-      });
-
-      const payload = await response.json();
-
-      if (!response.ok) {
-        console.error("Erro ao salvar pedido:", payload);
-        alert(submitErrorMessage);
-        setIsSubmitting(false);
-        return;
-      }
-
-      setPaymentLink(payload.paymentLink);
-      setShowThankYou(true);
-
-      // Redirecionar para o link de pagamento após 6 segundos
-      setTimeout(() => {
-        startTransition(() => {
-          window.location.href = payload.paymentLink;
-        });
-      }, 6000);
-    } catch (error) {
-      console.error("Erro ao enviar pedido:", error);
-      alert(submitErrorMessage);
-      setIsSubmitting(false);
-    }
+    setShowThankYou(true);
   };
 
   if (!user) {
