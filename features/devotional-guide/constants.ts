@@ -12,7 +12,7 @@ export const DEVOTIONAL_GUIDE_PRODUCT_IDS = [
   'guia-devocional',
 ] as const;
 
-export const DEVOTIONAL_GUIDE_DOWNLOAD_URL = '/guia-devocional/ebook.pdf';
+export const DEVOTIONAL_GUIDE_DOWNLOAD_URL = '/ebook/ebook.pdf';
 
 export function hasDevotionalGuideAccess(purchases?: UserPurchase[]) {
   if (!purchases?.length) {

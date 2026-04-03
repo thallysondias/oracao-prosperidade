@@ -75,7 +75,7 @@ export function DevotionalGuideTab({ hasAccess }: DevotionalGuideTabProps) {
             </div>
           </div>
 
-          {hasAccess ? (
+          {!hasAccess ? (
             <div className="rounded-2xl bg-white/8 p-5 ring-1 ring-white/10">
               <p className="text-sm leading-6 text-stone-100">
                 {t('devotionalGuideUnlockedBody')}

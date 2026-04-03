@@ -20,6 +20,8 @@ export default function PrayerRequestForm() {
   const user = useAuthStore((state) => state.user);
   const [prayerText, setPrayerText] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showThankYou, setShowThankYou] = useState(false);
+  const [paymentLink, setPaymentLink] = useState<string>("");
   const loginRequiredMessage = t("loginRequiredMessage");
   const submitErrorMessage = t("submitErrorMessage");
 
@@ -57,9 +59,15 @@ export default function PrayerRequestForm() {
         return;
       }
 
-      startTransition(() => {
-        window.location.href = payload.paymentLink;
-      });
+      setPaymentLink(payload.paymentLink);
+      setShowThankYou(true);
+
+      // Redirecionar para o link de pagamento após 6 segundos
+      setTimeout(() => {
+        startTransition(() => {
+          window.location.href = payload.paymentLink;
+        });
+      }, 6000);
     } catch (error) {
       console.error("Erro ao enviar pedido:", error);
       alert(submitErrorMessage);
@@ -74,6 +82,30 @@ export default function PrayerRequestForm() {
           <p className="text-gray-600 mb-4">{t("loginPrompt")}</p>
           <Button asChild className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold">
             <Link href={getLoginPath(locale)}>{t("loginCTA")}</Link>
+          </Button>
+        </div>
+      </Card>
+    );
+  }
+
+  if (showThankYou) {
+    return (
+      <Card className="p-6 shadow-xl border-none bg-gradient-to-br from-yellow-50 to-amber-50">
+        <div className="text-center py-8 max-w-2xl mx-auto">
+          <h2 className="text-2xl font-serif font-bold text-amber-900 mb-6">
+            {t("thankYouTitle")}
+          </h2>
+          <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-line mb-8">
+            {t("thankYouMessage")}
+          </p>
+          <p className="text-xs text-gray-500 mb-6">
+            {t("footerInfo")}
+          </p>
+          <Button
+            disabled
+            className="bg-gray-400 cursor-not-allowed text-black font-bold"
+          >
+            {t("thankYouCTA")}
           </Button>
         </div>
       </Card>

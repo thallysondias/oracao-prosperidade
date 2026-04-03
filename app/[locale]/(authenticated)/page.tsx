@@ -62,7 +62,7 @@ export default function HomePage() {
   }, [locale, minutesLabel]);
 
   const handleSupportClick = () => {
-    window.open('https://wa.me/5531973130289', '_blank');
+    window.location.href = 'mailto:pedrohenriquerchotmart@gmail.com';
   };
 
   return (
