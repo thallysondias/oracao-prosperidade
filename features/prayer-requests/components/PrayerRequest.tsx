@@ -12,7 +12,7 @@ export function PrayerRequest() {
 
   return (
     <div className="mx-auto p-4">
-      <PrayerRequestOverlay />
+     {/*  <PrayerRequestOverlay /> */}
 
       <div className="relative overflow-hidden rounded-2xl mb-8 shadow-xl">
         <div className="relative h-64">
