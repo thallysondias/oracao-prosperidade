@@ -7,62 +7,16 @@ import { useTranslations, useLocale } from 'next-intl';
 import { ChevronLeft, Play, Pause, ChevronDown, Lock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { getChallengeAudioSources } from '@/features/challenge/audio';
-import { CHALLENGE_HERO_IMAGE } from '@/features/challenge/data';
+import { CHALLENGE_HERO_IMAGE, getChallengeDayContent } from '@/features/challenge/data';
 import { useAuthStore } from '@/store/authStore';
 import type { ProductLocale } from '@/lib/products/oraciones';
 
 const getDayData = (day: number, locale: ProductLocale) => {
-  const titles = [
-    'Un comienzo con presencia',
-    'Soltar el peso del dia',
-    'Escuchar el cansancio interior',
-    'Nombrar lo que siento',
-    'Dar espacio a la verdad',
-    'Reconocer lo que permanece',
-    'Respirar con mas calma',
-    'Abrirme a la reflexion',
-    'Mirar mi historia con honestidad',
-    'Dejar atras viejos impulsos',
-    'Comprender mis necesidades',
-    'Cuidar lo que llevo dentro',
-    'Abrirme al discernimiento',
-    'Salir de patrones repetidos',
-    'Oracion por la fortaleza',
-    'Oracion por la claridad',
-    'Oracion por la calma interior',
-    'Oracion por la renovacion del animo',
-    'Oracion por la constancia',
-    'Oracion por la convivencia',
-    'Oracion final de gratitud',
-  ];
-
-  const texts = [
-    `Hoy comienza este recorrido de 21 dias. Esta oracion te invita a empezar con calma, presencia y apertura interior.\n\nNo se trata de prometer resultados, sino de crear un ritmo de oracion y reflexion que pueda acompanarte paso a paso.\n\nRespira, haz una pausa y disponete a vivir este camino con sencillez.`,
-    `El segundo dia propone reconocer el peso que traes contigo.\n\nPoner nombre a las preocupaciones ya es una forma de mirarlas con mas honestidad y menos ruido.\n\nDeja que esta oracion te acompane a soltar un poco de la tension del dia.`,
-    `Hoy la invitacion es escuchar el cansancio que muchas veces pasa desapercibido.\n\nQuizas no necesitas responder a todo de inmediato, sino darte un momento para detenerte y respirar.\n\nQue esta oracion sea una pausa de cuidado interior.`,
-    `En este cuarto dia, la propuesta es nombrar lo que sientes sin juzgarte.\n\nReconocer una emocion con honestidad puede abrir espacio para vivirla con mas serenidad.\n\nPermanece en esta oracion con humildad y paciencia.`,
-    `A veces guardamos demasiado por dentro. Hoy puedes ofrecer ese espacio interior a la reflexion y a la escucha.\n\nNo hace falta forzar respuestas; basta con permanecer disponible.\n\nQue esta oracion te ayude a habitar tu verdad con calma.`,
-    `El sexto dia invita a mirar lo que aun permanece en tu interior: deseos, preocupaciones, recuerdos y aprendizajes.\n\nTodo eso forma parte de tu historia y puede ser acogido con mas claridad.\n\nPermite que esta oracion te acompanhe en esa mirada.`,
-    `Hoy el foco esta en la respiracion y en la calma.\n\nCuando el dia pesa, volver al silencio puede ayudar a recuperar equilibrio.\n\nQue esta oracion te ofrezca un momento de descanso interior.`,
-    `Este dia propone abrirte a la reflexion con mas honestidad.\n\nNo para exigirte cambios inmediatos, sino para observar tu camino con mayor conciencia.\n\nDeja que la oracion te sostenga en ese proceso.`,
-    `Mirar la propia historia con sinceridad requiere valor y mansedumbre.\n\nHoy puedes revisar tus decisiones, tus rutinas y tus prioridades con una mirada mas compasiva.\n\nQue esta oracion te ayude a hacerlo sin dureza.`,
-    `En el decimo dia, la invitacion es dejar atras impulsos o habitos que ya no te hacen bien.\n\nA veces el cambio empieza con una pequena eleccion cotidiana.\n\nPermanece en esta oracion con apertura y paciencia.`,
-    `Hoy puedes prestar atencion a lo que realmente necesitas.\n\nTal vez no sea una solucion inmediata, sino mas claridad para atravesar el presente.\n\nQue esta oracion te ayude a escuchar eso con serenidad.`,
-    `Cuidar lo que llevas dentro tambien es una forma de fe.\n\nEn este dia, date permiso para hacer una pausa y atender tu mundo interior con respeto.\n\nQue la oracion te recuerde el valor de ese cuidado.`,
-    `El dia trece invita al discernimiento.\n\nMirar con mas profundidad lo que vives puede ayudarte a elegir mejor tus proximos pasos.\n\nQue esta oracion te acompanhe con calma en esa busqueda.`,
-    `Hoy es momento de reconocer patrones que se repiten y que quizas ya no quieres sostener.\n\nNombrarlos con claridad puede ser el inicio de un camino mas consciente.\n\nQue esta oracion fortalezca tu disposicion para seguir aprendiendo.`,
-    `En este dia rezamos por fortaleza interior.\n\nNo una fuerza ruidosa, sino la constancia serena que permite seguir adelante.\n\nQue esta oracion te recuerde que tambien puedes avanzar de forma simple y fiel.`,
-    `La claridad muchas veces nace del silencio y de la pausa.\n\nHoy la invitacion es escuchar con mas atencion lo que tu vida necesita en este momento.\n\nQue esta oracion te ayude a dar espacio a esa comprension.`,
-    `Este dia esta dedicado a la calma interior.\n\nCuando la mente se acelera, la oracion puede convertirse en un ancla para volver al presente.\n\nRespira y deja que este contenido te acompanhe con suavidad.`,
-    `La renovacion del animo puede comenzar en gestos pequenos: descansar mejor, hablar con mas bondad, volver a lo esencial.\n\nHoy la oracion te invita a valorar esos movimientos discretos.\n\nQue encuentres en ellos una fuente de aliento.`,
-    `La constancia se construye dia a dia.\n\nEste recorrido no busca perfeccion, sino presencia y fidelidad en lo pequeno.\n\nQue esta oracion te anime a continuar con paciencia.`,
-    `Hoy rezamos por la convivencia y por los vinculos cotidianos.\n\nQue puedas acercarte a los demas con mas escucha, respeto y disposicion al dialogo.\n\nQue esta oracion te inspire a cuidar mejor esas relaciones.`,
-    `Llegamos al ultimo dia con gratitud.\n\nEste cierre no promete resultados; celebra el tiempo dedicado a la oracion, a la escucha y a la reflexion.\n\nQue lo vivido en este camino pueda acompanarte mas alla de este desafio.`,
-  ];
+  const content = getChallengeDayContent(locale, day);
 
   return {
-    title: titles[day - 1] || 'Oracion del dia',
-    text: texts[day - 1] || 'Texto de la oracion no disponible.',
+    title: content.title,
+    text: content.text,
     audioSources: getChallengeAudioSources(day, locale),
   };
 };

@@ -11,7 +11,7 @@ import { Button } from '@/components/ui/button';
 import { useAudioPlayer } from '@/features/prayer-player/useAudioPlayer';
 import { formatAudioTime } from '@/features/prayer-player/utils';
 import { getLocalizedProductText } from '@/features/prayers/helpers';
-import { products } from '@/lib/products/oraciones';
+import { getProductAudioUrl, products } from '@/lib/products/oraciones';
 
 export default function PrayerPlayPage() {
   const params = useParams();
@@ -50,6 +50,7 @@ export default function PrayerPlayPage() {
   }
 
   const { title } = getLocalizedProductText(prayer, locale);
+  const audioSrc = getProductAudioUrl(prayer, locale) || prayer.audioUrl || '';
 
   const handleVolumeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!audioRef.current) return;
@@ -67,7 +68,7 @@ export default function PrayerPlayPage() {
     >
       <audio
         ref={audioRef}
-        src={prayer.audioUrl || ''}
+        src={audioSrc}
         onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleLoadedMetadata}
         onEnded={handleEnded}

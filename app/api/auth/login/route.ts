@@ -1,5 +1,11 @@
 import { createClient } from "@/utils/supabase/server";
 import { NextResponse } from "next/server";
+import {
+  authSessionCookieName,
+  authSessionMaxAge,
+  createSessionToken,
+  fetchAuthenticatedUser,
+} from "@/features/auth/server/session";
 
 export async function POST(request: Request) {
   try {
@@ -36,31 +42,31 @@ export async function POST(request: Request) {
       );
     }
 
-    // 3. Buscar compras do usuário
-    const { data: purchases, error: purchasesError } = await supabase
-      .from("purchases")
-      .select("product_id, product_name, transaction_id, status, purchased_at")
-      .eq("profile_id", profile.id)
-      .order("purchased_at", { ascending: false });
+    const userData = await fetchAuthenticatedUser(supabase, profile.id);
 
-    if (purchasesError) {
-      console.error("Error fetching purchases:", purchasesError);
+    if (!userData) {
+      return NextResponse.json(
+        { error: "Nao foi possivel carregar a sessao do usuario" },
+        { status: 500 }
+      );
     }
-
-    // 4. Montar resposta sem a senha
-    const userData = {
-      id: profile.id,
-      name: profile.name,
-      email: profile.email,
-      purchases: purchases || [],
-    };
 
     console.log("User logged in:", userData);
 
-    return NextResponse.json({
+    const response = NextResponse.json({
       success: true,
       user: userData,
     });
+
+    response.cookies.set(authSessionCookieName, createSessionToken(profile.id), {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+      path: "/",
+      maxAge: authSessionMaxAge,
+    });
+
+    return response;
   } catch (error) {
     console.error("Login error:", error);
     return NextResponse.json(

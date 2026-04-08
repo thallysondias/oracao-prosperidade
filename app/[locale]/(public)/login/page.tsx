@@ -4,38 +4,45 @@ import { useState } from "react";
 
 import { Mail, Lock } from "lucide-react";
 import Image from "next/image";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter as useNextRouter, useSearchParams } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 
 import { Alert } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useAuthStore } from "@/store/authStore";
 
 export default function LoginPage() {
   const t = useTranslations("Login");
+  const tHome = useTranslations("HomePage");
   const locale = useLocale() as "pt" | "en" | "es";
   const searchParams = useSearchParams();
-  const isEnglishDemo = locale === "en";
   const demoNameByLocale = {
     pt: "Orador",
     es: "Oración",
     en: "Prayer",
   } as const;
-  const router = useRouter();
+  const router = useNextRouter();
   const login = useAuthStore((state) => state.login);
 
-  const [email, setEmail] = useState(() => {
-    if (isEnglishDemo) {
-      return "testeComprador271101postman15@example.com";
-    }
-
-    return searchParams.get("email") ?? "";
-  });
+  const [email, setEmail] = useState(() => searchParams.get("email") ?? "");
   const [password, setPassword] = useState("benedito");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  const handleLanguageChange = (value: string) => {
+    const queryString = searchParams.toString();
+    const targetPath = `/${value}/login${queryString ? `?${queryString}` : ""}`;
+    window.location.assign(targetPath);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -117,26 +124,22 @@ export default function LoginPage() {
                 </Alert>
               )}
 
-              {isEnglishDemo ? (
-                <Input id="email" type="hidden" value={email} readOnly />
-              ) : (
-                <div className="space-y-2">
-                  <label htmlFor="email" className="text-sm font-medium text-gray-300 flex items-center gap-2">
-                    <Mail className="w-4 h-4 text-yellow-500" />
-                    {t("emailLabel")}
-                  </label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="seu@email.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    disabled={loading}
-                    className="bg-black/50 border-gray-700 text-white placeholder:text-gray-500 focus:border-yellow-500 focus:ring-yellow-500/20"
-                  />
-                </div>
-              )}
+              <div className="space-y-2">
+                <label htmlFor="email" className="text-sm font-medium text-gray-300 flex items-center gap-2">
+                  <Mail className="w-4 h-4 text-yellow-500" />
+                  {t("emailLabel")}
+                </label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="seu@email.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  disabled={loading}
+                  className="bg-black/50 border-gray-700 text-white placeholder:text-gray-500 focus:border-yellow-500 focus:ring-yellow-500/20"
+                />
+              </div>
 
               <Input
                 id="password"
@@ -168,6 +171,22 @@ export default function LoginPage() {
               <p className="text-xs text-gray-500 text-center leading-relaxed">
                 {t("secureAccess")}
               </p>
+
+              <div className="mt-4">
+                <Select value={locale || "en"} onValueChange={handleLanguageChange}>
+                  <SelectTrigger
+                    id="login-language-select"
+                    className="mx-auto h-10 w-full max-w-[220px] bg-black/50 border-gray-700 text-white focus:border-yellow-500 focus:ring-yellow-500/20"
+                  >
+                    <SelectValue placeholder={tHome("profileLanguagePlaceholder")} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="en">🇺🇸 {tHome("languages.en")}</SelectItem>
+                    <SelectItem value="es">🇲🇽 {tHome("languages.es")}</SelectItem>
+                    <SelectItem value="pt">🇧🇷 {tHome("languages.pt")}</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
           </div>
         </Card>

@@ -4,11 +4,11 @@ import {
   getImportedUserPassword,
   isUsingLegacyImportedPassword,
 } from '@/features/auth/server/imported-user-password';
-import { addToMailingBoss } from '@/features/webhooks/shared/mailingboss';
 import {
   PLATFORM_ACCESS_PRODUCTS,
   isApprovedPrayerRequestProduct,
 } from '@/features/webhooks/shared/products';
+import { syncLead } from '@/features/webhooks/shared/lead-sync';
 import type { VendePayWebhook } from '@/features/webhooks/vendepay/types';
 import {
   getBuyerName,
@@ -18,6 +18,8 @@ import {
 } from '@/features/webhooks/vendepay/utils';
 import { createClient } from '@/utils/supabase/server';
 
+const VENDEPAY_APPROVED_EVENTS = new Set(['compra.aprovada', 'assinatura.realizada']);
+
 export async function POST(request: Request) {
   try {
     if (isUsingLegacyImportedPassword()) {
@@ -25,6 +27,8 @@ export async function POST(request: Request) {
     }
 
     const supabase = await createClient();
+    const { searchParams } = new URL(request.url);
+    const sender = searchParams.get('sender');
     const body: VendePayWebhook = await request.json();
 
     if (body.event === 'TEST') {
@@ -39,7 +43,10 @@ export async function POST(request: Request) {
     const transactionId = getTransactionId(body);
     const buyerName = getBuyerName(body) || email?.split('@')[0] || 'Cliente VendePay';
     const sourceProductId = body.produtoId?.trim() || 'vendepay_super_purchase';
-    const status = mapVendePayStatus(body.status);
+    const normalizedEvent = body.event?.trim().toLowerCase();
+    const status = VENDEPAY_APPROVED_EVENTS.has(normalizedEvent || '')
+      ? 'approved'
+      : mapVendePayStatus(body.status);
 
     console.log('VendePay webhook received:', {
       event: body.event,
@@ -133,7 +140,13 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Failed to process purchases' }, { status: 500 });
     }
 
-    await addToMailingBoss(email, buyerName, status);
+    await syncLead({
+      email,
+      name: buyerName,
+      status,
+      provider: sender,
+      productNames: accessProducts.map((product) => product.name),
+    });
 
     if (status === 'approved' && accessProducts.some((product) => isApprovedPrayerRequestProduct(product.name))) {
       const { error: updatePrayerError } = await supabase

@@ -32,7 +32,7 @@ export function Challenge21Days() {
   );
 
   const hasPurchased = !!challengePurchase;
-  const days = useMemo(() => generateChallengeDays(purchaseDate), [purchaseDate]);
+  const days = useMemo(() => generateChallengeDays(locale as "pt" | "en" | "es", purchaseDate), [locale, purchaseDate]);
   const currentChallengeDay = useMemo(
     () => getCurrentChallengeDay(days),
     [days]

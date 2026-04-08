@@ -20,6 +20,10 @@ export function useAuth() {
 
   const logout = () => {
     storeLogout();
+    void fetch("/api/auth/logout", {
+      method: "POST",
+      credentials: "include",
+    });
     router.push(getLoginPath(locale));
   };
 

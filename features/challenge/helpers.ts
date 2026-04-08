@@ -1,6 +1,12 @@
-import { CHALLENGE_CHECKOUT_URL, CHALLENGE_PRODUCT_NAME, challengeDayReasons, challengeDayTitles } from '@/features/challenge/data';
+import {
+  CHALLENGE_CHECKOUT_URL,
+  CHALLENGE_PRODUCT_NAME,
+  getChallengeDayReasons,
+  getChallengeDayTitles,
+} from '@/features/challenge/data';
 import type { DayPrayer } from '@/features/challenge/types';
 import type { UserPurchase } from '@/features/auth/types';
+import type { ProductLocale } from '@/lib/products/oraciones';
 
 export function findChallengePurchase(purchases?: UserPurchase[]) {
   return purchases?.find(
@@ -20,12 +26,15 @@ export function getChallengePurchaseDate(purchases?: UserPurchase[]) {
   return new Date(purchase.purchased_at);
 }
 
-export function generateChallengeDays(purchaseDate?: Date): DayPrayer[] {
+export function generateChallengeDays(locale: ProductLocale, purchaseDate?: Date): DayPrayer[] {
+  const titles = getChallengeDayTitles(locale);
+  const reasons = getChallengeDayReasons(locale);
+
   if (!purchaseDate) {
     return Array.from({ length: 21 }, (_, index) => ({
       day: index + 1,
-      title: challengeDayTitles[index],
-      reason: challengeDayReasons[index],
+      title: titles[index],
+      reason: reasons[index],
       audioUrl: `/desafio/dia${index + 1}.mp3`,
       isCompleted: false,
       isLocked: true,
@@ -41,8 +50,8 @@ export function generateChallengeDays(purchaseDate?: Date): DayPrayer[] {
 
     return {
       day: dayNumber,
-      title: challengeDayTitles[index],
-      reason: challengeDayReasons[index],
+      title: titles[index],
+      reason: reasons[index],
       audioUrl: `/desafio/dia${dayNumber}.mp3`,
       isCompleted: dayNumber < daysSincePurchase,
       isLocked: dayNumber > daysSincePurchase,
