@@ -101,7 +101,7 @@ export default function ProfilePage() {
               <p className="text-xs text-muted-foreground">{t('profileLanguageHint')}</p>
             </div>
 
-            <div className="space-y-2">
+     {/*        <div className="space-y-2">
               <Label>{t('profileSupport')}</Label>
               <Button
                 onClick={handleSupportClick}
@@ -113,7 +113,7 @@ export default function ProfilePage() {
               <div className="rounded-lg border border-dashed bg-muted/40 px-4 py-3 text-sm text-muted-foreground">
                 {t('profileSupportInfo')}
               </div>
-            </div>
+            </div> */}
           </CardContent>
         </Card>
       </div>
