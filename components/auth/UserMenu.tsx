@@ -13,10 +13,44 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { LogOut, ShoppingBag } from "lucide-react";
 import { useLocale } from "next-intl";
+import type { Locale } from "@/shared/config/locales";
 
 export function UserMenu() {
   const { user, isAuthenticated, logout, getActivePurchases } = useAuth();
-  const locale = useLocale() as "pt" | "en" | "es";
+  const locale = useLocale() as Locale;
+  const signInLabel =
+    locale === "en"
+      ? "Sign in"
+      : locale === "es"
+        ? "Entrar"
+        : locale === "fr"
+          ? "Se connecter"
+          : "Entrar";
+  const userLabel =
+    locale === "en"
+      ? "User"
+      : locale === "es"
+        ? "Usuario"
+        : locale === "fr"
+          ? "Utilisateur"
+          : "Usuario";
+  const activePurchases = getActivePurchases();
+  const activeProductsLabel =
+    locale === "en"
+      ? `${activePurchases.length} active products`
+      : locale === "es"
+        ? `${activePurchases.length} productos activos`
+        : locale === "fr"
+          ? `${activePurchases.length} produits actifs`
+          : `${activePurchases.length} produtos ativos`;
+  const logoutLabel =
+    locale === "en"
+      ? "Sign out"
+      : locale === "es"
+        ? "Salir"
+        : locale === "fr"
+          ? "Se deconnecter"
+          : "Sair";
 
   if (!isAuthenticated || !user) {
     return (
@@ -25,12 +59,10 @@ export function UserMenu() {
         size="sm"
         onClick={() => (window.location.href = `/${locale}/login`)}
       >
-        Entrar
+        {signInLabel}
       </Button>
     );
   }
-
-  const activePurchases = getActivePurchases();
 
   return (
     <DropdownMenu>
@@ -46,7 +78,7 @@ export function UserMenu() {
       <DropdownMenuContent align="end" className="w-56">
         <DropdownMenuLabel>
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">{user.name || "Usuário"}</p>
+            <p className="text-sm font-medium leading-none">{user.name || userLabel}</p>
             <p className="text-xs leading-none text-muted-foreground">
               {user.email}
             </p>
@@ -55,12 +87,12 @@ export function UserMenu() {
         <DropdownMenuSeparator />
         <DropdownMenuItem disabled className="cursor-default">
           <ShoppingBag className="mr-2 h-4 w-4" />
-          <span>{activePurchases.length} produtos ativos</span>
+          <span>{activeProductsLabel}</span>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={logout} className="text-red-600 cursor-pointer">
           <LogOut className="mr-2 h-4 w-4" />
-          <span>Sair</span>
+          <span>{logoutLabel}</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

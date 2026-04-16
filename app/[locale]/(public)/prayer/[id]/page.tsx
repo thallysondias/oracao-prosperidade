@@ -21,19 +21,41 @@ export async function generateMetadata({ params }: PrayerPageProps): Promise<Met
 
   if (!prayer) {
     return {
-      title: locale === 'es' ? 'Oracion no encontrada' : locale === 'en' ? 'Prayer not found' : 'Oracao nao encontrada',
+      title:
+        locale === 'es'
+          ? 'Oracion no encontrada'
+          : locale === 'en'
+            ? 'Prayer not found'
+            : locale === 'fr'
+              ? 'Priere introuvable'
+              : 'Oracao nao encontrada',
     };
   }
 
-  const title = locale === 'es' ? prayer.titleEs : locale === 'en' ? prayer.titleEn : prayer.titlePt;
+  const title =
+    locale === 'es'
+      ? prayer.titleEs
+      : locale === 'en'
+        ? prayer.titleEn
+        : locale === 'fr'
+          ? prayer.titleFr
+          : prayer.titlePt;
   const description =
-    locale === 'es' ? prayer.descriptionEs : locale === 'en' ? prayer.descriptionEn : prayer.descriptionPt;
+    locale === 'es'
+      ? prayer.descriptionEs
+      : locale === 'en'
+        ? prayer.descriptionEn
+        : locale === 'fr'
+          ? prayer.descriptionFr
+          : prayer.descriptionPt;
   const url = `${process.env.NEXT_PUBLIC_APP_URL || 'https://calmia.club'}/${locale}/prayer/${prayerId}`;
   const keywords =
     locale === 'es'
       ? ['oracion', 'meditacion', 'espiritualidad', 'gratitud', title.toLowerCase()]
       : locale === 'en'
         ? ['prayer', 'meditation', 'spirituality', 'gratitude', title.toLowerCase()]
+        : locale === 'fr'
+          ? ['priere', 'meditation', 'spiritualite', 'gratitude', title.toLowerCase()]
         : ['oracao', 'meditacao', 'espiritualidade', 'gratidao', title.toLowerCase()];
 
   return {
@@ -47,7 +69,7 @@ export async function generateMetadata({ params }: PrayerPageProps): Promise<Met
       siteName: 'Calmia.club',
       images: [OPEN_GRAPH_IMAGE_PATH],
       type: 'website',
-      locale: locale === 'pt' ? 'pt_BR' : locale === 'es' ? 'es_ES' : 'en_US',
+      locale: locale === 'pt' ? 'pt_BR' : locale === 'es' ? 'es_ES' : locale === 'fr' ? 'fr_FR' : 'en_US',
     },
     twitter: {
       card: 'summary_large_image',
@@ -67,17 +89,38 @@ export default async function PrayerPage({ params }: PrayerPageProps) {
     notFound();
   }
 
-  const title = locale === 'es' ? prayer.titleEs : locale === 'en' ? prayer.titleEn : prayer.titlePt;
+  const title =
+    locale === 'es'
+      ? prayer.titleEs
+      : locale === 'en'
+        ? prayer.titleEn
+        : locale === 'fr'
+          ? prayer.titleFr
+          : prayer.titlePt;
   const description =
-    locale === 'es' ? prayer.descriptionEs : locale === 'en' ? prayer.descriptionEn : prayer.descriptionPt;
-  const minutesLabel = locale === 'en' ? 'minutes' : locale === 'es' ? 'minutos' : 'minutos';
+    locale === 'es'
+      ? prayer.descriptionEs
+      : locale === 'en'
+        ? prayer.descriptionEn
+        : locale === 'fr'
+          ? prayer.descriptionFr
+          : prayer.descriptionPt;
+  const minutesLabel = locale === 'en' ? 'minutes' : locale === 'es' ? 'minutos' : locale === 'fr' ? 'minutes' : 'minutos';
   const ctaLabel =
-    locale === 'en' ? 'Receive prayers' : locale === 'es' ? 'Recibe oraciones' : 'Receba oracoes';
+    locale === 'en'
+      ? 'Receive prayers'
+      : locale === 'es'
+        ? 'Recibe oraciones'
+        : locale === 'fr'
+          ? 'Recevoir les prieres'
+          : 'Receba oracoes';
   const ctaHint =
     locale === 'en'
       ? 'Unlock exclusive prayers and guided reflections.'
       : locale === 'es'
         ? 'Desbloquea oraciones y reflexiones guiadas exclusivas.'
+        : locale === 'fr'
+          ? 'Debloquez des prieres exclusives et des reflexions guidees.'
         : 'Desbloqueie oracoes e reflexoes guiadas exclusivas.';
 
   return (

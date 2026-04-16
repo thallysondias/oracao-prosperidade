@@ -12,6 +12,11 @@ export function getLocalizedProductText(product: Product, locale: ProductLocale)
         title: product.titleEs,
         description: product.descriptionEs,
       };
+    case 'fr':
+      return {
+        title: product.titleFr,
+        description: product.descriptionFr,
+      };
     case 'en':
       return {
         title: product.titleEn,

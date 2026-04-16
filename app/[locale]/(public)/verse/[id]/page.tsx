@@ -26,9 +26,15 @@ export async function generateMetadata({ params }: VersePageProps): Promise<Meta
     };
   }
 
-  const verseText = verse.traducao[locale];
+  const verseText = verse.traducao[locale] || verse.traducao.en;
   const pageTitle =
-    locale === 'pt' ? 'Versiculo do Dia' : locale === 'es' ? 'Versiculo del dia' : 'Verse of the Day';
+    locale === 'pt'
+      ? 'Versiculo do Dia'
+      : locale === 'es'
+        ? 'Versiculo del dia'
+        : locale === 'fr'
+          ? 'Verset du jour'
+          : 'Verse of the Day';
   const url = `${process.env.NEXT_PUBLIC_APP_URL || 'https://calmia.club'}/${locale}/verse/${id}`;
   return {
     title: `${verse.referencia} - ${pageTitle}`,
@@ -41,7 +47,7 @@ export async function generateMetadata({ params }: VersePageProps): Promise<Meta
       siteName: 'Calmia.club',
       images: [OPEN_GRAPH_IMAGE_PATH],
       type: 'website',
-      locale: locale === 'pt' ? 'pt_BR' : locale === 'es' ? 'es_ES' : 'en_US',
+      locale: locale === 'pt' ? 'pt_BR' : locale === 'es' ? 'es_ES' : locale === 'fr' ? 'fr_FR' : 'en_US',
     },
     twitter: {
       card: 'summary_large_image',
@@ -61,6 +67,8 @@ export default async function VersePage({ params }: VersePageProps) {
   if (!verse) {
     notFound();
   }
+
+  const verseText = verse.traducao[locale] || verse.traducao.en;
 
   const backgroundImage =
     'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&h=800&fit=crop';
@@ -83,7 +91,7 @@ export default async function VersePage({ params }: VersePageProps) {
           </p>
           <h1 className="text-xl font-bold text-white/50 md:text-2xl">{verse.referencia}</h1>
           <p className="text-base font-serif italic leading-relaxed text-white/80 md:text-lg">
-            &ldquo;{verse.traducao[locale]}&rdquo;
+            &ldquo;{verseText}&rdquo;
           </p>
         </div>
 

@@ -29,6 +29,8 @@ export async function generateMetadata({ searchParams, params }: VersePageProps)
       ? ['versiculo', 'biblia', 'espiritualidade', 'oracao', 'gratidao']
       : locale === 'es'
         ? ['versiculo', 'biblia', 'espiritualidad', 'oracion', 'gratitud']
+        : locale === 'fr'
+          ? ['verset', 'bible', 'spiritualite', 'priere', 'gratitude']
         : ['verse', 'bible', 'spirituality', 'prayer', 'gratitude'];
 
   return {
@@ -42,7 +44,7 @@ export async function generateMetadata({ searchParams, params }: VersePageProps)
       siteName: 'Calmia.club',
       images: [OPEN_GRAPH_IMAGE_PATH],
       type: 'website',
-      locale: locale === 'pt' ? 'pt_BR' : locale === 'es' ? 'es_ES' : 'en_US',
+      locale: locale === 'pt' ? 'pt_BR' : locale === 'es' ? 'es_ES' : locale === 'fr' ? 'fr_FR' : 'en_US',
     },
     twitter: {
       card: 'summary_large_image',

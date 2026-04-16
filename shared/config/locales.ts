@@ -1,5 +1,5 @@
 export const defaultLocale = 'en';
-export const locales = ['pt', 'en', 'es'] as const;
+export const locales = ['pt', 'en', 'es', 'fr'] as const;
 export const localeCookieName = 'NEXT_LOCALE';
 
 export type Locale = (typeof locales)[number];

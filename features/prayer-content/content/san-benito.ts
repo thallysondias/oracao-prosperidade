@@ -169,4 +169,60 @@ export const sanBenitoPrayerContent: LocalizedPrayerContent = {
     ],
     amen: 'Amen.',
   },
+  fr: {
+    title: 'Guide de foi et de reflexion inspire par Saint Benoit',
+    subtitle: 'Un moment de recueillement et de foi',
+    tags: ['Foi', 'Discernement', 'Calme', 'Reflexion'],
+    sections: [
+      {
+        title: '',
+        paragraphs: [
+          'Saint Benoit, accompagne ce moment de priere. Je veux faire une pause, apaiser mon coeur et me souvenir que la foi se construit aussi dans le silence, la constance et la vie quotidienne.',
+          'Que ce contenu m aide a regarder ma journee avec plus de serenite et fortifie ma disposition a agir avec prudence, patience et bonté.',
+          'Je ne cherche ni formules ni promesses, mais un espace sincere de reflexion qui me rapproche de Dieu et m aide a vivre avec plus de presence.',
+        ],
+      },
+      {
+        title: 'Debut de la priere',
+        paragraphs: [
+          'Apprends moi a reconnaitre ce que je dois prendre soin aujourd hui en moi : mes pensees, mes paroles, mes decisions et la maniere dont je traite ceux qui m entourent.',
+          'Que la priere m aide a m eloigner du bruit et a retrouver un regard plus simple, plus humble et plus attentif a l essentiel.',
+          'Que dans les moments de fatigue, je trouve ici une pause pour respirer, remercier et avancer avec plus de clarte.',
+        ],
+      },
+      {
+        title: 'Vie quotidienne',
+        paragraphs: [
+          'Aide moi a vivre mes responsabilites quotidiennes avec honnetete, equilibre et dedication. Que j agisse avec respect pour mon propre cheminement et pour celui des autres.',
+          'Que j apprenne a observer mes pensees avec plus de calme et a prendre des decisions avec moins d impulsion et davantage de discernement.',
+          'Que la foi me soutienne dans ce qui est simple : une parole bienveillante, une attitude patiente et la capacite de recommencer chaque jour.',
+          'Que ce temps de priere ne m eloigne pas de la realite, mais m aide a la vivre avec plus d equilibre, de responsabilite et d esperance.',
+        ],
+      },
+      {
+        title: 'Relations et coexistence',
+        paragraphs: [
+          'Que je puisse prendre soin de mes liens avec plus d ecoute, de douceur et de respect. Que dans mes conversations, il y ait plus de verite, de patience et d ouverture au dialogue.',
+          'Aide moi a reconnaitre quand j ai besoin de demander pardon, de me taire ou de recommencer avec plus d humilite.',
+          'Que ma presence soit un signe de calme plutot que de precipitation, d accueil plutot que de durete.',
+        ],
+      },
+      {
+        title: 'Soin interieur',
+        paragraphs: [
+          'Que j apprenne a ecouter ma vie interieure sans peur et sans exiger de reponses immediates. Que la priere devienne pour moi un refuge de pause, de conscience et de confiance.',
+          'Donne moi la serenite pour traverser les jours complexes et la gratitude pour reconnaitre les petits biens de chaque journee.',
+          'Que je puisse soutenir mes processus avec patience et continuer de cultiver une vie spirituelle simple et constante.',
+        ],
+      },
+      {
+        title: 'Gratitude finale',
+        paragraphs: [
+          'Merci pour cet espace de reflexion. Que ce qui a ete vecu ici m encourage a continuer avec une foi plus sereine, un regard plus conscient et une disposition plus bienveillante dans ma vie quotidienne.',
+          'Saint Benoit, inspire nous a vivre avec fermete interieure, simplicite et paix.',
+        ],
+      },
+    ],
+    amen: 'Amen.',
+  },
 };

@@ -4,12 +4,13 @@ import { useLocale } from 'next-intl';
 
 import { PrayerContentView } from '@/features/prayer-content/components/PrayerContentView';
 import { carloAcutisPrayerContent } from '@/features/prayer-content/content/carlo-acutis';
-import { defaultLocale } from '@/shared/config/locales';
+import { defaultLocale, type Locale } from '@/shared/config/locales';
 
 export const CarlosAcuti: React.FC = () => {
-  const locale = (useLocale() as 'pt' | 'es' | 'en') || defaultLocale;
+  const locale = (useLocale() as Locale) || defaultLocale;
+  const content = carloAcutisPrayerContent[locale] ?? carloAcutisPrayerContent.en!;
 
-  return <PrayerContentView content={carloAcutisPrayerContent[locale]} />;
+  return <PrayerContentView content={content} />;
 };
 
 export default CarlosAcuti;

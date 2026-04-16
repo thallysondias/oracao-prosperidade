@@ -56,7 +56,7 @@ type ChallengeDayContent = {
   text: string;
 };
 
-const challengeDayContentByLocale: Record<ProductLocale, ChallengeDayContent[]> = {
+const challengeDayContentByLocale: Partial<Record<ProductLocale, ChallengeDayContent[]>> = {
   en: [
     {
       title: 'A beginning with presence',
@@ -162,6 +162,113 @@ const challengeDayContentByLocale: Record<ProductLocale, ChallengeDayContent[]> 
       title: 'Final prayer of gratitude',
       text:
         'We arrive at the final day with gratitude.\n\nThis closing does not promise results; it celebrates the time dedicated to prayer, listening, and reflection.\n\nMay what was lived in this journey continue to accompany you beyond this challenge.',
+    },
+  ],
+  fr: [
+    {
+      title: 'Un commencement avec presence',
+      text:
+        'Aujourd hui commence ce parcours de 21 jours. Cette priere vous invite a debuter avec calme, presence et ouverture interieure.\n\nIl ne s agit pas de promettre des resultats, mais de creer un rythme de priere et de reflexion capable de vous accompagner pas a pas.\n\nRespirez, faites une pause et laissez vous vivre ce chemin avec simplicite.',
+    },
+    {
+      title: 'Relacher le poids du jour',
+      text:
+        'Le deuxieme jour vous invite a reconnaitre le poids que vous portez.\n\nNommer vos preoccupations est deja une facon de les regarder avec plus d honnetete et moins de bruit.\n\nLaissez cette priere vous accompagner pendant que vous relachez un peu de la tension du jour.',
+    },
+    {
+      title: 'Ecouter la fatigue interieure',
+      text:
+        'Aujourd hui, l invitation est d ecouter cette fatigue qui passe souvent inapercue.\n\nPeut etre n avez vous pas besoin de repondre a tout tout de suite, mais simplement de vous accorder un instant pour vous arreter et respirer.\n\nQue cette priere devienne une pause de soin interieur.',
+    },
+    {
+      title: 'Nommer ce que je ressens',
+      text:
+        'En ce quatrieme jour, la proposition est de nommer ce que vous ressentez sans vous juger.\n\nReconnaître une emotion avec sincerite peut ouvrir un espace pour la vivre avec plus de serenite.\n\nDemeurez dans cette priere avec humilite et patience.',
+    },
+    {
+      title: 'Faire place a la verite',
+      text:
+        'Parfois, nous gardons trop de choses en nous. Aujourd hui, vous pouvez offrir cet espace interieur a la reflexion et a l ecoute.\n\nIl n est pas necessaire de forcer les reponses ; il suffit de rester disponible.\n\nQue cette priere vous aide a habiter votre verite avec calme.',
+    },
+    {
+      title: 'Reconnaître ce qui demeure',
+      text:
+        'Le sixieme jour vous invite a regarder ce qui demeure encore en vous : desirs, preoccupations, souvenirs et apprentissages.\n\nTout cela fait partie de votre histoire et peut etre accueilli avec plus de clarte.\n\nPermettez a cette priere de vous accompagner dans ce regard.',
+    },
+    {
+      title: 'Respirer avec plus de calme',
+      text:
+        'Aujourd hui, l attention se tourne vers la respiration et le calme.\n\nQuand la journee pese, revenir au silence peut aider a retrouver l equilibre.\n\nQue cette priere vous offre un moment de repos interieur.',
+    },
+    {
+      title: 'M ouvrir a la reflexion',
+      text:
+        'Ce jour vous invite a vous ouvrir a la reflexion avec plus d honnetete.\n\nNon pour exiger des changements immediats, mais pour observer votre chemin avec davantage de conscience.\n\nLaissez la priere vous soutenir dans ce processus.',
+    },
+    {
+      title: 'Regarder mon histoire avec honnetete',
+      text:
+        'Regarder sa propre histoire avec sincerite demande du courage et de la douceur.\n\nAujourd hui, vous pouvez revisiter vos choix, vos habitudes et vos priorites avec un regard plus compatissant.\n\nQue cette priere vous aide a le faire sans durete.',
+    },
+    {
+      title: 'Laisser derriere de vieux élans',
+      text:
+        'Au dixieme jour, l invitation est de laisser derriere vous des impulsions ou des habitudes qui ne vous font plus du bien.\n\nParfois, le changement commence par un petit choix quotidien.\n\nRestez dans cette priere avec ouverture et patience.',
+    },
+    {
+      title: 'Comprendre mes besoins',
+      text:
+        'Aujourd hui, vous pouvez porter attention a ce dont vous avez reellement besoin.\n\nPeut etre pas d une solution immediate, mais de plus de clarte pour traverser le present.\n\nQue cette priere vous aide a entendre cela avec serenite.',
+    },
+    {
+      title: 'Prendre soin de ce que je porte en moi',
+      text:
+        'Prendre soin de ce que vous portez en vous est aussi une forme de foi.\n\nEn ce jour, donnez vous la permission de faire une pause et de vous occuper de votre monde interieur avec respect.\n\nQue la priere vous rappelle la valeur de ce soin.',
+    },
+    {
+      title: 'M ouvrir au discernement',
+      text:
+        'Le treizieme jour invite au discernement.\n\nRegarder plus profondement ce que vous vivez peut vous aider a choisir plus sagement vos prochains pas.\n\nQue cette priere vous accompagne avec calme dans cette recherche.',
+    },
+    {
+      title: 'Sortir des schemas repetes',
+      text:
+        'Aujourd hui est le moment de reconnaître des schemas qui se repetent et que, peut etre, vous ne souhaitez plus entretenir.\n\nLes nommer clairement peut etre le debut d un chemin plus conscient.\n\nQue cette priere fortifie votre disposition a continuer d apprendre.',
+    },
+    {
+      title: 'Priere pour la force',
+      text:
+        'En ce jour, nous prions pour une force interieure.\n\nNon pas une force bruyante, mais une constance paisible qui permet de continuer a avancer.\n\nQue cette priere vous rappelle qu il est aussi possible d avancer de maniere simple et fidele.',
+    },
+    {
+      title: 'Priere pour la clarte',
+      text:
+        'La clarte naît souvent du silence et de la pause.\n\nAujourd hui, l invitation est d ecouter plus attentivement ce dont votre vie a besoin en ce moment.\n\nQue cette priere vous aide a faire place a cette comprehension.',
+    },
+    {
+      title: 'Priere pour le calme interieur',
+      text:
+        'Ce jour est consacre au calme interieur.\n\nQuand l esprit s accelere, la priere peut devenir une ancre qui vous ramene au present.\n\nRespirez et laissez ce contenu vous accompagner avec douceur.',
+    },
+    {
+      title: 'Priere pour un courage renouvele',
+      text:
+        'Un courage renouvele peut commencer par de petits gestes : mieux se reposer, parler avec plus de bonté, revenir a ce qui compte vraiment.\n\nAujourd hui, la priere vous invite a valoriser ces mouvements discrets.\n\nQue vous y trouviez une source d elan.',
+    },
+    {
+      title: 'Priere pour la constance',
+      text:
+        'La constance se construit jour apres jour.\n\nCe parcours ne cherche pas la perfection, mais la presence et la fidelite dans les petites choses.\n\nQue cette priere vous encourage a continuer avec patience.',
+    },
+    {
+      title: 'Priere pour les relations',
+      text:
+        'Aujourd hui, nous prions pour les relations et la vie quotidienne partagee.\n\nQue vous puissiez vous approcher des autres avec plus d ecoute, de respect et de disposition au dialogue.\n\nQue cette priere vous inspire a prendre davantage soin de ces liens.',
+    },
+    {
+      title: 'Priere finale de gratitude',
+      text:
+        'Nous arrivons au dernier jour avec gratitude.\n\nCette conclusion ne promet pas de resultats ; elle celebre le temps consacre a la priere, a l ecoute et a la reflexion.\n\nQue ce qui a ete vecu dans ce parcours continue de vous accompagner au dela de ce defi.',
     },
   ],
   es: [
@@ -380,7 +487,7 @@ const challengeDayContentByLocale: Record<ProductLocale, ChallengeDayContent[]> 
   ],
 };
 
-const challengeDayTitlesByLocale: Record<ProductLocale, string[]> = {
+const challengeDayTitlesByLocale: Partial<Record<ProductLocale, string[]>> = {
   en: [
     'When the soul chooses to begin',
     'The weight that starts to loosen',
@@ -403,6 +510,29 @@ const challengeDayTitlesByLocale: Record<ProductLocale, string[]> = {
     'Prayer for Perseverance',
     'Prayer for Unity',
     'Final Prayer of Gratitude',
+  ],
+  fr: [
+    'Quand l ame choisit de commencer',
+    'Le poids qui commence a se desserrer',
+    'La fatigue que mon ame n a jamais nommee',
+    'L emotion revenue pour etre guerie',
+    'L emotion qui cherche a sortir',
+    'Ce qui vit encore en moi',
+    'Ce qui pese sur ma poitrine',
+    'La fissure qui s est enfin ouverte',
+    'La verite que j ai toujours evitee',
+    'Ce qui commence a se rompre en moi',
+    'La raison derriere ma douleur',
+    'La blessure qui ne peut plus se cacher',
+    'Ce que Dieu veut me montrer',
+    'Le cycle que je dois briser',
+    'Priere pour la Force',
+    'Priere pour la Clarte',
+    'Priere pour la Liberte',
+    'Priere pour le Renouveau',
+    'Priere pour la Perseverance',
+    'Priere pour l Union',
+    'Priere finale de gratitude',
   ],
   es: [
     'Cuando el alma decide comenzar',
@@ -452,7 +582,7 @@ const challengeDayTitlesByLocale: Record<ProductLocale, string[]> = {
   ],
 };
 
-const challengeDayReasonsByLocale: Record<ProductLocale, string[]> = {
+const challengeDayReasonsByLocale: Partial<Record<ProductLocale, string[]>> = {
   en: [
     'The moment your soul decides to begin transforming',
     'Release the weight you have been carrying alone',
@@ -475,6 +605,29 @@ const challengeDayReasonsByLocale: Record<ProductLocale, string[]> = {
     'Help us remain steady in faith',
     'Strengthen the bonds of love and harmony',
     'Celebrate the journey and seal our spiritual commitment',
+  ],
+  fr: [
+    'Le moment ou votre ame decide de se transformer',
+    'Liberez vous du poids que vous avez porte seul',
+    'Reconnaissez la fatigue profonde que vous n avez jamais exprimee',
+    'Permettez a d anciennes emotions de revenir pour etre gueries',
+    'Laissez sortir l emotion qui tente de se liberer',
+    'Decouvrez ce qui vit encore dans votre coeur',
+    'Soulagez le poids qui oppresse votre poitrine',
+    'Permettez a la fissure de s ouvrir enfin a la guerison',
+    'Affrontez la verite que vous avez toujours evitee',
+    'Reconnaissez ce qui se brise a l interieur de vous',
+    'Decouvrez la veritable raison de votre douleur',
+    'Voyez la blessure qui ne peut plus se cacher',
+    'Ecoutez ce que Dieu veut vous reveler',
+    'Brisez le cycle qui doit etre rompu',
+    'Nous donne le courage d affronter nos defis',
+    'Illumine notre chemin et nous montre le sens',
+    'Nous libere des fardeaux et des limitations',
+    'Apporte un nouvel elan et l energie pour recommencer',
+    'Nous aide a demeurer fermes dans la foi',
+    'Fortifie les liens d amour et d harmonie',
+    'Celebre le chemin et scelle notre engagement spirituel',
   ],
   es: [
     'El momento en que tu alma toma la decision de transformar',
@@ -524,24 +677,33 @@ const challengeDayReasonsByLocale: Record<ProductLocale, string[]> = {
   ],
 };
 
-export function getChallengeDayTitles(locale: ProductLocale) {
-  return challengeDayTitlesByLocale[locale] || challengeDayTitlesByLocale.en;
+export function getChallengeDayTitles(locale: ProductLocale): string[] {
+  return challengeDayTitlesByLocale[locale] || challengeDayTitlesByLocale.en || [];
 }
 
-export function getChallengeDayReasons(locale: ProductLocale) {
-  return challengeDayReasonsByLocale[locale] || challengeDayReasonsByLocale.en;
+export function getChallengeDayReasons(locale: ProductLocale): string[] {
+  return challengeDayReasonsByLocale[locale] || challengeDayReasonsByLocale.en || [];
 }
 
 export function getChallengeDayContent(locale: ProductLocale, day: number) {
-  const content = challengeDayContentByLocale[locale] || challengeDayContentByLocale.en;
+  const content = challengeDayContentByLocale[locale] || challengeDayContentByLocale.en || [];
   return (
     content[day - 1] || {
-      title: locale === 'en' ? 'Prayer of the day' : locale === 'es' ? 'Oracion del dia' : 'Oracao do dia',
+      title:
+        locale === 'en'
+          ? 'Prayer of the day'
+          : locale === 'es'
+            ? 'Oracion del dia'
+            : locale === 'fr'
+              ? 'Priere du jour'
+              : 'Oracao do dia',
       text:
         locale === 'en'
           ? 'Prayer text is not available.'
           : locale === 'es'
             ? 'El texto de la oracion no esta disponible.'
+            : locale === 'fr'
+              ? 'Le texte de la priere n est pas disponible.'
             : 'O texto da oracao nao esta disponivel.',
     }
   );

@@ -18,46 +18,65 @@ import { DailyPrayerCard } from '@/features/home-feed/components/DailyPrayerCard
 import { PrayerRequest } from '@/features/prayer-requests/components/PrayerRequest';
 import { products } from '@/lib/products/oraciones';
 import { getTodayVerse } from '@/lib/versiculos_traduzidos';
+import type { Locale } from '@/shared/config/locales';
 import { useAuthStore } from '@/store/authStore';
 
 export default function HomePage() {
   const t = useTranslations('HomePage');
-  const locale = useLocale() as 'pt' | 'en' | 'es';
+  const locale = useLocale() as Locale;
   const user = useAuthStore((state) => state.user);
   const [activeTab, setActiveTab] = useState<'today' | 'guia-devocional' | 'challenge-21' | 'prayer-request'>('today');
   const [showSupportPopup, setShowSupportPopup] = useState(false);
 
   const todayVerse = useMemo(() => getTodayVerse(), []);
-  const todayVerseText = todayVerse.traducao[locale];
+  const todayVerseText = todayVerse.traducao[locale] || todayVerse.traducao.en;
   const dailyPrayerAuthorName =
     locale === 'pt'
       ? 'Cultive uma rotina de reflexao'
       : locale === 'es'
         ? 'Cultiva una rutina de reflexion'
+        : locale === 'fr'
+          ? 'Cultivez une routine de reflexion'
         : 'Build a reflection routine';
   const anonymousUserName =
-    locale === 'pt' ? 'Usuario' : locale === 'es' ? 'Usuario' : 'User';
+    locale === 'pt' ? 'Usuario' : locale === 'es' ? 'Usuario' : locale === 'fr' ? 'Utilisateur' : 'User';
   const minutesLabel =
-    locale === 'pt' ? 'minutos' : locale === 'es' ? 'minutos' : 'minutes';
+    locale === 'pt' ? 'minutos' : locale === 'es' ? 'minutos' : locale === 'fr' ? 'minutes' : 'minutes';
   const hasGuideAccess = useMemo(() => hasDevotionalGuideAccess(user?.purchases), [user?.purchases]);
 
   const formattedProducts = useMemo(() => {
     return products.map((product, index) => ({
       id: parseInt(product.id.split('_')[1]),
-      title: locale === 'pt' ? product.titlePt : locale === 'en' ? product.titleEn : product.titleEs,
+      title:
+        locale === 'pt'
+          ? product.titlePt
+          : locale === 'en'
+            ? product.titleEn
+            : locale === 'es'
+              ? product.titleEs
+              : product.titleFr,
       description:
         locale === 'pt'
           ? product.descriptionPt
           : locale === 'en'
             ? product.descriptionEn
-            : product.descriptionEs,
+            : locale === 'es'
+              ? product.descriptionEs
+              : product.descriptionFr,
       image:
         product.image ||
         'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop',
       isLocked: product.isLocked,
       daysCount: index + 1,
       duration: `${product.durationMinutes} ${minutesLabel}`,
-      tags: locale === 'pt' ? product.tagsPt : locale === 'en' ? product.tagsEn : product.tagsEs,
+      tags:
+        locale === 'pt'
+          ? product.tagsPt
+          : locale === 'en'
+            ? product.tagsEn
+            : locale === 'es'
+              ? product.tagsEs
+              : product.tagsFr,
     }));
   }, [locale, minutesLabel]);
 

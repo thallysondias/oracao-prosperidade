@@ -136,4 +136,49 @@ export const carloAcutisPrayerContent: LocalizedPrayerContent = {
     ],
     amen: 'Amen.',
   },
+  fr: {
+    title: 'Guide de foi et de reflexion inspire par Carlo Acutis',
+    subtitle: 'Carlo Acutis',
+    tags: ['Presence', 'Guide', 'Reflexion', 'Foi'],
+    sections: [
+      {
+        title: '',
+        paragraphs: [
+          'Aujourd hui, je veux prier avec simplicite et me souvenir du temoignage de Carlo Acutis : une foi vecue dans la vie quotidienne, avec joie, attention et proximite avec Dieu.',
+          'Que ce moment m aide a regarder ma vie avec plus d honnetete et de gratitude. Que j apprenne a reconnaitre les petits gestes de bien qui font deja partie de mon chemin.',
+          'Accompagne mes pas afin que je puisse, moi aussi, vivre avec plus de presence, de generosite et de confiance.',
+        ],
+      },
+      {
+        title: 'Priere d ouverture',
+        paragraphs: [
+          'Seigneur, permets moi de commencer ce temps dans le calme. Que la priere m aide a mettre de l ordre dans mon interieur et a demeurer attentif a ce qui donne sens, reconfort et direction a mes jours.',
+          'Que je puisse vivre avec un coeur disponible pour apprendre, remercier et servir avec simplicite.',
+        ],
+      },
+      {
+        title: 'Offrande interieure',
+        paragraphs: [
+          'Je te presente mes inquietudes, mes doutes et mes fatigues. Non pour exiger des reponses immediates, mais pour apprendre a les porter avec plus de serenite et de confiance.',
+        ],
+      },
+      {
+        title: 'Chemin quotidien',
+        paragraphs: [
+          'Aide moi a marcher avec attention et responsabilite. Qu au milieu de la routine, je trouve de la place pour la foi, l ecoute et la bonté envers les autres.',
+          'Que je puisse regarder mon histoire avec compassion, faire des pauses quand c est necessaire et continuer avec plus de clarte dans mes decisions.',
+          'Apprends moi a reconnaitre la valeur de ce qui est petit : une parole bienveillante, une attitude patiente, un geste d attention, une journee vecue avec plus de conscience.',
+          'Que cette experience fortifie ma disposition a continuer de grandir dans la foi d une maniere simple et authentique.',
+        ],
+      },
+      {
+        title: 'Conclusion',
+        paragraphs: [
+          'Merci pour ce temps de priere et de reflexion. Qu il m aide a vivre avec un coeur plus attentif, un esprit plus paisible et une foi davantage presente dans la vie quotidienne.',
+          'Que je puisse poursuivre ce chemin avec humilite, constance et ouverture au bien.',
+        ],
+      },
+    ],
+    amen: 'Amen.',
+  },
 };

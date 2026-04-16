@@ -13,6 +13,12 @@ const VENDEPAY_STATUS_MAP: Record<
 };
 
 export function getBuyerName(body: VendePayWebhook) {
+  const explicitName = body.name?.trim() || body.buyerName?.trim();
+
+  if (explicitName) {
+    return explicitName;
+  }
+
   return [body.nomeComprador?.trim(), body.sobrenomeComprador?.trim()]
     .filter(Boolean)
     .join(' ')
@@ -20,10 +26,24 @@ export function getBuyerName(body: VendePayWebhook) {
 }
 
 export function getTransactionId(body: VendePayWebhook) {
-  return body.id?.trim() || body.checkoutId?.trim() || '';
+  return body.transaction?.trim() || body.id?.trim() || body.checkoutId?.trim() || body.idepotentialCheckoutId?.trim() || '';
 }
 
-export function mapVendePayStatus(status?: number) {
+export function mapVendePayStatus(status?: number | string) {
+  if (typeof status === 'string') {
+    const normalizedStatus = status.trim().toLowerCase();
+
+    if (
+      normalizedStatus === 'approved' ||
+      normalizedStatus === 'pending' ||
+      normalizedStatus === 'cancelled' ||
+      normalizedStatus === 'refunded' ||
+      normalizedStatus === 'chargeback'
+    ) {
+      return normalizedStatus;
+    }
+  }
+
   if (typeof status !== 'number') {
     return 'pending';
   }
@@ -46,5 +66,5 @@ export function resolvePurchasedAt(createdAt?: string) {
 }
 
 export function resolveVendePayProductName(body: VendePayWebhook) {
-  return resolveProductNameById(body.produtoId, 'Produto VendePay');
+  return resolveProductNameById(body.produtoId || body.productId, 'Produto VendePay');
 }

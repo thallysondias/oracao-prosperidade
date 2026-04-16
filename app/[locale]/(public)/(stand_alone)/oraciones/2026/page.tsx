@@ -12,7 +12,9 @@ export default function Prosperity2026Page() {
   const audioUrl =
     locale === 'es'
       ? '/oracion/prosperidade_2026_es.mp3'
-      : '/oracion/prosperidade_2026_en.mp3';
+      : locale === 'fr'
+        ? '/oracion/prosperidade_2026_fr.mp3'
+        : '/oracion/prosperidade_2026_en.mp3';
 
   return (
     <AudioPrayerPage

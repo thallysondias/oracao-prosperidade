@@ -4,12 +4,13 @@ import { useLocale } from 'next-intl';
 
 import { PrayerContentView } from '@/features/prayer-content/components/PrayerContentView';
 import { sanBenitoPrayerContent } from '@/features/prayer-content/content/san-benito';
-import { defaultLocale } from '@/shared/config/locales';
+import { defaultLocale, type Locale } from '@/shared/config/locales';
 
 export const SanBenitoPrayer: React.FC = () => {
-  const locale = (useLocale() as 'pt' | 'es' | 'en') || defaultLocale;
+  const locale = (useLocale() as Locale) || defaultLocale;
+  const content = sanBenitoPrayerContent[locale] ?? sanBenitoPrayerContent.en!;
 
-  return <PrayerContentView content={sanBenitoPrayerContent[locale]} />;
+  return <PrayerContentView content={content} />;
 };
 
 export default SanBenitoPrayer;

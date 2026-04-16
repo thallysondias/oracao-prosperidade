@@ -15,6 +15,7 @@ import {
   getTransactionId,
   mapVendePayStatus,
   resolvePurchasedAt,
+  resolveVendePayProductName,
 } from '@/features/webhooks/vendepay/utils';
 import { createClient } from '@/utils/supabase/server';
 
@@ -39,10 +40,11 @@ export async function POST(request: Request) {
       });
     }
 
-    const email = body.emailComprador?.trim().toLowerCase();
+    const email = (body.emailComprador || body.email)?.trim().toLowerCase();
     const transactionId = getTransactionId(body);
     const buyerName = getBuyerName(body) || email?.split('@')[0] || 'Cliente VendePay';
-    const sourceProductId = body.produtoId?.trim() || 'vendepay_super_purchase';
+    const sourceProductId = body.produtoId?.trim() || body.productId?.trim() || 'vendepay_super_purchase';
+    const sourceProductName = resolveVendePayProductName(body);
     const normalizedEvent = body.event?.trim().toLowerCase();
     const status = VENDEPAY_APPROVED_EVENTS.has(normalizedEvent || '')
       ? 'approved'
@@ -53,6 +55,7 @@ export async function POST(request: Request) {
       transaction: transactionId,
       email,
       productId: sourceProductId,
+      productName: sourceProductName,
       status,
     });
 

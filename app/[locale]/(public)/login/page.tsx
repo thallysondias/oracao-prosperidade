@@ -18,18 +18,26 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { locales, type Locale } from "@/shared/config/locales";
 import { useAuthStore } from "@/store/authStore";
 
 export default function LoginPage() {
   const t = useTranslations("Login");
   const tHome = useTranslations("HomePage");
-  const locale = useLocale() as "pt" | "en" | "es";
+  const locale = useLocale() as Locale;
   const searchParams = useSearchParams();
-  const demoNameByLocale = {
+  const demoNameByLocale: Record<Locale, string> = {
     pt: "Orador",
     es: "Oración",
     en: "Prayer",
-  } as const;
+    fr: "Prière",
+  };
+  const localeFlags: Record<Locale, string> = {
+    pt: "🇧🇷",
+    en: "🇺🇸",
+    es: "🇲🇽",
+    fr: "🇫🇷",
+  };
   const router = useNextRouter();
   const login = useAuthStore((state) => state.login);
 
@@ -181,9 +189,11 @@ export default function LoginPage() {
                     <SelectValue placeholder={tHome("profileLanguagePlaceholder")} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="en">🇺🇸 {tHome("languages.en")}</SelectItem>
-                    <SelectItem value="es">🇲🇽 {tHome("languages.es")}</SelectItem>
-                    <SelectItem value="pt">🇧🇷 {tHome("languages.pt")}</SelectItem>
+                    {locales.map((availableLocale) => (
+                      <SelectItem key={availableLocale} value={availableLocale}>
+                        {localeFlags[availableLocale]} {tHome(`languages.${availableLocale}`)}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>

@@ -14,12 +14,13 @@ import {
   getChallengePurchaseDate,
   getCurrentChallengeDay,
 } from "@/features/challenge/helpers";
+import type { Locale } from "@/shared/config/locales";
 
 export function Challenge21Days() {
   const disclaimer = useTranslations("AppDisclaimer");
   const user = useAuthStore((state) => state.user);
   const router = useRouter();
-  const locale = useLocale();
+  const locale = useLocale() as Locale;
 
   const challengePurchase = useMemo(
     () => findChallengePurchase(user?.purchases),
@@ -32,7 +33,7 @@ export function Challenge21Days() {
   );
 
   const hasPurchased = !!challengePurchase;
-  const days = useMemo(() => generateChallengeDays(locale as "pt" | "en" | "es", purchaseDate), [locale, purchaseDate]);
+  const days = useMemo(() => generateChallengeDays(locale, purchaseDate), [locale, purchaseDate]);
   const currentChallengeDay = useMemo(
     () => getCurrentChallengeDay(days),
     [days]

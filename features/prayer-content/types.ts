@@ -14,4 +14,4 @@ export interface PrayerContentCopy {
   amen: string;
 }
 
-export type LocalizedPrayerContent = Record<Locale, PrayerContentCopy>;
+export type LocalizedPrayerContent = Partial<Record<Locale, PrayerContentCopy>>;

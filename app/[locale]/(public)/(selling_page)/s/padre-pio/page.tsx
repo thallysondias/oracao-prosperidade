@@ -26,7 +26,7 @@ const OracionPadrePio = () => {
   }, [searchParams, fallbackName]);
 
   const fechaHoy = useMemo(() => {
-    const dateLocale = locale === 'en' ? 'en-US' : locale === 'pt' ? 'pt-BR' : 'es-ES';
+    const dateLocale = locale === 'en' ? 'en-US' : locale === 'pt' ? 'pt-BR' : locale === 'fr' ? 'fr-FR' : 'es-ES';
     return new Date()
       .toLocaleDateString(dateLocale, {
         day: 'numeric',

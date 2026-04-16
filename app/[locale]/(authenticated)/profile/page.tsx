@@ -15,17 +15,17 @@ import {
 } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 import { LightRays } from '@/components/ui/light-rays';
-import { locales } from '@/config';
+import { locales, type Locale } from '@/shared/config/locales';
 
 export default function ProfilePage() {
   const t = useTranslations('HomePage');
-  const locale = useLocale() as 'pt' | 'en' | 'es';
+  const locale = useLocale() as Locale;
   const router = useRouter();
   const pathname = usePathname();
   const user = useAuthStore((state) => state.user);
 
   const handleLanguageChange = (value: string) => {
-    router.replace(pathname, { locale: value as 'pt' | 'en' | 'es' });
+    router.replace(pathname, { locale: value as Locale });
   };
 
   const handleSupportClick = () => {

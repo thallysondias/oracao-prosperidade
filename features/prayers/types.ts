@@ -5,12 +5,15 @@ export interface Product {
   titlePt: string;
   titleEn: string;
   titleEs: string;
+  titleFr: string;
   descriptionPt: string;
   descriptionEn: string;
   descriptionEs: string;
+  descriptionFr: string;
   tagsPt: string[];
   tagsEn: string[];
   tagsEs: string[];
+  tagsFr: string[];
   durationMinutes: number;
   image?: string;
   youtubeUrl?: string;
@@ -24,7 +27,7 @@ export interface FeaturedPrayerCard {
   id: string;
   titleKey: string;
   descriptionKey?: string;
-  descriptions?: Record<ProductLocale, string>;
+  descriptions?: Partial<Record<ProductLocale, string>>;
   image: string;
   route: string;
   productName: string | null;

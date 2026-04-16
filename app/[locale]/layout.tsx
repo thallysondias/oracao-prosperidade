@@ -53,6 +53,22 @@ const localizedMetadata: Record<string, Metadata> = {
       images: [OPEN_GRAPH_IMAGE_PATH],
     },
   },
+  fr: {
+    title: "Calmia.club",
+    description: "Cultivez l'habitude de la gratitude et de la prière avec plus de présence dans votre vie quotidienne.",
+    openGraph: {
+      title: "Calmia.club",
+      description: "Cultivez l'habitude de la gratitude et de la prière avec plus de présence dans votre vie quotidienne.",
+      siteName: "Calmia.club",
+      images: [OPEN_GRAPH_IMAGE_PATH],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "Calmia.club",
+      description: "Cultivez l'habitude de la gratitude et de la prière avec plus de présence dans votre vie quotidienne.",
+      images: [OPEN_GRAPH_IMAGE_PATH],
+    },
+  },
 };
 
 export function generateStaticParams() {

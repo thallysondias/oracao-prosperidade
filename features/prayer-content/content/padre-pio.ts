@@ -121,4 +121,44 @@ export const padrePioPrayerContent: LocalizedPrayerContent = {
     closing: 'Padre Pio, accompany us on this path of faith.',
     amen: 'Amen.',
   },
+  fr: {
+    title: 'Guide de foi et de reflexion inspire par Padre Pio',
+    subtitle: 'Inspire par son temoignage de foi',
+    tags: ['Reflexion', 'Reconfort', 'Esperance', 'Foi'],
+    sections: [
+      {
+        title: '',
+        paragraphs: [
+          'Padre Pio, aujourd hui je fais une pause pour prier avec serenite et me souvenir de ton exemple de confiance, de silence et d offrande. En cet instant, je veux apaiser mon esprit, rassembler mes pensees et me rapprocher de Dieu avec sincerite.',
+          'Que cette priere soit un espace de recueillement. Qu elle m aide a respirer calmement, a reconnaitre ce que je traverse et a demeurer plus patient face aux inquietudes de ce jour.',
+          'Accompagne mon chemin spirituel et apprends moi a vivre ce moment avec humilite, ecoute interieure et ouverture a ce qui est bon.',
+        ],
+      },
+      {
+        title: 'Un temps de silence',
+        paragraphs: [
+          'Apprends moi a prendre soin de ma vie interieure avec plus de douceur. Que je ne reagisse pas avec precipitation a tout ce qui me trouble, et que j apprenne a reconnaitre, sans durete, ce que je dois confier dans la priere.',
+          'Que ce moment me rappelle que la foi se vit aussi dans l ordinaire : par la patience, l ecoute, la bonté et la constance.',
+          'Aide moi a soutenir mon coeur avec une esperance paisible, sans exigences ni attentes, en faisant confiance au fait que je peux traverser cette journee avec plus de presence et d equilibre.',
+        ],
+      },
+      {
+        title: 'Confiance et presence',
+        paragraphs: [
+          'Que ton temoignage m inspire a perseverer dans la priere meme les jours ordinaires, quand tout semble silencieux et que je dois pourtant avancer avec confiance.',
+          'Que j agisse avec prudence, que je parle avec bienveillance et que je prenne mes decisions avec plus de conscience. Que je trouve dans la foi un lieu de repos interieur et de renouveau spirituel.',
+          'Accompagne aussi ceux que j aime et aide nous a traverser chaque etape avec respect, dialogue et serenite.',
+        ],
+      },
+      {
+        title: 'Gratitude',
+        paragraphs: [
+          'Merci pour ce moment de priere. Merci pour la possibilite de faire une pause, de respirer et de revenir a l essentiel. Que ce contenu m aide a cultiver une vie interieure plus consciente et une foi plus simple.',
+          'Que je reparte d ici plus calme pour la journee qui m attend et dispose a continuer de creer des espaces de reflexion, de priere et de soin interieur.',
+        ],
+      },
+    ],
+    closing: 'Padre Pio, accompagne nous sur ce chemin de foi.',
+    amen: 'Amen.',
+  },
 };

@@ -12,11 +12,12 @@ import { useAudioPlayer } from '@/features/prayer-player/useAudioPlayer';
 import { formatAudioTime } from '@/features/prayer-player/utils';
 import { getLocalizedProductText } from '@/features/prayers/helpers';
 import { getProductAudioUrl, products } from '@/lib/products/oraciones';
+import type { Locale } from '@/shared/config/locales';
 
 export default function PrayerPlayPage() {
   const params = useParams();
   const router = useRouter();
-  const locale = useLocale() as 'pt' | 'en' | 'es';
+  const locale = useLocale() as Locale;
   const t = useTranslations('PrayerPlayer');
   const disclaimer = useTranslations('AppDisclaimer');
   const prayerId = params.id as string;
