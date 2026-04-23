@@ -1,88 +1,105 @@
-'use client';
+"use client";
 
-import { useMemo, useState } from 'react';
+import { useMemo, useState } from "react";
 
-import { MessageCircle, X } from 'lucide-react';
-import { useLocale, useTranslations } from 'next-intl';
+import { MessageCircle, X } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
 
-import { Button } from '@/components/ui/button';
-import { ArchangelsSlider } from '@/components/home/ArchangelsSlider';
-import { Card } from '@/components/ui/card';
-import { Tabs, TabsContent } from '@/components/ui/tabs';
-import { Challenge21Days } from '@/components/home/Challenge21Days';
-import { PrayersSlider } from '@/components/home/PrayersSlider';
-import { RelatedScripturesSection } from '@/components/home/RelatedScripturesSection';
-import { DevotionalGuideTab } from '@/features/devotional-guide/components/DevotionalGuideTab';
-import { hasDevotionalGuideAccess } from '@/features/devotional-guide/constants';
-import { Header } from '@/features/home-feed/components/Header';
-import { DailyPrayerCard } from '@/features/home-feed/components/DailyPrayerCard';
-import { PrayerRequest } from '@/features/prayer-requests/components/PrayerRequest';
-import { products } from '@/lib/products/oraciones';
-import { getTodayVerse } from '@/lib/versiculos_traduzidos';
-import type { Locale } from '@/shared/config/locales';
-import { useAuthStore } from '@/store/authStore';
+import { Button } from "@/components/ui/button";
+import { ArchangelsSlider } from "@/components/home/ArchangelsSlider";
+import { Card } from "@/components/ui/card";
+import { Tabs, TabsContent } from "@/components/ui/tabs";
+import { Challenge21Days } from "@/components/home/Challenge21Days";
+import { PrayersSlider } from "@/components/home/PrayersSlider";
+import { RelatedScripturesSection } from "@/components/home/RelatedScripturesSection";
+import { DevotionalGuideTab } from "@/features/devotional-guide/components/DevotionalGuideTab";
+import { hasDevotionalGuideAccess } from "@/features/devotional-guide/constants";
+import { Header } from "@/features/home-feed/components/Header";
+import { DailyPrayerCard } from "@/features/home-feed/components/DailyPrayerCard";
+import { PrayerRequest } from "@/features/prayer-requests/components/PrayerRequest";
+import { products } from "@/lib/products/oraciones";
+import { getTodayVerse } from "@/lib/versiculos_traduzidos";
+import type { Locale } from "@/shared/config/locales";
+import { useAuthStore } from "@/store/authStore";
 
 export default function HomePage() {
-  const t = useTranslations('HomePage');
+  const t = useTranslations("HomePage");
   const locale = useLocale() as Locale;
   const user = useAuthStore((state) => state.user);
-  const [activeTab, setActiveTab] = useState<'today' | 'guia-devocional' | 'challenge-21' | 'prayer-request'>('today');
+  const [activeTab, setActiveTab] = useState<
+    "today" | "guia-devocional" | "challenge-21" | "prayer-request"
+  >("today");
   const [showSupportPopup, setShowSupportPopup] = useState(false);
 
   const todayVerse = useMemo(() => getTodayVerse(), []);
   const todayVerseText = todayVerse.traducao[locale] || todayVerse.traducao.en;
   const dailyPrayerAuthorName =
-    locale === 'pt'
-      ? 'Cultive uma rotina de reflexao'
-      : locale === 'es'
-        ? 'Cultiva una rutina de reflexion'
-        : locale === 'fr'
-          ? 'Cultivez une routine de reflexion'
-        : 'Build a reflection routine';
+    locale === "pt"
+      ? "Cultive uma rotina de reflexao"
+      : locale === "es"
+        ? "Cultiva una rutina de reflexion"
+        : locale === "fr"
+          ? "Cultivez une routine de reflexion"
+          : "Build a reflection routine";
   const anonymousUserName =
-    locale === 'pt' ? 'Usuario' : locale === 'es' ? 'Usuario' : locale === 'fr' ? 'Utilisateur' : 'User';
+    locale === "pt"
+      ? "Usuario"
+      : locale === "es"
+        ? "Usuario"
+        : locale === "fr"
+          ? "Utilisateur"
+          : "User";
   const minutesLabel =
-    locale === 'pt' ? 'minutos' : locale === 'es' ? 'minutos' : locale === 'fr' ? 'minutes' : 'minutes';
-  const hasGuideAccess = useMemo(() => hasDevotionalGuideAccess(user?.purchases), [user?.purchases]);
+    locale === "pt"
+      ? "minutos"
+      : locale === "es"
+        ? "minutos"
+        : locale === "fr"
+          ? "minutes"
+          : "minutes";
+  const hasGuideAccess = useMemo(
+    () => hasDevotionalGuideAccess(user?.purchases),
+    [user?.purchases],
+  );
 
   const formattedProducts = useMemo(() => {
     return products.map((product, index) => ({
-      id: parseInt(product.id.split('_')[1]),
+      id: parseInt(product.id.split("_")[1]),
       title:
-        locale === 'pt'
+        locale === "pt"
           ? product.titlePt
-          : locale === 'en'
+          : locale === "en"
             ? product.titleEn
-            : locale === 'es'
+            : locale === "es"
               ? product.titleEs
               : product.titleFr,
       description:
-        locale === 'pt'
+        locale === "pt"
           ? product.descriptionPt
-          : locale === 'en'
+          : locale === "en"
             ? product.descriptionEn
-            : locale === 'es'
+            : locale === "es"
               ? product.descriptionEs
               : product.descriptionFr,
       image:
         product.image ||
-        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop',
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop",
       isLocked: product.isLocked,
       daysCount: index + 1,
       duration: `${product.durationMinutes} ${minutesLabel}`,
       tags:
-        locale === 'pt'
+        locale === "pt"
           ? product.tagsPt
-          : locale === 'en'
+          : locale === "en"
             ? product.tagsEn
-            : locale === 'es'
+            : locale === "es"
               ? product.tagsEs
               : product.tagsFr,
     }));
   }, [locale, minutesLabel]);
 
   const handleSupportClick = () => {
-    window.location.href = 'mailto:pedrohenriquerchotmart@gmail.com';
+    window.location.href = "mailto:pedrohenriquerchotmart@gmail.com";
   };
 
   return (
@@ -96,8 +113,8 @@ export default function HomePage() {
 
         <Tabs value={activeTab}>
           <TabsContent value="today" className="space-y-6 pb-12">
-            <PrayersSlider />
             <ArchangelsSlider />
+            <PrayersSlider />
 
             <DailyPrayerCard
               verseText={todayVerseText}
@@ -142,7 +159,9 @@ export default function HomePage() {
         <div className="fixed bottom-24 right-6 z-50 w-80">
           <Card className="p-4 shadow-xl bg-white border-2 border-green-500 gap-0 space-y-0">
             <div className="flex justify-between items-start">
-              <h3 className="font-semibold text-gray-900">{t('profileSupport')}</h3>
+              <h3 className="font-semibold text-gray-900">
+                {t("profileSupport")}
+              </h3>
               <button
                 onClick={() => setShowSupportPopup(false)}
                 className="text-gray-400 hover:text-gray-600"
@@ -150,12 +169,14 @@ export default function HomePage() {
                 <X className="w-4 h-4" />
               </button>
             </div>
-            <p className="text-sm text-gray-600 mb-4">{t('profileSupportInfo')}</p>
+            <p className="text-sm text-gray-600 mb-4">
+              {t("profileSupportInfo")}
+            </p>
             <Button
               onClick={handleSupportClick}
               className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold"
             >
-              {t('profileSupportCTA')}
+              {t("profileSupportCTA")}
             </Button>
           </Card>
         </div>
