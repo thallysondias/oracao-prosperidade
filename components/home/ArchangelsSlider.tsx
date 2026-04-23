@@ -45,7 +45,7 @@ export function ArchangelsSlider() {
   return (
     <section className="px-4 space-y-4 mt-8">
       <div className="text-center">
-        <h2 className="text-2xl font-bold text-slate-900 dark:text-white">
+        <h2 className="text-xl font-bold dark:text-white">
           {t('title')}
         </h2>
       </div>
@@ -77,6 +77,12 @@ export function ArchangelsSlider() {
 
                 <div className="rounded-3xl overflow-hidden bg-linear-to-br from-amber-100 via-yellow-50 to-white dark:from-stone-900 dark:via-stone-950 dark:to-black shadow-lg p-6 pt-8 h-full flex flex-col border border-amber-200/70 dark:border-yellow-500/10">
                   <div className="text-center mt-8 mb-4">
+                    <div className="mb-3">
+                      <span className="inline-flex items-center rounded-full bg-amber-200/80 dark:bg-yellow-500/15 px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-amber-800 dark:text-yellow-400">
+                        {t(`items.${archangel.slug}.theme`)}
+                      </span>
+                    </div>
+
                     <h3 className="text-xl text-amber-700 dark:text-yellow-500 font-bold mb-2 min-h-[56px] flex items-center justify-center">
                       {t(`items.${archangel.slug}.name`)}
                     </h3>
@@ -84,7 +90,7 @@ export function ArchangelsSlider() {
                   </div>
 
                   <p className="text-sm text-slate-700 dark:text-white/80 leading-relaxed text-center mb-4 flex-1 min-h-[72px]">
-                    {t(`items.${archangel.slug}.theme`)}
+                    {t(`items.${archangel.slug}.description`)}
                   </p>
 
                   <Link

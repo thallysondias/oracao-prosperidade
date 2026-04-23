@@ -26,19 +26,23 @@
     "items": {
       "gabriel": {
         "name": "Archangel Gabriel",
-        "theme": "Financial Prosperity"
+        "theme": "Financial Prosperity",
+        "description": "A vibration to invite clarity, trust, and abundance into your financial path."
       },
       "michael": {
         "name": "Archangel Michael",
-        "theme": "Protection"
+        "theme": "Protection",
+        "description": "A vibration for spiritual strength, energetic shielding, and inner firmness."
       },
       "raphael": {
         "name": "Archangel Raphael",
-        "theme": "Healing"
+        "theme": "Healing",
+        "description": "A vibration to support restoration, emotional peace, and healing presence."
       },
       "uriel": {
         "name": "Archangel Uriel",
-        "theme": "Love & Relationships"
+        "theme": "Love & Relationships",
+        "description": "A vibration for harmony, affection, and deeper connection in relationships."
       }
     }
   },
