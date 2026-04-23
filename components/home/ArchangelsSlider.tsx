@@ -44,11 +44,11 @@ export function ArchangelsSlider() {
 
   return (
     <section className="px-4 space-y-4 mt-8">
-      <div className="text-left mb-4">
+      {/* <div className="text-left mb-4">
         <h2 className="text-xl font-bold dark:text-white">
           {t('title')}
         </h2>
-      </div>
+      </div> */}
 
       <div className="overflow-visible" ref={emblaRef}>
         <div className="flex gap-4">
