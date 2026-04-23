@@ -6,21 +6,24 @@ import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { DEVOTIONAL_GUIDE_DOWNLOAD_URL } from '@/features/devotional-guide/constants';
+import { getDevotionalGuideAssets } from '@/features/devotional-guide/constants';
+import type { Locale } from '@/shared/config/locales';
 
 interface DevotionalGuideTabProps {
   hasAccess: boolean;
+  locale: Locale;
 }
 
-export function DevotionalGuideTab({ hasAccess }: DevotionalGuideTabProps) {
+export function DevotionalGuideTab({ hasAccess, locale }: DevotionalGuideTabProps) {
   const t = useTranslations('HomePage');
+  const { coverImageUrl, downloadUrl } = getDevotionalGuideAssets(locale);
 
   return (
     <div className="space-y-6 pb-12">
       <div className="overflow-hidden rounded-[28px] bg-white shadow-sm ring-1 ring-black/5">
         <div className="relative aspect-16/10 w-full">
           <Image
-            src="/guia-devocional/ebook-cover.jpeg"
+            src={coverImageUrl}
             alt={t('devotionalGuideImageAlt')}
             fill
             className="object-cover"
@@ -81,7 +84,7 @@ export function DevotionalGuideTab({ hasAccess }: DevotionalGuideTabProps) {
                 {t('devotionalGuideUnlockedBody')}
               </p>
               <Button asChild size="lg" className="mt-5 bg-amber-500 text-stone-950 hover:bg-amber-400">
-                <a href={DEVOTIONAL_GUIDE_DOWNLOAD_URL} download>
+                <a href={downloadUrl} download>
                   <Download className="h-4 w-4" />
                   {t('devotionalGuideDownloadButton')}
                 </a>

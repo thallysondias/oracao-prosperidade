@@ -135,7 +135,7 @@ export default function HomePage() {
           </TabsContent>
 
           <TabsContent value="guia-devocional">
-            <DevotionalGuideTab hasAccess={hasGuideAccess} />
+            <DevotionalGuideTab hasAccess={hasGuideAccess} locale={locale} />
           </TabsContent>
 
           <TabsContent value="challenge-21">
