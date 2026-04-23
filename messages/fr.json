@@ -20,6 +20,59 @@
     "listenPrayer": "Ecouter la priere",
     "buyPrayer": "Acheter la priere"
   },
+  "ArchangelsSlider": {
+    "title": "Chant des quatre archanges",
+    "listen": "Ecouter le chant",
+    "items": {
+      "gabriel": {
+        "name": "Archange Gabriel",
+        "theme": "Prosperite financiere"
+      },
+      "michael": {
+        "name": "Archange Michel",
+        "theme": "Protection"
+      },
+      "raphael": {
+        "name": "Archange Raphael",
+        "theme": "Guerison"
+      },
+      "uriel": {
+        "name": "Archange Uriel",
+        "theme": "Amour et relations"
+      }
+    }
+  },
+  "ArchangelPage": {
+    "playingNow": "En lecture",
+    "letterTitle": "Lettre de l'archange",
+    "disclaimer": "Les prieres et contenus audio disponibles sur cette page sont de nature spirituelle et inspirante. Ils ne remplacent pas un accompagnement medical, psychologique, financier, juridique ou religieux individuel.",
+    "items": {
+      "gabriel": {
+        "name": "Archange Gabriel",
+        "theme": "Prosperite financiere",
+        "avatarAlt": "Avatar de l'Archange Gabriel",
+        "letterAlt": "Lettre de l'Archange Gabriel"
+      },
+      "michael": {
+        "name": "Archange Michel",
+        "theme": "Protection",
+        "avatarAlt": "Avatar de l'Archange Michel",
+        "letterAlt": "Lettre de l'Archange Michel"
+      },
+      "raphael": {
+        "name": "Archange Raphael",
+        "theme": "Guerison",
+        "avatarAlt": "Avatar de l'Archange Raphael",
+        "letterAlt": "Lettre de l'Archange Raphael"
+      },
+      "uriel": {
+        "name": "Archange Uriel",
+        "theme": "Amour et relations",
+        "avatarAlt": "Avatar de l'Archange Uriel",
+        "letterAlt": "Lettre de l'Archange Uriel"
+      }
+    }
+  },
   "HomePage": {
     "title": "Priere et Reflexion",
     "greeting": "Bon apres-midi",

@@ -6,6 +6,7 @@ import { MessageCircle, X } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
+import { ArchangelsSlider } from '@/components/home/ArchangelsSlider';
 import { Card } from '@/components/ui/card';
 import { Tabs, TabsContent } from '@/components/ui/tabs';
 import { Challenge21Days } from '@/components/home/Challenge21Days';
@@ -96,6 +97,7 @@ export default function HomePage() {
         <Tabs value={activeTab}>
           <TabsContent value="today" className="space-y-6 pb-12">
             <PrayersSlider />
+            <ArchangelsSlider />
 
             <DailyPrayerCard
               verseText={todayVerseText}

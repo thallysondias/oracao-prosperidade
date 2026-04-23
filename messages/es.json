@@ -20,6 +20,59 @@
     "listenPrayer": "Escuchar oracion",
     "buyPrayer": "Comprar oracion"
   },
+  "ArchangelsSlider": {
+    "title": "Canto de los cuatro arcangeles",
+    "listen": "Escuchar canto",
+    "items": {
+      "gabriel": {
+        "name": "Arcangel Gabriel",
+        "theme": "Prosperidad financiera"
+      },
+      "michael": {
+        "name": "Arcangel Miguel",
+        "theme": "Proteccion"
+      },
+      "raphael": {
+        "name": "Arcangel Rafael",
+        "theme": "Sanacion"
+      },
+      "uriel": {
+        "name": "Arcangel Uriel",
+        "theme": "Amor y relaciones"
+      }
+    }
+  },
+  "ArchangelPage": {
+    "playingNow": "Reproduciendo ahora",
+    "letterTitle": "Carta del arcangel",
+    "disclaimer": "Las oraciones y los audios disponibles en esta pagina tienen caracter espiritual e inspiracional. No sustituyen orientacion medica, psicologica, financiera, legal ni religiosa individual.",
+    "items": {
+      "gabriel": {
+        "name": "Arcangel Gabriel",
+        "theme": "Prosperidad financiera",
+        "avatarAlt": "Avatar del Arcangel Gabriel",
+        "letterAlt": "Carta del Arcangel Gabriel"
+      },
+      "michael": {
+        "name": "Arcangel Miguel",
+        "theme": "Proteccion",
+        "avatarAlt": "Avatar del Arcangel Miguel",
+        "letterAlt": "Carta del Arcangel Miguel"
+      },
+      "raphael": {
+        "name": "Arcangel Rafael",
+        "theme": "Sanacion",
+        "avatarAlt": "Avatar del Arcangel Rafael",
+        "letterAlt": "Carta del Arcangel Rafael"
+      },
+      "uriel": {
+        "name": "Arcangel Uriel",
+        "theme": "Amor y relaciones",
+        "avatarAlt": "Avatar del Arcangel Uriel",
+        "letterAlt": "Carta del Arcangel Uriel"
+      }
+    }
+  },
   "HomePage": {
     "title": "Oracion y Reflexion",
     "greeting": "Buenas tardes",

@@ -20,6 +20,59 @@
     "listenPrayer": "Listen to Prayer",
     "buyPrayer": "Buy Prayer"
   },
+  "ArchangelsSlider": {
+    "title": "Chant of the Four Archangels",
+    "listen": "Listen to chant",
+    "items": {
+      "gabriel": {
+        "name": "Archangel Gabriel",
+        "theme": "Financial Prosperity"
+      },
+      "michael": {
+        "name": "Archangel Michael",
+        "theme": "Protection"
+      },
+      "raphael": {
+        "name": "Archangel Raphael",
+        "theme": "Healing"
+      },
+      "uriel": {
+        "name": "Archangel Uriel",
+        "theme": "Love & Relationships"
+      }
+    }
+  },
+  "ArchangelPage": {
+    "playingNow": "Playing now",
+    "letterTitle": "Letter of the archangel",
+    "disclaimer": "The prayers and audio content available on this page are spiritual and inspirational in nature. They do not replace individual medical, psychological, financial, legal, or religious guidance.",
+    "items": {
+      "gabriel": {
+        "name": "Archangel Gabriel",
+        "theme": "Financial Prosperity",
+        "avatarAlt": "Archangel Gabriel avatar",
+        "letterAlt": "Letter of Archangel Gabriel"
+      },
+      "michael": {
+        "name": "Archangel Michael",
+        "theme": "Protection",
+        "avatarAlt": "Archangel Michael avatar",
+        "letterAlt": "Letter of Archangel Michael"
+      },
+      "raphael": {
+        "name": "Archangel Raphael",
+        "theme": "Healing",
+        "avatarAlt": "Archangel Raphael avatar",
+        "letterAlt": "Letter of Archangel Raphael"
+      },
+      "uriel": {
+        "name": "Archangel Uriel",
+        "theme": "Love & Relationships",
+        "avatarAlt": "Archangel Uriel avatar",
+        "letterAlt": "Letter of Archangel Uriel"
+      }
+    }
+  },
   "HomePage": {
     "title": "Prayer and Reflection",
     "greeting": "Good afternoon",
