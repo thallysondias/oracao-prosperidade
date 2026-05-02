@@ -69,7 +69,7 @@ export default function PrayerPlayPage() {
     >
       <audio
         ref={audioRef}
-        src={audioSrc}
+        preload="none"
         onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleLoadedMetadata}
         onEnded={handleEnded}
@@ -136,7 +136,7 @@ export default function PrayerPlayPage() {
 
         <div className="flex items-center justify-center gap-6 mb-6">
           <button
-            onClick={handlePlayPause}
+            onClick={() => handlePlayPause(audioSrc)}
             className="bg-yellow-500 hover:bg-yellow-600 text-black rounded-full p-4 transition transform hover:scale-105"
           >
             {isPlaying ? (

@@ -9,7 +9,6 @@ export default proxy;
 export const config = {
   matcher: [
     '/',
-    '/(pt|en|es)/:path*',
-    '/((?!api|_next|_vercel|.*\\..*).*)'
+    '/(pt|en|es|fr)/:path*'
   ]
 };

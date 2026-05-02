@@ -90,13 +90,27 @@ export default function ChallengeDayPage() {
   }
 
   const handlePlayPause = () => {
-    if (audioRef.current && currentAudioSrc) {
+    const audio = audioRef.current;
+
+    if (audio && currentAudioSrc) {
       if (isPlaying) {
-        audioRef.current.pause();
+        audio.pause();
+        setIsPlaying(false);
       } else {
-        audioRef.current.play();
+        if (audio.getAttribute('src') !== currentAudioSrc) {
+          audio.src = currentAudioSrc;
+          audio.load();
+        }
+
+        const playPromise = audio.play();
+        setIsPlaying(true);
+
+        if (playPromise) {
+          playPromise.catch(() => {
+            setIsPlaying(false);
+          });
+        }
       }
-      setIsPlaying(!isPlaying);
     }
   };
 
@@ -196,7 +210,7 @@ export default function ChallengeDayPage() {
           <audio
             ref={audioRef}
             key={currentAudioSrc}
-            src={currentAudioSrc}
+            preload="none"
             onTimeUpdate={handleTimeUpdate}
             onLoadedMetadata={handleLoadedMetadata}
             onEnded={handleAudioEnded}

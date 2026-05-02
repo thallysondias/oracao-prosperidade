@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -48,10 +48,6 @@ export function AudioPrayerPage({
     isPlaying,
     played,
   } = useAudioPlayer();
-
-  useEffect(() => {
-    setAudioSourceIndex(0);
-  }, [audioSrc]);
 
   const currentAudioSrc = audioSources[audioSourceIndex];
 
@@ -109,7 +105,7 @@ export function AudioPrayerPage({
         <audio
           ref={audioRef}
           key={currentAudioSrc}
-          src={currentAudioSrc}
+          preload="none"
           onTimeUpdate={handleTimeUpdate}
           onLoadedMetadata={handleLoadedMetadata}
           onEnded={handleEnded}
@@ -122,7 +118,7 @@ export function AudioPrayerPage({
         <div className="sticky top-0 z-50 bg-black border-b border-yellow-500/20 px-4 py-2">
           <div className="max-w-2xl mx-auto flex items-center justify-between gap-4">
             <button
-              onClick={handlePlayPause}
+              onClick={() => handlePlayPause(currentAudioSrc)}
               className="bg-yellow-500 hover:bg-yellow-600 text-black rounded-full p-2 transition transform hover:scale-105 shrink-0"
             >
               {isPlaying ? (

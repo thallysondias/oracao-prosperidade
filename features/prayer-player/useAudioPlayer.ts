@@ -8,18 +8,31 @@ export function useAudioPlayer() {
   const [duration, setDuration] = useState(600);
   const [played, setPlayed] = useState(0);
 
-  const handlePlayPause = () => {
-    if (!audioRef.current) {
+  const handlePlayPause = (audioSrc?: string) => {
+    const audio = audioRef.current;
+
+    if (!audio) {
       return;
     }
 
     if (isPlaying) {
-      audioRef.current.pause();
+      audio.pause();
+      setIsPlaying(false);
     } else {
-      audioRef.current.play();
-    }
+      if (audioSrc && audio.getAttribute('src') !== audioSrc) {
+        audio.src = audioSrc;
+        audio.load();
+      }
 
-    setIsPlaying(!isPlaying);
+      const playPromise = audio.play();
+      setIsPlaying(true);
+
+      if (playPromise) {
+        playPromise.catch(() => {
+          setIsPlaying(false);
+        });
+      }
+    }
   };
 
   const handleProgressChange = (event: React.ChangeEvent<HTMLInputElement>) => {
