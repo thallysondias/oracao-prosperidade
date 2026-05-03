@@ -1,11 +1,6 @@
 import { resolveAudioSourceCandidates } from '@/features/prayer-player/utils';
 import type { ProductLocale } from '@/features/prayers/types';
 
-const archangelAudioSuffixByLocale: Partial<Record<ProductLocale, string>> = {
-  en: 'en',
-  fr: 'fr',
-};
-
 export const archangels = [
   {
     slug: 'gabriel',
@@ -39,17 +34,6 @@ export function getArchangelAudioSources(
   slug: ArchangelSlug,
   locale: ProductLocale
 ) {
-  const basePath = `/archangels/${slug}/audio.mp3`;
-  const legacyPath = `/archangels/${slug}/vibration.mp3`;
-  const suffix = archangelAudioSuffixByLocale[locale];
-
-  if (suffix) {
-    return resolveAudioSourceCandidates([
-      `/archangels/${slug}/audio-${suffix}.mp3`,
-      basePath,
-      legacyPath,
-    ]);
-  }
-
-  return resolveAudioSourceCandidates([basePath, legacyPath]);
+  void locale;
+  return resolveAudioSourceCandidates(`/archangels/${slug}/vibration.mp3`);
 }

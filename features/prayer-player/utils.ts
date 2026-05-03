@@ -1,3 +1,9 @@
+const AUDIO_ASSET_BASE_URL =
+  process.env.NEXT_PUBLIC_AUDIO_ASSET_BASE_URL ||
+  'https://coral-jackal-532042.hostingersite.com/wp-content/uploads/oracion';
+
+const AUDIO_ASSET_PATH_PATTERN = /^\/(?:archangels|desafio|oracion|prayer)\//;
+
 export function formatAudioTime(seconds: number): string {
   if (isNaN(seconds)) return '0:00';
 
@@ -14,6 +20,14 @@ export function formatAudioTime(seconds: number): string {
   return `${minutes}:${secs.toString().padStart(2, '0')}`;
 }
 
+export function resolveAudioAssetUrl(audioSrc: string): string {
+  if (!AUDIO_ASSET_PATH_PATTERN.test(audioSrc)) {
+    return audioSrc;
+  }
+
+  return `${AUDIO_ASSET_BASE_URL}${audioSrc}`;
+}
+
 export function resolveAudioSourceCandidates(
   audioSrc?: string | string[]
 ): string[] {
@@ -25,14 +39,14 @@ export function resolveAudioSourceCandidates(
       continue;
     }
 
-    candidates.push(source);
+    candidates.push(resolveAudioAssetUrl(source));
 
     if (source.endsWith('.mp3')) {
-      candidates.push(source.replace(/\.mp3$/, '.MP3'));
+      candidates.push(resolveAudioAssetUrl(source.replace(/\.mp3$/, '.MP3')));
     }
 
     if (source.endsWith('.MP3')) {
-      candidates.push(source.replace(/\.MP3$/, '.mp3'));
+      candidates.push(resolveAudioAssetUrl(source.replace(/\.MP3$/, '.mp3')));
     }
   }
 

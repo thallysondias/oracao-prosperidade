@@ -2,6 +2,8 @@
 
 import { useRef, useState } from 'react';
 
+import { resolveAudioAssetUrl } from '@/features/prayer-player/utils';
+
 export function useAudioPlayer() {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -19,8 +21,10 @@ export function useAudioPlayer() {
       audio.pause();
       setIsPlaying(false);
     } else {
-      if (audioSrc && audio.getAttribute('src') !== audioSrc) {
-        audio.src = audioSrc;
+      const resolvedAudioSrc = audioSrc ? resolveAudioAssetUrl(audioSrc) : undefined;
+
+      if (resolvedAudioSrc && audio.getAttribute('src') !== resolvedAudioSrc) {
+        audio.src = resolvedAudioSrc;
         audio.load();
       }
 
