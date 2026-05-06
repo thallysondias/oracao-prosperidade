@@ -99,7 +99,7 @@ export default function HomePage() {
   }, [locale, minutesLabel]);
 
   const handleSupportClick = () => {
-    window.location.href = "mailto:pedrohenriquerchotmart@gmail.com";
+    window.location.href = "mailto:support.calmia@gmail.com";
   };
 
   return (

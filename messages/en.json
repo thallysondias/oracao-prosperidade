@@ -519,6 +519,42 @@
     "headerAlt": "Carlo Acutis",
     "arrowAlt": "Carlo Acutis"
   },
+  "SupportPage": {
+    "metadataTitle": "Calmia Club | Support & Refund",
+    "metadataDescription": "Contact Calmia Club support or submit a refund request.",
+    "brandSubtitle": "prayers, devotion, and spiritual growth",
+    "title": "Support / Refund",
+    "intro": "Please fill out the information below so our team can locate your purchase and assist you with care and respect.",
+    "noticeTitle": "Before submitting your request",
+    "noticeText": "Refund requests may take up to 30 business days to be processed, according to the payment platform's conditions.",
+    "nameLabel": "Full name",
+    "namePlaceholder": "Enter your full name",
+    "emailLabel": "Purchase email",
+    "emailPlaceholder": "Enter the email used for the purchase",
+    "productLabel": "Product purchased",
+    "productPlaceholder": "Select the product",
+    "products": [
+      "DEVOTIONAL GUIDE",
+      "21-DAY JOURNEY",
+      "PRAYER MOMENTS",
+      "VERSE OF THE DAY",
+      "PRAYERS",
+      "Other product"
+    ],
+    "amountLabel": "Amount paid",
+    "amountPlaceholder": "Ex: $37 / €31 / R$97",
+    "orderLabel": "Purchase code",
+    "orderPlaceholder": "If you received one by email",
+    "reasonLabel": "Reason for your request",
+    "reasonPlaceholder": "Briefly explain the reason for your contact or refund request",
+    "additionalLabel": "Additional information",
+    "additionalPlaceholder": "Share any extra details that may help our team",
+    "footerTitle": "Thank you for submitting your request.",
+    "footerText": "You will soon receive an email confirming that your request has been received. Our team will review the information and contact you as soon as possible. In the meantime, you may continue accessing your devotional content on calmia.club, according to your purchase conditions.",
+    "secureText": "Secure environment - Respectful and caring support",
+    "submit": "Submit request",
+    "smallNote": "Calmia Club is a digital devotional content platform. Refund deadlines and conditions may vary according to the payment platform used for the purchase."
+  },
   "AppDisclaimer": {
     "spiritualContent": "The prayers and audio content available on this page are spiritual and inspirational in nature. They do not replace individual medical, psychological, financial, legal, or religious guidance.",
     "challengeExperience": "This journey was created to encourage consistency in prayer and daily reflection. Results may vary according to each user's personal experience."

@@ -520,6 +520,42 @@
     "headerAlt": "Carlo Acutis",
     "arrowAlt": "Carlo Acutis"
   },
+  "SupportPage": {
+    "metadataTitle": "Calmia Club | Assistance et remboursement",
+    "metadataDescription": "Contactez l'assistance Calmia Club ou envoyez une demande de remboursement.",
+    "brandSubtitle": "prieres, devotion et croissance spirituelle",
+    "title": "Assistance / Remboursement",
+    "intro": "Veuillez remplir les informations ci-dessous afin que notre equipe puisse retrouver votre achat et vous aider avec attention et respect.",
+    "noticeTitle": "Avant d'envoyer votre demande",
+    "noticeText": "Les demandes de remboursement peuvent prendre jusqu'a 30 jours ouvrables, selon les conditions de la plateforme de paiement.",
+    "nameLabel": "Nom complet",
+    "namePlaceholder": "Saisissez votre nom complet",
+    "emailLabel": "Email d'achat",
+    "emailPlaceholder": "Saisissez l'email utilise pour l'achat",
+    "productLabel": "Produit achete",
+    "productPlaceholder": "Selectionnez le produit",
+    "products": [
+      "GUIDE DEVOTIONNEL",
+      "PARCOURS DE 21 JOURS",
+      "MOMENTS DE PRIERE",
+      "VERSET DU JOUR",
+      "PRIERES",
+      "Autre produit"
+    ],
+    "amountLabel": "Montant paye",
+    "amountPlaceholder": "Ex: $37 / €31 / R$97",
+    "orderLabel": "Code d'achat",
+    "orderPlaceholder": "Si vous en avez recu un par email",
+    "reasonLabel": "Motif de votre demande",
+    "reasonPlaceholder": "Expliquez brievement la raison de votre contact ou demande de remboursement",
+    "additionalLabel": "Informations supplementaires",
+    "additionalPlaceholder": "Partagez tout detail supplementaire pouvant aider notre equipe",
+    "footerTitle": "Merci d'avoir envoye votre demande.",
+    "footerText": "Vous recevrez bientot un email confirmant que votre demande a ete recue. Notre equipe examinera les informations et vous contactera des que possible. En attendant, vous pouvez continuer a acceder a votre contenu devotionnel sur calmia.club, selon les conditions de votre achat.",
+    "secureText": "Environnement securise - Assistance respectueuse et attentive",
+    "submit": "Envoyer la demande",
+    "smallNote": "Calmia Club est une plateforme numerique de contenu devotionnel. Les delais et conditions de remboursement peuvent varier selon la plateforme de paiement utilisee pour l'achat."
+  },
   "AppDisclaimer": {
     "spiritualContent": "Les prieres et contenus audio disponibles sur cette page sont de nature spirituelle et inspirante. Ils ne remplacent pas un accompagnement medical, psychologique, financier, juridique ou religieux individuel.",
     "challengeExperience": "Ce parcours a ete cree pour encourager la constance dans la priere et la reflexion quotidienne. Les resultats peuvent varier selon l'experience personnelle de chaque utilisateur."

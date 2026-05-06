@@ -519,6 +519,42 @@
     "headerAlt": "Carlo Acutis",
     "arrowAlt": "Carlo Acutis"
   },
+  "SupportPage": {
+    "metadataTitle": "Calmia Club | Suporte e reembolso",
+    "metadataDescription": "Entre em contato com o suporte da Calmia Club ou envie uma solicitacao de reembolso.",
+    "brandSubtitle": "oracoes, devocao e crescimento espiritual",
+    "title": "Suporte / Reembolso",
+    "intro": "Preencha as informacoes abaixo para que nossa equipe possa localizar sua compra e ajudar voce com cuidado e respeito.",
+    "noticeTitle": "Antes de enviar sua solicitacao",
+    "noticeText": "Solicitacoes de reembolso podem levar ate 30 dias uteis para serem processadas, de acordo com as condicoes da plataforma de pagamento.",
+    "nameLabel": "Nome completo",
+    "namePlaceholder": "Digite seu nome completo",
+    "emailLabel": "Email da compra",
+    "emailPlaceholder": "Digite o email usado na compra",
+    "productLabel": "Produto comprado",
+    "productPlaceholder": "Selecione o produto",
+    "products": [
+      "GUIA DEVOCIONAL",
+      "JORNADA DE 21 DIAS",
+      "MOMENTOS DE ORACAO",
+      "VERSICULO DO DIA",
+      "ORACOES",
+      "Outro produto"
+    ],
+    "amountLabel": "Valor pago",
+    "amountPlaceholder": "Ex: $37 / €31 / R$97",
+    "orderLabel": "Codigo da compra",
+    "orderPlaceholder": "Se voce recebeu um por email",
+    "reasonLabel": "Motivo da sua solicitacao",
+    "reasonPlaceholder": "Explique brevemente o motivo do contato ou pedido de reembolso",
+    "additionalLabel": "Informacoes adicionais",
+    "additionalPlaceholder": "Compartilhe detalhes extras que possam ajudar nossa equipe",
+    "footerTitle": "Obrigado por enviar sua solicitacao.",
+    "footerText": "Em breve voce recebera um email confirmando que sua solicitacao foi recebida. Nossa equipe revisara as informacoes e entrara em contato assim que possivel. Enquanto isso, voce pode continuar acessando seu conteudo devocional em calmia.club, conforme as condicoes da sua compra.",
+    "secureText": "Ambiente seguro - Suporte respeitoso e cuidadoso",
+    "submit": "Enviar solicitacao",
+    "smallNote": "Calmia Club e uma plataforma digital de conteudo devocional. Prazos e condicoes de reembolso podem variar de acordo com a plataforma de pagamento usada na compra."
+  },
   "AppDisclaimer": {
     "spiritualContent": "As oracoes e os audios disponiveis nesta pagina tem carater espiritual e inspiracional. Nao substituem orientacao medica, psicologica, financeira, legal nem religiosa individual.",
     "challengeExperience": "Esta jornada foi criada para incentivar a constancia na oracao e na reflexao diaria. Os resultados podem variar de acordo com a experiencia pessoal de cada usuario."

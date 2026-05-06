@@ -519,6 +519,42 @@
     "headerAlt": "Carlo Acutis",
     "arrowAlt": "Carlo Acutis"
   },
+  "SupportPage": {
+    "metadataTitle": "Calmia Club | Soporte y reembolso",
+    "metadataDescription": "Contacta con el soporte de Calmia Club o envia una solicitud de reembolso.",
+    "brandSubtitle": "oraciones, devocion y crecimiento espiritual",
+    "title": "Soporte / Reembolso",
+    "intro": "Completa la informacion a continuacion para que nuestro equipo pueda localizar tu compra y ayudarte con cuidado y respeto.",
+    "noticeTitle": "Antes de enviar tu solicitud",
+    "noticeText": "Las solicitudes de reembolso pueden tardar hasta 30 dias habiles en procesarse, segun las condiciones de la plataforma de pago.",
+    "nameLabel": "Nombre completo",
+    "namePlaceholder": "Ingresa tu nombre completo",
+    "emailLabel": "Email de compra",
+    "emailPlaceholder": "Ingresa el email usado para la compra",
+    "productLabel": "Producto comprado",
+    "productPlaceholder": "Selecciona el producto",
+    "products": [
+      "GUIA DEVOCIONAL",
+      "JORNADA DE 21 DIAS",
+      "MOMENTOS DE ORACION",
+      "VERSICULO DEL DIA",
+      "ORACIONES",
+      "Otro producto"
+    ],
+    "amountLabel": "Valor pagado",
+    "amountPlaceholder": "Ej: $37 / €31 / R$97",
+    "orderLabel": "Codigo de compra",
+    "orderPlaceholder": "Si recibiste uno por email",
+    "reasonLabel": "Motivo de tu solicitud",
+    "reasonPlaceholder": "Explica brevemente el motivo de tu contacto o solicitud de reembolso",
+    "additionalLabel": "Informacion adicional",
+    "additionalPlaceholder": "Comparte cualquier detalle extra que pueda ayudar a nuestro equipo",
+    "footerTitle": "Gracias por enviar tu solicitud.",
+    "footerText": "Pronto recibiras un email confirmando que tu solicitud fue recibida. Nuestro equipo revisara la informacion y se pondra en contacto contigo lo antes posible. Mientras tanto, puedes seguir accediendo a tu contenido devocional en calmia.club, segun las condiciones de tu compra.",
+    "secureText": "Entorno seguro - Soporte respetuoso y cuidadoso",
+    "submit": "Enviar solicitud",
+    "smallNote": "Calmia Club es una plataforma digital de contenido devocional. Los plazos y condiciones de reembolso pueden variar segun la plataforma de pago utilizada para la compra."
+  },
   "AppDisclaimer": {
     "spiritualContent": "Las oraciones y los audios disponibles en esta pagina tienen caracter espiritual e inspiracional. No sustituyen orientacion medica, psicologica, financiera, legal ni religiosa individual.",
     "challengeExperience": "Esta jornada fue creada para fomentar la constancia en la oracion y la reflexion diaria. Los resultados pueden variar segun la experiencia personal de cada usuario."
