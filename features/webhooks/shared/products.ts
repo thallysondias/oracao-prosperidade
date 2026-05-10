@@ -1,23 +1,11 @@
 export const PLATFORM_ACCESS_PRODUCTS = [
   {
+    id: 'prod_four_archangels_chant',
+    name: 'The Chant of the Four Archangels',
+  },
+  {
     id: 'prod_TTfl4ccopmSAnb',
     name: 'Guia de Fe y Reflexion inspirada en Carlo Acutis',
-  },
-  {
-    id: 'prod_TTfxYqIhvEeiKa',
-    name: '21 Dias de Oracion y Milagros en Vivo',
-  },
-  {
-    id: 'prod_TTgOHAIhXSbdjI',
-    name: 'Pedido de Oracion Personalizado',
-  },
-  {
-    id: 'prod_padre_pio',
-    name: 'Guia de Fe y Reflexion inspirada en Padre Pio',
-  },
-  {
-    id: 'prod_san_benito',
-    name: 'Guia de Fe y Reflexion inspirada en San Benito',
   },
 ] as const;
 

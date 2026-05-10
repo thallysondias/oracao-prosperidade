@@ -6,6 +6,12 @@ const STRIPE_LINKS = {
   saintBenedict: 'https://donate.stripe.com/6oUcN48h50P16ZQgR66kg07',
 } as const;
 
+export const FEATURED_PRAYER_PRODUCT_NAMES = {
+  padrePio: 'Padre Pio',
+  carlosAcutis: 'Oración de Carlos Acutis',
+  saintBenedict: 'Oración de San Benito',
+} as const;
+
 function withPrefilledEmail(baseUrl: string, email?: string) {
   if (!email) {
     return baseUrl;
@@ -30,7 +36,7 @@ export function getFeaturedPrayerCards(userEmail?: string): FeaturedPrayerCard[]
       },
       image: '/products/padre-pio.jpeg',
       route: '/padre-pio',
-      productName: null,
+      productName: FEATURED_PRAYER_PRODUCT_NAMES.padrePio,
       purchaseUrl: withPrefilledEmail(STRIPE_LINKS.padrePio, userEmail),
     },
     {
@@ -45,7 +51,7 @@ export function getFeaturedPrayerCards(userEmail?: string): FeaturedPrayerCard[]
       },
       image: '/products/carlo-acutis.jpeg',
       route: '/carlos-acutis',
-      productName: null,
+      productName: FEATURED_PRAYER_PRODUCT_NAMES.carlosAcutis,
       purchaseUrl: withPrefilledEmail(STRIPE_LINKS.carlosAcutis, userEmail),
     },
     {
@@ -60,7 +66,7 @@ export function getFeaturedPrayerCards(userEmail?: string): FeaturedPrayerCard[]
       },
       image: '/products/san-benedito.jpeg',
       route: '/saint-benedict',
-      productName: null,
+      productName: FEATURED_PRAYER_PRODUCT_NAMES.saintBenedict,
       purchaseUrl: withPrefilledEmail(STRIPE_LINKS.saintBenedict, userEmail),
     },
   ];
