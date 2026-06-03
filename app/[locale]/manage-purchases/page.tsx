@@ -19,7 +19,7 @@ const AVAILABLE_PRODUCTS = [
   {
     id: 'prod_TTfxYqIhvEeiKa',
     name: '21 Días de Oración y Milagros en Vivo',
-    priceId: 'price_1SmCQYBTq5zaRnxJIGALK6Ml',
+    priceId: 'price_1SWibuBTq5zaRnxJynjeV7qC',
   },
   {
     id: 'prod_TTgOHAIhXSbdjI',

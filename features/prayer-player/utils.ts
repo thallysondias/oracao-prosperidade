@@ -1,6 +1,7 @@
 const AUDIO_ASSET_BASE_URL =
   process.env.NEXT_PUBLIC_AUDIO_ASSET_BASE_URL ||
-  'https://coral-jackal-532042.hostingersite.com/wp-content/uploads/oracion';
+  'https://peru-goose-523294.hostingersite.com/wp-content/uploads/oracion';
+
 
 const AUDIO_ASSET_PATH_PATTERN = /^\/(?:archangels|desafio|oracion|prayer)\//;
 
