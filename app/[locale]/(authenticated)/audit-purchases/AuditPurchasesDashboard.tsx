@@ -24,7 +24,8 @@ import {
 } from "@/components/ui/table";
 
 const AUDIT_VENDOR_ID = "75728a7d-ff85-4112-b33d-3bf074acc275";
-const BATCH_SIZE = 500;
+const INITIAL_BATCH_SIZE = 500;
+const MIN_BATCH_SIZE = 25;
 const PAGE_SIZE = 25;
 
 type AuditProduct = {
@@ -260,6 +261,7 @@ export function AuditPurchasesDashboard() {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const [loadedBatches, setLoadedBatches] = useState(0);
+  const [batchSize, setBatchSize] = useState(INITIAL_BATCH_SIZE);
 
   useEffect(() => {
     let isCancelled = false;
@@ -268,11 +270,13 @@ export function AuditPurchasesDashboard() {
       setIsLoading(true);
       setError(null);
       setLoadedBatches(0);
+      setBatchSize(INITIAL_BATCH_SIZE);
 
       let nextCursor: string | null = null;
+      let currentBatchSize = INITIAL_BATCH_SIZE;
 
       while (!isCancelled) {
-        const params = new URLSearchParams({ limit: String(BATCH_SIZE) });
+        const params = new URLSearchParams({ limit: String(currentBatchSize) });
 
         if (nextCursor) {
           params.set("cursor", nextCursor);
@@ -283,6 +287,12 @@ export function AuditPurchasesDashboard() {
         });
 
         if (!response.ok) {
+          if ((response.status === 504 || response.status === 500) && currentBatchSize > MIN_BATCH_SIZE) {
+            currentBatchSize = Math.max(MIN_BATCH_SIZE, Math.floor(currentBatchSize / 2));
+            setBatchSize(currentBatchSize);
+            continue;
+          }
+
           const payload = await response.json().catch(() => null);
           throw new Error(payload?.error || "Nao foi possivel carregar as compras.");
         }
@@ -294,6 +304,7 @@ export function AuditPurchasesDashboard() {
 
         setRecords((current) => [...current, ...payload.rows]);
         setLoadedBatches((current) => current + 1);
+        setBatchSize(currentBatchSize);
         nextCursor = payload.nextCursor;
 
         if (!nextCursor) {
@@ -402,7 +413,7 @@ export function AuditPurchasesDashboard() {
             {isLoading ? (
               <Badge variant="secondary" className="gap-1.5">
                 <Loader2 className="size-3.5 animate-spin" />
-                Lote {loadedBatches + 1} em andamento
+                Lote {loadedBatches + 1} em andamento ({batchSize} por vez)
               </Badge>
             ) : null}
             {isComplete ? <Badge variant="outline">{records.length} registros totais</Badge> : null}

@@ -8,6 +8,28 @@ const AUDIT_VENDOR_ID = "75728a7d-ff85-4112-b33d-3bf074acc275";
 const DEFAULT_LIMIT = 500;
 const MAX_LIMIT = 1000;
 
+type CompactPurchaseRow = {
+  id: string;
+  email: string | null;
+  product_id: string | null;
+  product_name: string | null;
+  transaction_id: string | null;
+  status: string | null;
+  payment_gateway: string | null;
+  purchased_at: string | null;
+  created_at: string | null;
+  nomeProduto: string | null;
+  emailComprador: string | null;
+  nomeComprador: string | null;
+  sobrenomeComprador: string | null;
+  cupomDescontoId: string | null;
+  valorPago: number | string | null;
+  purchase_id: string | null;
+  purchase_transaction: string | null;
+  checkoutId: string | null;
+  idepotentialCheckoutId: string | null;
+};
+
 function normalizeLimit(value: string | null) {
   const limit = Number(value);
 
@@ -66,7 +88,27 @@ export async function GET(request: Request) {
   let query = supabase
     .from("purchases")
     .select(
-      "id, email, product_id, product_name, transaction_id, status, payment_gateway, purchase_data, purchased_at, created_at"
+      [
+        "id",
+        "email",
+        "product_id",
+        "product_name",
+        "transaction_id",
+        "status",
+        "payment_gateway",
+        "purchased_at",
+        "created_at",
+        "nomeProduto:purchase_data->nomeProduto",
+        "emailComprador:purchase_data->emailComprador",
+        "nomeComprador:purchase_data->nomeComprador",
+        "sobrenomeComprador:purchase_data->sobrenomeComprador",
+        "cupomDescontoId:purchase_data->cupomDescontoId",
+        "valorPago:purchase_data->valorPago",
+        "purchase_id:purchase_data->id",
+        "purchase_transaction:purchase_data->transaction",
+        "checkoutId:purchase_data->checkoutId",
+        "idepotentialCheckoutId:purchase_data->idepotentialCheckoutId",
+      ].join(",")
     )
     .filter("purchase_data->>vendedorId", "eq", AUDIT_VENDOR_ID)
     .order("created_at", { ascending: false, nullsFirst: false })
@@ -76,7 +118,7 @@ export async function GET(request: Request) {
     query = query.lt("created_at", cursor);
   }
 
-  const { data, error } = await query;
+  const { data, error } = await query.returns<CompactPurchaseRow[]>();
 
   if (error) {
     console.error("Error loading purchase audit batch:", error);
@@ -86,7 +128,30 @@ export async function GET(request: Request) {
     );
   }
 
-  const rows = data || [];
+  const rows = (data || []).map((row) => ({
+    id: row.id,
+    email: row.email,
+    product_id: row.product_id,
+    product_name: row.product_name,
+    transaction_id: row.transaction_id,
+    status: row.status,
+    payment_gateway: row.payment_gateway,
+    purchased_at: row.purchased_at,
+    created_at: row.created_at,
+    purchase_data: {
+      nomeProduto: row.nomeProduto,
+      emailComprador: row.emailComprador,
+      nomeComprador: row.nomeComprador,
+      sobrenomeComprador: row.sobrenomeComprador,
+      cupomDescontoId: row.cupomDescontoId,
+      valorPago: row.valorPago,
+      id: row.purchase_id,
+      transaction: row.purchase_transaction,
+      checkoutId: row.checkoutId,
+      idepotentialCheckoutId: row.idepotentialCheckoutId,
+      createdAt: row.created_at,
+    },
+  }));
   const lastRow = rows[rows.length - 1];
 
   return NextResponse.json({
