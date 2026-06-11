@@ -64,6 +64,19 @@ type AuditDashboardData = {
   rows: AuditRow[];
 };
 
+type PurchaseAuditRecord = {
+  id: string;
+  email: string | null;
+  product_id: string | null;
+  product_name: string | null;
+  transaction_id: string | null;
+  status: string | null;
+  payment_gateway: string | null;
+  purchase_data: Record<string, unknown> | null;
+  purchased_at: string | null;
+  created_at: string | null;
+};
+
 function toNumber(value: number | string | null | undefined) {
   if (typeof value === "number") {
     return value;
@@ -108,6 +121,169 @@ function normalizePage(value?: string) {
   return Number.isInteger(page) && page > 0 ? page : 1;
 }
 
+function getString(value: unknown) {
+  return typeof value === "string" ? value.trim() : "";
+}
+
+function getPaidAmount(value: unknown) {
+  if (typeof value === "number" && Number.isFinite(value)) {
+    return value;
+  }
+
+  if (typeof value !== "string") {
+    return null;
+  }
+
+  const normalized = value.trim().replace(",", ".");
+  const parsed = Number(normalized);
+
+  return Number.isFinite(parsed) ? parsed : null;
+}
+
+function resolvePurchaseDate(record: PurchaseAuditRecord) {
+  const purchaseData = record.purchase_data || {};
+  const createdAt = getString(purchaseData.createdAt);
+
+  if (createdAt && !Number.isNaN(new Date(createdAt).getTime())) {
+    return new Date(createdAt).toISOString();
+  }
+
+  return record.purchased_at || record.created_at || new Date(0).toISOString();
+}
+
+function isCleanAuditPurchase(record: PurchaseAuditRecord) {
+  const purchaseData = record.purchase_data || {};
+  const buyerEmail = getString(purchaseData.emailComprador) || getString(record.email);
+  const buyerName = getString(purchaseData.nomeComprador);
+  const lowerEmail = buyerEmail.toLowerCase();
+  const lowerName = buyerName.toLowerCase();
+
+  return (
+    purchaseData.cupomDescontoId == null &&
+    buyerEmail.length > 0 &&
+    !lowerEmail.includes("teste") &&
+    !lowerEmail.includes("test") &&
+    !lowerName.includes("teste") &&
+    !lowerName.includes("test")
+  );
+}
+
+function buildAuditDashboard(records: PurchaseAuditRecord[], page: number): AuditDashboardData {
+  const transactions = new Map<
+    string,
+    {
+      transaction_id: string;
+      buyer_email: string;
+      buyer_name: string | null;
+      purchased_at: string;
+      total_paid: number | null;
+      productsById: Map<string, AuditProduct>;
+    }
+  >();
+
+  for (const record of records.filter(isCleanAuditPurchase)) {
+    const purchaseData = record.purchase_data || {};
+    const buyerEmail = (
+      getString(purchaseData.emailComprador) ||
+      getString(record.email)
+    ).toLowerCase();
+    const buyerName = [
+      getString(purchaseData.nomeComprador),
+      getString(purchaseData.sobrenomeComprador),
+    ]
+      .filter(Boolean)
+      .join(" ");
+    const transactionId =
+      getString(purchaseData.transaction) ||
+      getString(purchaseData.id) ||
+      getString(purchaseData.checkoutId) ||
+      getString(purchaseData.idepotentialCheckoutId) ||
+      getString(record.transaction_id) ||
+      record.id;
+    const purchasedAt = resolvePurchaseDate(record);
+    const paidAmount = getPaidAmount(purchaseData.valorPago);
+    const existing = transactions.get(transactionId);
+    const productId = record.product_id || "produto";
+    const productKey = `${transactionId}:${productId}`;
+    const product: AuditProduct = {
+      product_id: record.product_id,
+      product_name: record.product_name || record.product_id || "Produto",
+      paid_amount: paidAmount,
+      status: record.status,
+      payment_gateway: record.payment_gateway,
+    };
+
+    if (!existing) {
+      transactions.set(transactionId, {
+        transaction_id: transactionId,
+        buyer_email: buyerEmail,
+        buyer_name: buyerName || null,
+        purchased_at: purchasedAt,
+        total_paid: paidAmount,
+        productsById: new Map([[productKey, product]]),
+      });
+      continue;
+    }
+
+    if (new Date(purchasedAt).getTime() > new Date(existing.purchased_at).getTime()) {
+      existing.purchased_at = purchasedAt;
+    }
+
+    existing.buyer_name ||= buyerName || null;
+    existing.total_paid = Math.max(existing.total_paid || 0, paidAmount || 0);
+    existing.productsById.set(productKey, product);
+  }
+
+  const buyerStats = new Map<string, { purchase_count: number; buyer_total_paid: number }>();
+  const sortedTransactions = Array.from(transactions.values()).sort(
+    (a, b) => new Date(b.purchased_at).getTime() - new Date(a.purchased_at).getTime()
+  );
+
+  for (const transaction of sortedTransactions) {
+    const stats = buyerStats.get(transaction.buyer_email) || {
+      purchase_count: 0,
+      buyer_total_paid: 0,
+    };
+
+    stats.purchase_count += 1;
+    stats.buyer_total_paid += transaction.total_paid || 0;
+    buyerStats.set(transaction.buyer_email, stats);
+  }
+
+  const totalTransactions = sortedTransactions.length;
+  const totalRevenue = sortedTransactions.reduce(
+    (sum, transaction) => sum + (transaction.total_paid || 0),
+    0
+  );
+  const start = (page - 1) * PAGE_SIZE;
+
+  return {
+    summary: {
+      total_transactions: totalTransactions,
+      total_buyers: buyerStats.size,
+      total_revenue: totalRevenue,
+      page,
+      page_size: PAGE_SIZE,
+    },
+    rows: sortedTransactions.slice(start, start + PAGE_SIZE).map((transaction) => {
+      const stats = buyerStats.get(transaction.buyer_email);
+
+      return {
+        transaction_id: transaction.transaction_id,
+        buyer_email: transaction.buyer_email,
+        buyer_name: transaction.buyer_name,
+        purchase_count: stats?.purchase_count || 0,
+        buyer_total_paid: stats?.buyer_total_paid || 0,
+        purchased_at: transaction.purchased_at,
+        total_paid: transaction.total_paid,
+        products: Array.from(transaction.productsById.values()).sort((a, b) =>
+          a.product_name.localeCompare(b.product_name)
+        ),
+      };
+    }),
+  };
+}
+
 async function assertServerSession(locale: string) {
   const cookieStore = await cookies();
   const token = cookieStore.get(authSessionCookieName)?.value;
@@ -132,22 +308,29 @@ async function getAuditDashboard(page: number): Promise<{
     };
   }
 
-  const { data, error } = await supabase.rpc("get_purchase_audit_dashboard", {
-    p_vendedor_id: AUDIT_VENDOR_ID,
-    p_page: page,
-    p_page_size: PAGE_SIZE,
-  });
+  const selectColumns =
+    "id, email, product_id, product_name, transaction_id, status, payment_gateway, purchase_data, purchased_at, created_at";
+  const ranges = [
+    [0, 999],
+    [1000, 1999],
+    [2000, 2999],
+  ] as const;
+  const results = await Promise.all(
+    ranges.map(([from, to]) =>
+      supabase
+        .from("purchases")
+        .select(selectColumns)
+        .filter("purchase_data->>vendedorId", "eq", AUDIT_VENDOR_ID)
+        .order("purchased_at", { ascending: false, nullsFirst: false })
+        .range(from, to)
+        .returns<PurchaseAuditRecord[]>()
+    )
+  );
+  const error = results.find((result) => result.error)?.error;
+  const data = results.flatMap((result) => result.data || []);
 
   if (error) {
     console.error("Error loading purchase audit dashboard:", error);
-
-    if (error.code === "57014") {
-      return {
-        data: null,
-        error:
-          "A consulta excedeu o tempo limite. Aplique a migration 006_optimize_purchase_audit_dashboard.sql no Supabase e recarregue a pagina.",
-      };
-    }
 
     return {
       data: null,
@@ -156,7 +339,7 @@ async function getAuditDashboard(page: number): Promise<{
   }
 
   return {
-    data: data as AuditDashboardData,
+    data: buildAuditDashboard(data || [], page),
     error: null,
   };
 }
