@@ -140,6 +140,15 @@ async function getAuditDashboard(page: number): Promise<{
 
   if (error) {
     console.error("Error loading purchase audit dashboard:", error);
+
+    if (error.code === "57014") {
+      return {
+        data: null,
+        error:
+          "A consulta excedeu o tempo limite. Aplique a migration 006_optimize_purchase_audit_dashboard.sql no Supabase e recarregue a pagina.",
+      };
+    }
+
     return {
       data: null,
       error: "Nao foi possivel carregar a auditoria de compras.",

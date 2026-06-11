@@ -1,3 +1,10 @@
+CREATE INDEX IF NOT EXISTS idx_purchases_audit_vendor_created_at
+ON public.purchases (
+  (purchase_data->>'vendedorId'),
+  (purchase_data->>'createdAt') DESC
+)
+WHERE purchase_data->>'cupomDescontoId' IS NULL;
+
 CREATE OR REPLACE FUNCTION public.get_purchase_audit_dashboard(
   p_vendedor_id text DEFAULT '75728a7d-ff85-4112-b33d-3bf074acc275',
   p_page integer DEFAULT 1,
