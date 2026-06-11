@@ -163,10 +163,12 @@ function buildAuditRows(records: PurchaseAuditRecord[]) {
     const paidAmount = getPaidAmount(purchaseData.valorPago);
     const existing = transactions.get(transactionId);
     const productId = record.product_id || "produto";
+    const productName =
+      getString(purchaseData.nomeProduto) || record.product_name || record.product_id || "Produto";
     const productKey = `${transactionId}:${productId}`;
     const product: AuditProduct = {
       product_id: record.product_id,
-      product_name: record.product_name || record.product_id || "Produto",
+      product_name: productName,
       paid_amount: paidAmount,
       status: record.status,
       payment_gateway: record.payment_gateway,
