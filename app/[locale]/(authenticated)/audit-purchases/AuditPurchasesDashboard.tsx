@@ -230,14 +230,46 @@ function buildAuditRows(records: PurchaseAuditRecord[]) {
   });
 }
 
-function filterRows(rows: AuditRow[], search: string) {
-  const normalizedSearch = search.trim().toLowerCase();
+function getDateStart(value: string) {
+  if (!value) {
+    return null;
+  }
 
-  if (!normalizedSearch) {
+  const date = new Date(`${value}T00:00:00`);
+  return Number.isNaN(date.getTime()) ? null : date.getTime();
+}
+
+function getDateEnd(value: string) {
+  if (!value) {
+    return null;
+  }
+
+  const date = new Date(`${value}T23:59:59.999`);
+  return Number.isNaN(date.getTime()) ? null : date.getTime();
+}
+
+function filterRows(rows: AuditRow[], search: string, startDate: string, endDate: string) {
+  const normalizedSearch = search.trim().toLowerCase();
+  const startTime = getDateStart(startDate);
+  const endTime = getDateEnd(endDate);
+
+  if (!normalizedSearch && startTime == null && endTime == null) {
     return rows;
   }
 
   return rows.filter((row) => {
+    const purchasedTime = new Date(row.purchased_at).getTime();
+    const matchesStart = startTime == null || purchasedTime >= startTime;
+    const matchesEnd = endTime == null || purchasedTime <= endTime;
+
+    if (!matchesStart || !matchesEnd) {
+      return false;
+    }
+
+    if (!normalizedSearch) {
+      return true;
+    }
+
     const products = row.products.map((product) => product.product_name).join(" ");
     return [
       row.transaction_id,
@@ -259,6 +291,8 @@ export function AuditPurchasesDashboard() {
   const [isComplete, setIsComplete] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [search, setSearch] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   const [page, setPage] = useState(1);
   const [loadedBatches, setLoadedBatches] = useState(0);
   const [batchSize, setBatchSize] = useState(INITIAL_BATCH_SIZE);
@@ -336,7 +370,10 @@ export function AuditPurchasesDashboard() {
   }, []);
 
   const rows = useMemo(() => buildAuditRows(records), [records]);
-  const filteredRows = useMemo(() => filterRows(rows, search), [rows, search]);
+  const filteredRows = useMemo(
+    () => filterRows(rows, search, startDate, endDate),
+    [rows, search, startDate, endDate]
+  );
   const totalPages = Math.max(1, Math.ceil(filteredRows.length / PAGE_SIZE));
   const paginatedRows = filteredRows.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
   const totalRevenue = filteredRows.reduce((sum, row) => sum + (row.total_paid || 0), 0);
@@ -395,8 +432,9 @@ export function AuditPurchasesDashboard() {
           </Card>
         </section>
 
-        <section className="flex flex-col gap-3 rounded-lg border bg-white p-4 shadow-sm md:flex-row md:items-center md:justify-between">
-          <div className="relative w-full md:max-w-md">
+        <section className="flex flex-col gap-3 rounded-lg border bg-white p-4 shadow-sm">
+          <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+            <div className="relative w-full lg:max-w-md">
             <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-slate-400" />
             <Input
               className="pl-9"
@@ -407,6 +445,44 @@ export function AuditPurchasesDashboard() {
                 setPage(1);
               }}
             />
+            </div>
+
+            <div className="grid gap-3 sm:grid-cols-[1fr_1fr_auto] sm:items-end">
+              <label className="space-y-1 text-xs font-medium text-slate-600">
+                <span>Data inicial</span>
+                <Input
+                  type="date"
+                  value={startDate}
+                  onChange={(event) => {
+                    setStartDate(event.target.value);
+                    setPage(1);
+                  }}
+                />
+              </label>
+              <label className="space-y-1 text-xs font-medium text-slate-600">
+                <span>Data final</span>
+                <Input
+                  type="date"
+                  value={endDate}
+                  onChange={(event) => {
+                    setEndDate(event.target.value);
+                    setPage(1);
+                  }}
+                />
+              </label>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => {
+                  setStartDate("");
+                  setEndDate("");
+                  setPage(1);
+                }}
+                disabled={!startDate && !endDate}
+              >
+                Limpar datas
+              </Button>
+            </div>
           </div>
 
           <div className="flex flex-wrap items-center gap-2 text-sm text-slate-600">
