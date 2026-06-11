@@ -127,7 +127,8 @@ async function getAuditDashboard(page: number): Promise<{
   if (!supabase) {
     return {
       data: null,
-      error: "Supabase admin client is not configured.",
+      error:
+        "Configure SUPABASE_SERVICE_ROLE_KEY no .env.local e reinicie o servidor para carregar os dados.",
     };
   }
 
