@@ -8,12 +8,19 @@ import type { DayPrayer } from '@/features/challenge/types';
 import type { UserPurchase } from '@/features/auth/types';
 import type { ProductLocale } from '@/lib/products/oraciones';
 
+const OPEN_CHALLENGE_PURCHASE: UserPurchase = {
+  product_id: 'open-access',
+  product_name: CHALLENGE_PRODUCT_NAME,
+  transaction_id: 'open-access',
+  status: 'approved',
+};
+
 export function findChallengePurchase(purchases?: UserPurchase[]) {
   return purchases?.find(
     (purchase) =>
       purchase.product_name === CHALLENGE_PRODUCT_NAME &&
       purchase.status === 'approved'
-  );
+  ) ?? OPEN_CHALLENGE_PURCHASE;
 }
 
 export function getChallengePurchaseDate(purchases?: UserPurchase[]) {
@@ -30,19 +37,9 @@ export function generateChallengeDays(locale: ProductLocale, purchaseDate?: Date
   const titles = getChallengeDayTitles(locale);
   const reasons = getChallengeDayReasons(locale);
 
-  if (!purchaseDate) {
-    return Array.from({ length: 21 }, (_, index) => ({
-      day: index + 1,
-      title: titles[index],
-      reason: reasons[index],
-      audioUrl: `/desafio/dia${index + 1}.mp3`,
-      isCompleted: false,
-      isLocked: true,
-    }));
-  }
-
   const today = new Date();
-  const timeDiff = today.getTime() - purchaseDate.getTime();
+  const unlockedFromDate = purchaseDate ?? today;
+  const timeDiff = today.getTime() - unlockedFromDate.getTime();
   const daysSincePurchase = Math.floor(timeDiff / (1000 * 60 * 60 * 24)) + 1;
 
   return Array.from({ length: 21 }, (_, index) => {
@@ -54,7 +51,7 @@ export function generateChallengeDays(locale: ProductLocale, purchaseDate?: Date
       reason: reasons[index],
       audioUrl: `/desafio/dia${dayNumber}.mp3`,
       isCompleted: dayNumber < daysSincePurchase,
-      isLocked: dayNumber > daysSincePurchase,
+      isLocked: false,
     };
   });
 }

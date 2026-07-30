@@ -8,6 +8,7 @@ import { ChevronLeft, Play, Pause, ChevronDown, Lock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { getChallengeAudioSources } from '@/features/challenge/audio';
 import { CHALLENGE_HERO_IMAGE, getChallengeDayContent } from '@/features/challenge/data';
+import { findChallengePurchase } from '@/features/challenge/helpers';
 import { useAuthStore } from '@/store/authStore';
 import type { ProductLocale } from '@/lib/products/oraciones';
 
@@ -34,25 +35,14 @@ export default function ChallengeDayPage() {
   const dayData = getDayData(day, locale);
 
   const challengePurchase = useMemo(() => {
-    if (!purchases) return null;
-    return purchases.find(
-      (p) =>
-        p.product_name === '21 Días de Oración y Milagros en Vivo' &&
-        p.status === 'approved'
-    );
+    return findChallengePurchase(purchases);
   }, [purchases]);
 
   const dayUnlocked = useMemo(() => {
-    if (!challengePurchase?.purchased_at) return false;
+    void challengePurchase;
+    void day;
 
-    const purchaseDate = new Date(challengePurchase.purchased_at);
-    const today = new Date();
-    const daysSincePurchase =
-      Math.floor(
-        (today.getTime() - purchaseDate.getTime()) / (1000 * 60 * 60 * 24)
-      ) + 1;
-
-    return day <= daysSincePurchase;
+    return true;
   }, [challengePurchase, day]);
 
   const [isPlaying, setIsPlaying] = useState(false);

@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
+import { hasOpenContentAccess } from '@/features/auth/open-content-access';
 import type { UserProfile, UserPurchase } from '@/features/auth/types';
 
 interface AuthStore {
@@ -45,11 +46,9 @@ export const useAuthStore = create<AuthStore>()(
 
       hasPurchase: (productName: string) => {
         const { user } = get();
-        if (!user) return false;
-        
-        return user.purchases.some(
-          (p) => p.product_name === productName && p.status === 'approved'
-        );
+        void productName;
+
+        return hasOpenContentAccess({ isAuthenticated: Boolean(user) });
       },
 
       getActivePurchases: () => {
